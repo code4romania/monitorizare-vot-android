@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="AppTheme.Common">
+        <item name="android:windowActivityTransitions">true</item>
+        <!--<item name="android:windowSharedElementEnterTransition">@transition/login_transform</item>-->
+        <!--<item name="android:windowSharedElementExitTransition">@transition/login_transform</item>-->
+        <item name="android:windowEnterTransition">@transition/fade_in</item>
+        <item name="android:windowExitTransition">@transition/fade_out</item>
+    </style>
+
+    <style name="AppTheme.Login" parent="AppTheme.Login.Common">
+        <item name="android:colorControlNormal">@color/textLight</item>
+        <item name="android:colorControlActivated">@color/accent</item>
+        <item name="android:colorControlHighlight">@color/accent</item>
+    </style>
+
+    <style name="buttonLogin">
+        <item name="android:colorButtonNormal">@color/accent</item>
+        <item name="android:colorAccent">@color/accentLight</item>
+    </style>
+
+    <style name="SharedElementPurpleBackground">
+        <item name="android:background">@color/primary</item>
+        <item name="android:transitionName">@string/shared_element_purple_background</item>
+    </style>
+
+    <style name="SharedElementLogo">
+        <item name="android:transitionName">@string/shared_element_logo</item>
+    </style>
+</resources>

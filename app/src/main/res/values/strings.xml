@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">VoteHack</string>
+
+    <!-- Images -->
+    <string name="content_icon_phone">Phone icon</string>
+    <string name="content_icon_lock">Lock icon</string>
+
+    <!-- Login -->
+    <string name="logo_vote">Vote</string>
+    <string name="logo_hack">Hack</string>
+    <string name="login_phone">Numărul de telefon</string>
+    <string name="login_branch">Numărul secției de votare</string>
+    <string name="login">Autentificare</string>
+
+    <!-- Forms list -->
+    <string name="forms_list_description">Aici vine un text dummy, pe una \n sau \n mai multe linii.</string>
+    <string name="form_1">Formular A</string>
+    <string name="form_2">Formular B</string>
+    <string name="form_3">Formular C</string>
+    <string name="form_notes">Note</string>
+
+    <string name="dummy_form_json">[ { \"codSectiune\": \"A\", \"descriere\": \"Descrierea primei sectiuni\", \"intrebari\": [ { \"idIntrebare\": 1, \"textIntrebare\": \"Ce tipuri de bere iti plac? (se pot alege optiuni multiple)\", \"idTipIntrebare\": 0, \"raspunsuriDisponibile\": [ { \"idOptiune\": 27, \"textOptiune\": \"Dark Island\", \"seIntroduceText\": false }, { \"idOptiune\": 28, \"textOptiune\": \"London Pride\", \"seIntroduceText\": false }, { \"idOptiune\": 29, \"textOptiune\": \"Zaganu\", \"seIntroduceText\": false } ] }, { \"idIntrebare\": 12, \"textIntrebare\": \"Iti place berea? (se alege o singura optiune selectabila)\", \"idTipIntrebare\": 1, \"raspunsuriDisponibile\": [ { \"idOptiune\": 24, \"textOptiune\": \"DA\", \"seIntroduceText\": false }, { \"idOptiune\": 25, \"textOptiune\": \"NU\", \"seIntroduceText\": false }, { \"idOptiune\": 26, \"textOptiune\": \"Nu stiu\", \"seIntroduceText\": false } ] } ] }, { \"codSectiune\": \"A\", \"descriere\": \"Descrierea celei de-a doua sectiuni\", \"intrebari\": [ { \"idIntrebare\": 1, \"textIntrebare\": \"Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)\", \"idTipIntrebare\": 2, \"raspunsuriDisponibile\": [ { \"idOptiune\": 31, \"textOptiune\": \"Transmisia manual\u00E3\", \"seIntroduceText\": false }, { \"idOptiune\": 32, \"textOptiune\": \"Transmisia automat\u00E3\", \"seIntroduceText\": false }, { \"idOptiune\": 33, \"textOptiune\": \"Transmisia non-sincron\", \"seIntroduceText\": false }, { \"idOptiune\": 34, \"textOptiune\": \"Altele (specifica\u0163i)\", \"seIntroduceText\": true } ] }, { \"idIntrebare\": 1, \"textIntrebare\": \"Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni)\", \"idTipIntrebare\": 3, \"raspunsuriDisponibile\": [ { \"idOptiune\": 27, \"textOptiune\": \"Metrou\", \"seIntroduceText\": false }, { \"idOptiune\": 28, \"textOptiune\": \"Tramvai\", \"seIntroduceText\": false }, { \"idOptiune\": 29, \"textOptiune\": \"Autobuz\", \"seIntroduceText\": false }, { \"idOptiune\": 30, \"textOptiune\": \"Altele (specifica\u0163i)\", \"seIntroduceText\": true } ] } ] } ]</string>
+</resources>
