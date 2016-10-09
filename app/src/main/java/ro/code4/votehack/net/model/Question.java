@@ -3,11 +3,14 @@ package ro.code4.votehack.net.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Question implements Serializable {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class Question extends RealmObject implements Serializable {
     private Integer idIntrebare;
     private String textIntrebare;
     private Integer idTipIntrebare;
-    private List<Answer> raspunsuriDisponibile;
+    private RealmList<Answer> raspunsuriDisponibile;
 
     public Integer getId() {
         return idIntrebare;

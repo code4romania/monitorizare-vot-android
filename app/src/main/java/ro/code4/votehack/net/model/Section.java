@@ -3,10 +3,13 @@ package ro.code4.votehack.net.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Section implements Serializable {
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class Section extends RealmObject implements Serializable {
     private String codSectiune;
     private String descriere;
-    private List<Question> intrebari;
+    private RealmList<Question> intrebari;
 
     public String getSectionCode() {
         return codSectiune;

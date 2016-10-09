@@ -2,7 +2,9 @@ package ro.code4.votehack.net.model;
 
 import java.io.Serializable;
 
-public class Answer implements Serializable {
+import io.realm.RealmObject;
+
+public class Answer extends RealmObject implements Serializable {
     private Integer idOptiune;
     private String textOptiune;
     private boolean seIntroduceText;
