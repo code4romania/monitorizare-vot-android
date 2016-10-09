@@ -6,6 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 
 import ro.code4.votehack.fragment.FormsListFragment;
+import ro.code4.votehack.net.HttpCallback;
+import ro.code4.votehack.net.HttpClient;
+import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.response.VersionResponse;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
     private Toolbar toolbar;
@@ -20,6 +24,40 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         initToolbar();
 
         navigateTo(FormsListFragment.newInstance(), false);
+
+        checkFormVersion();
+    }
+
+    private void checkFormVersion() {
+
+    }
+
+    private void getFormVersion() {
+        HttpClient.getInstance().getFormVersion(new HttpCallback<VersionResponse>(VersionResponse.class) {
+            @Override
+            public void onSuccess(VersionResponse response) {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+    }
+
+    private void getForms() {
+        HttpClient.getInstance().getForm("1", new HttpCallback<Section[]>(Section[].class) {
+            @Override
+            public void onSuccess(Section[] sections) {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
     }
 
     private void initToolbar() {
