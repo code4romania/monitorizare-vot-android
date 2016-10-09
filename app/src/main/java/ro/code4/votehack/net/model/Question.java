@@ -5,8 +5,10 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Question extends RealmObject implements Serializable {
+    @PrimaryKey
     private Integer idIntrebare;
     private String textIntrebare;
     private Integer idTipIntrebare;

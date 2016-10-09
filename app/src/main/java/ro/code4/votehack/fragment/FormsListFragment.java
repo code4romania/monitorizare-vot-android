@@ -6,11 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.db.Data;
 
 public class FormsListFragment extends BaseFragment implements View.OnClickListener {
     public static FormsListFragment newInstance() {
@@ -37,18 +35,15 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String dummyJson = getString(R.string.dummy_form_json);
-        Section[] sections = new Gson().fromJson(dummyJson, Section[].class);
-
         switch (v.getId()) {
             case R.id.button_form_1:
-                navigateTo(FormDetailsFragment.newInstance(sections[0]));
+                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionA()));
                 break;
             case R.id.button_form_2:
-                navigateTo(FormDetailsFragment.newInstance(sections[1]));
+                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionB()));
                 break;
             case R.id.button_form_3:
-                navigateTo(FormDetailsFragment.newInstance(sections[1]));
+                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionC()));
                 break;
             case R.id.button_form_notes:
                 break;

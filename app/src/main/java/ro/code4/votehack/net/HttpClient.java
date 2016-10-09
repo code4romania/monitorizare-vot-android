@@ -19,7 +19,7 @@ public class HttpClient {
         return instance;
     }
 
-    public void getForm(Callback callback) {
+    public void getForms(Callback callback) {
         getForm("", callback);
     }
 

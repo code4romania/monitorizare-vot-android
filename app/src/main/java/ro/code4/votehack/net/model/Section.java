@@ -5,8 +5,10 @@ import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Section extends RealmObject implements Serializable {
+    @PrimaryKey
     private String codSectiune;
     private String descriere;
     private RealmList<Question> intrebari;

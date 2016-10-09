@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Arrays;
+
+import io.realm.Realm;
 import ro.code4.votehack.fragment.FormsListFragment;
 import ro.code4.votehack.net.HttpCallback;
 import ro.code4.votehack.net.HttpClient;
@@ -25,7 +28,8 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
         navigateTo(FormsListFragment.newInstance(), false);
 
-        checkFormVersion();
+//        checkFormVersion();
+        getForms();
     }
 
     private void checkFormVersion() {
@@ -47,10 +51,14 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     }
 
     private void getForms() {
-        HttpClient.getInstance().getForm("1", new HttpCallback<Section[]>(Section[].class) {
+        HttpClient.getInstance().getForms(new HttpCallback<Section[]>(Section[].class) {
             @Override
             public void onSuccess(Section[] sections) {
-
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(Arrays.asList(sections));
+                realm.commitTransaction();
+                realm.close();
             }
 
             @Override
