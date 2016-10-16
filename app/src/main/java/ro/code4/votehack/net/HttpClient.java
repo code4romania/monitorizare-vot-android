@@ -19,13 +19,9 @@ public class HttpClient {
         return instance;
     }
 
-    public void getForms(Callback callback) {
-        getForm("", callback);
-    }
-
     public void getForm(String formId, Callback callback) {
         Request request = new Request.Builder()
-                .url("http://viuat.azurewebsites.net/api/v1/formular")
+                .url("http://viuat.azurewebsites.net/api/v1/formular?idformular=" + formId)
                 .build();
         client.newCall(request).enqueue(callback);
     }

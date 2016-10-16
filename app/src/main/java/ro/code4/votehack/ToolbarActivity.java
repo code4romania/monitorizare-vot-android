@@ -51,7 +51,37 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     }
 
     private void getForms() {
-        HttpClient.getInstance().getForms(new HttpCallback<Section[]>(Section[].class) {
+        HttpClient.getInstance().getForm("A", new HttpCallback<Section[]>(Section[].class) {
+            @Override
+            public void onSuccess(Section[] sections) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(Arrays.asList(sections));
+                realm.commitTransaction();
+                realm.close();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+        HttpClient.getInstance().getForm("B", new HttpCallback<Section[]>(Section[].class) {
+            @Override
+            public void onSuccess(Section[] sections) {
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
+                realm.copyToRealmOrUpdate(Arrays.asList(sections));
+                realm.commitTransaction();
+                realm.close();
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+        HttpClient.getInstance().getForm("C", new HttpCallback<Section[]>(Section[].class) {
             @Override
             public void onSuccess(Section[] sections) {
                 Realm realm = Realm.getDefaultInstance();
@@ -85,5 +115,12 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
             transaction.addToBackStack(fragment.getIdentifier());
         }
         transaction.commit();
+    }
+
+    @Override
+    public void navigateBack() {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }
     }
 }

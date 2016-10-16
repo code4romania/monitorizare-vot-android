@@ -2,10 +2,14 @@ package ro.code4.votehack;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Bundle;
+
+import io.realm.Realm;
 
 public abstract class BaseFragment extends Fragment implements Navigator {
     public abstract String getIdentifier();
     private Navigator navigator;
+    private Realm realm;
 
     @Override
     public void onAttach(Context context) {
@@ -18,6 +22,18 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    @Override
     public void navigateTo(BaseFragment fragment) {
         navigator.navigateTo(fragment);
     }
@@ -25,5 +41,10 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     @Override
     public void navigateTo(BaseFragment fragment, boolean addToBackStack) {
         navigator.navigateTo(fragment, addToBackStack);
+    }
+
+    @Override
+    public void navigateBack() {
+        navigator.navigateBack();
     }
 }

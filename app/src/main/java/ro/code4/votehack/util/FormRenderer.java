@@ -32,7 +32,7 @@ public class FormRenderer {
         return rootView;
     }
 
-    private static View renderQuestion(Context context, Question question) {
+    public static View renderQuestion(Context context, Question question) {
         switch (QuestionType.from(question.getTypeId())) {
             case SINGLE_OPTION:
                 return renderSingleAnswerQuestion(context, question);
