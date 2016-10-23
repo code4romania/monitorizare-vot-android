@@ -20,12 +20,28 @@
             android:layout_height="match_parent"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
-            <ro.code4.votehack.widget.LogoText
-                style="@style/SharedElementLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:textSize="24sp"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ro.code4.votehack.widget.LogoText
+                    style="@style/SharedElementLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    app:textSize="24sp"/>
+
+                <ImageButton
+                    android:id="@+id/toolbar_call"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_margin="10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_phone_white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"/>
+            </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
     </FrameLayout>
 

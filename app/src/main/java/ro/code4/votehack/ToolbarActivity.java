@@ -1,9 +1,12 @@
 package ro.code4.votehack;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.Arrays;
 
@@ -16,6 +19,7 @@ import ro.code4.votehack.net.model.response.VersionResponse;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
     private Toolbar toolbar;
+    private View toolbarCall;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         setContentView(R.layout.activity_toolbar);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbarCall = toolbar.findViewById(R.id.toolbar_call);
 
         initToolbar();
 
@@ -100,6 +105,18 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
     private void initToolbar() {
         toolbar.setTitle(null);
+        toolbarCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callSupportCenter();
+            }
+        });
+    }
+
+    private void callSupportCenter() {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + App.SERVICE_CENTER_PHONE_NUMBER));
+        startActivity(callIntent);
     }
 
     @Override
