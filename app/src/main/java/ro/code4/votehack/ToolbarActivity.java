@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -20,6 +21,8 @@ import ro.code4.votehack.net.model.response.VersionResponse;
 public class ToolbarActivity extends BaseActivity implements Navigator {
     private Toolbar toolbar;
     private View toolbarCall;
+    private DrawerLayout drawerLayout;
+    private View menuButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,12 +32,26 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbarCall = toolbar.findViewById(R.id.toolbar_call);
 
+        menuButton = toolbar.findViewById(R.id.toolbar_menu);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
+
         initToolbar();
+        initNavigationDrawer();
 
         navigateTo(FormsListFragment.newInstance(), false);
 
 //        checkFormVersion();
         getForms();
+    }
+
+    private void initNavigationDrawer() {
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO toggle navigationDrawer
+            }
+        });
     }
 
     private void checkFormVersion() {
