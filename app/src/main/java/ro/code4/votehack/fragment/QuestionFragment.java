@@ -66,6 +66,10 @@ public class QuestionFragment extends BaseFragment {
         TextView progress = (TextView) rootView.findViewById(R.id.question_progress);
         progress.setText(questionIndex + " / " + numberOfQuestions);
 
+        if (questionIndex == numberOfQuestions) {
+            ((TextView) rootView.findViewById(R.id.button_question_next)).setText(R.string.question_finish);
+        }
+
         ViewGroup questionContainer = (ViewGroup) rootView.findViewById(R.id.question_container);
         questionContainer.addView(FormRenderer.renderQuestion(getActivity(), question));
         rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
