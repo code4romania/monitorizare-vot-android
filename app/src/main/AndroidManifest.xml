@@ -3,6 +3,7 @@
     package="ro.code4.votehack">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
@@ -23,6 +24,11 @@
         <activity
             android:name=".ToolbarActivity"
             android:theme="@style/AppTheme" />
+        <receiver android:name=".net.NetworkChangeReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
