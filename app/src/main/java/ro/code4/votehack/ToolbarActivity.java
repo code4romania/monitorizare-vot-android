@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -49,7 +51,31 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO toggle navigationDrawer
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        findViewById(R.id.menu_forms).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ToolbarActivity.this, "Forms coming soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.menu_questions).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ToolbarActivity.this, "Questions coming soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.menu_guide).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ToolbarActivity.this, "Guide coming soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+        findViewById(R.id.menu_call).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callSupportCenter();
             }
         });
     }

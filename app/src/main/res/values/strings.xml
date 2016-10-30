@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">VoteHack</string>
 
+    <!-- Menu -->
+    <string name="menu_forms">Formulare</string>
+    <string name="menu_questions">Lista intrebari</string>
+    <string name="menu_guide">Ghidul observatorului</string>
+    <string name="menu_call">Apelează TelVerde</string>
+
     <!-- Images -->
     <string name="content_icon_phone">Phone icon</string>
     <string name="content_icon_lock">Lock icon</string>
