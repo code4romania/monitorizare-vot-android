@@ -22,7 +22,6 @@ import ro.code4.votehack.net.model.response.VersionResponse;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
     private Toolbar toolbar;
-    private View toolbarCall;
     private DrawerLayout drawerLayout;
     private View menuButton;
 
@@ -32,7 +31,6 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         setContentView(R.layout.activity_toolbar);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbarCall = toolbar.findViewById(R.id.toolbar_call);
 
         menuButton = toolbar.findViewById(R.id.toolbar_menu);
 
@@ -148,12 +146,6 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
     private void initToolbar() {
         toolbar.setTitle(null);
-        toolbarCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callSupportCenter();
-            }
-        });
     }
 
     private void callSupportCenter() {
