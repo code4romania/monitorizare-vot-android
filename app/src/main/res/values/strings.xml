@@ -19,11 +19,11 @@
     <string name="login">Autentificare</string>
 
     <!-- Forms list -->
-    <string name="forms_list_description">Aici vine un text dummy, pe una \n sau \n mai multe linii.</string>
+    <string name="change_branch">Schimbă secția</string>
     <string name="form_1">Formular A</string>
     <string name="form_2">Formular B</string>
     <string name="form_3">Formular C</string>
-    <string name="form_notes">Note</string>
+    <string name="form_notes">Vezi/Scrie note</string>
 
     <!-- Question details -->
     <string name="question_notes">Note</string>

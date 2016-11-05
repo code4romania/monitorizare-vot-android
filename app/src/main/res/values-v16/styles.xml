@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="buttonLogin">
+    <style name="BaseButton" />
+    <style name="buttonLogin" parent="BaseButton">
         <item name="android:background">@color/accent</item>
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+    <style name="buttonDark" parent="BaseButton">
+        <item name="android:background">@color/backgroundDark</item>
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+    <style name="buttonLight" parent="BaseButton">
+        <item name="android:background">@color/backgroundLight</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+    <style name="buttonEmbedded" parent="BaseButton">
+        <item name="android:background">@color/backgroundLight</item>
+        <item name="android:textColor">@color/textPrimary</item>
     </style>
 </resources>
