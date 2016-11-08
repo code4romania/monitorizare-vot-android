@@ -4,8 +4,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.CheckBox;
 
+import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
 
 public class AnswerCheckbox extends CheckBox implements AnswerLayout {
@@ -31,7 +33,7 @@ public class AnswerCheckbox extends CheckBox implements AnswerLayout {
     }
 
     private void init(Context context) {
-        //Do initializations here
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.question_option_text));
     }
 
     @Override

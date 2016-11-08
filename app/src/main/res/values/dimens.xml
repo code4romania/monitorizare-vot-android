@@ -2,7 +2,7 @@
     <!-- General -->
     <dimen name="status_bar_spacer">0dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">10dp</dimen>
     <dimen name="input_height">50dp</dimen>
     <dimen name="button_height">50dp</dimen>
     <dimen name="button_height_large">70dp</dimen>
@@ -24,4 +24,7 @@
 
     <!-- Forms -->
     <dimen name="form_description_text">18sp</dimen>
+
+    <!-- Question -->
+    <dimen name="question_option_text">18sp</dimen>
 </resources>
