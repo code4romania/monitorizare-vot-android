@@ -16,17 +16,18 @@
         android:paddingRight="@dimen/activity_horizontal_margin">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/icon_block_size"
+            android:layout_height="@dimen/icon_block_size"
             android:src="@drawable/ic_building"/>
 
         <TextView
+            android:id="@+id/votingBranch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="21sp"
+            android:textSize="@dimen/header_text"
             android:textColor="@color/textPrimary"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="@dimen/header_margin_vertial"
+            android:layout_marginBottom="@dimen/header_margin_vertial"
             tools:text="GR 1123"/>
         
         <Button
@@ -38,48 +39,59 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="@color/backgroundDark"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
+        android:layout_weight="0.6"
+        android:gravity="center_horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dark_container_offset"
+            android:background="@color/backgroundDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+            <Button
+                android:id="@+id/button_form_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_large"
+                android:text="@string/form_1"
+                android:textSize="@dimen/button_text_large"
+                android:theme="@style/buttonLight" />
+
+            <Button
+                android:id="@+id/button_form_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_large"
+                android:layout_marginTop="@dimen/spacing_vertical"
+                android:text="@string/form_2"
+                android:textSize="@dimen/button_text_large"
+                android:theme="@style/buttonLight" />
+
+            <Button
+                android:id="@+id/button_form_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height_large"
+                android:layout_marginTop="@dimen/spacing_vertical"
+                android:text="@string/form_3"
+                android:textSize="@dimen/button_text_large"
+                android:theme="@style/buttonLight" />
+        </LinearLayout>
 
         <Button
-            android:id="@+id/button_form_1"
+            android:id="@+id/button_form_notes"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height_large"
-            android:text="@string/form_1"
-            android:textSize="@dimen/button_text_large"
-            android:theme="@style/buttonLight" />
-
-        <Button
-            android:id="@+id/button_form_2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height_large"
-            android:layout_marginTop="@dimen/spacing_vertical"
-            android:text="@string/form_2"
-            android:textSize="@dimen/button_text_large"
-            android:theme="@style/buttonLight" />
-
-        <Button
-            android:id="@+id/button_form_3"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height_large"
-            android:layout_marginTop="@dimen/spacing_vertical"
-            android:text="@string/form_3"
-            android:textSize="@dimen/button_text_large"
-            android:theme="@style/buttonLight" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button_form_notes"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:text="@string/form_notes"
-        android:theme="@style/buttonEmbedded"/>
+            android:layout_height="@dimen/button_height"
+            android:layout_alignParentBottom="true"
+            android:text="@string/form_notes"
+            android:theme="@style/buttonEmbedded"
+            android:background="@color/backgroundLight"/>
+    </RelativeLayout>
 
 </LinearLayout>

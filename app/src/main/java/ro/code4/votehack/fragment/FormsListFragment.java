@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
@@ -24,6 +25,8 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
         rootView.findViewById(R.id.button_form_2).setOnClickListener(this);
         rootView.findViewById(R.id.button_form_3).setOnClickListener(this);
         rootView.findViewById(R.id.button_form_notes).setOnClickListener(this);
+
+        ((TextView) rootView.findViewById(R.id.votingBranch)).setText("GR 1123"); //set selected voting branch here
 
         return rootView;
     }
