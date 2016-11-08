@@ -14,9 +14,32 @@
         <item name="android:colorControlHighlight">@color/accent</item>
     </style>
 
-    <style name="buttonLogin">
+    <style name="BaseButton">
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="buttonLogin" parent="BaseButton">
         <item name="android:colorButtonNormal">@color/accent</item>
         <item name="android:colorAccent">@color/accentLight</item>
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+
+    <style name="buttonDark" parent="BaseButton">
+        <item name="android:colorButtonNormal">@color/backgroundDark</item>
+        <item name="android:colorAccent">@color/backgroundAccent</item>
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+
+    <style name="buttonLight" parent="BaseButton">
+        <item name="android:colorButtonNormal">@color/backgroundLight</item>
+        <item name="android:colorAccent">@color/backgroundAccent</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <style name="buttonEmbedded" parent="BaseButton">
+        <item name="android:colorButtonNormal">@color/backgroundLight</item>
+        <item name="android:colorAccent">@color/backgroundLight</item>
+        <item name="android:textColor">@color/textPrimary</item>
     </style>
 
     <style name="SharedElementPurpleBackground">

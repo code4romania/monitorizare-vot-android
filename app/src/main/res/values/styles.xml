@@ -24,6 +24,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="BaseButton.Common">
+
+    </style>
+    <style name="BaseButton" parent="BaseButton.Common">
+        <!-- Can be overriden in values-v16 and values-v21 -->
+    </style>
+
     <!-- Overridden in values-v21 -->
     <style name="SharedElementPurpleBackground" />
     <style name="SharedElementLogo"/>

@@ -2,11 +2,20 @@
     <!-- General -->
     <dimen name="status_bar_spacer">0dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">10dp</dimen>
     <dimen name="input_height">50dp</dimen>
     <dimen name="button_height">50dp</dimen>
+    <dimen name="button_height_large">70dp</dimen>
     <dimen name="button_width">200dp</dimen>
-    <dimen name="spacing_vertical">16dp</dimen>
+    <dimen name="button_text">15sp</dimen>
+    <dimen name="button_text_large">19sp</dimen>
+    <dimen name="spacing_vertical">10dp</dimen>
+
+    <!-- Dark container with bottom button -->
+    <dimen name="header_text">21sp</dimen>
+    <dimen name="header_margin_vertial">10dp</dimen>
+    <dimen name="icon_block_size">50dp</dimen>
+    <dimen name="dark_container_offset">22dp</dimen>
 
     <!-- Login -->
     <dimen name="logo_spacing">50dp</dimen>
@@ -15,4 +24,7 @@
 
     <!-- Forms -->
     <dimen name="form_description_text">18sp</dimen>
+
+    <!-- Question -->
+    <dimen name="question_option_text">18sp</dimen>
 </resources>

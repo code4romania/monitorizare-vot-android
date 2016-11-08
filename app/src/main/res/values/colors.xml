@@ -5,7 +5,10 @@
     <color name="primaryLight">#fff2bd</color>
     <color name="accent">#009688</color>
     <color name="accentLight">#B2DFDB</color>
-    <color name="textPrimary">#212121</color>
+    <color name="backgroundDark">#333333</color>
+    <color name="backgroundLight">#FFFFFF</color>
+    <color name="backgroundAccent">#757575</color>
+    <color name="textPrimary">#333333</color>
     <color name="textSecondary">#757575</color>
     <color name="textLight">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>

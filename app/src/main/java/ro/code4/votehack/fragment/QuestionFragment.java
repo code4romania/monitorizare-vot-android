@@ -63,8 +63,8 @@ public class QuestionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
-        TextView progress = (TextView) rootView.findViewById(R.id.question_progress);
-        progress.setText(questionIndex + " / " + numberOfQuestions);
+        setProgress((TextView) rootView.findViewById(R.id.question_progress));
+        setDescription((TextView) rootView.findViewById(R.id.question_description));
 
         if (questionIndex == numberOfQuestions) {
             ((TextView) rootView.findViewById(R.id.button_question_next)).setText(R.string.question_finish);
@@ -85,5 +85,13 @@ public class QuestionFragment extends BaseFragment {
             }
         });
         return rootView;
+    }
+
+    private void setProgress(TextView progress) {
+        progress.setText(questionIndex + " / " + numberOfQuestions);
+    }
+
+    private void setDescription(TextView description) {
+        description.setText(question.getText());
     }
 }
