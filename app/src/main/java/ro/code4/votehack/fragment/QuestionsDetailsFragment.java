@@ -14,17 +14,25 @@ import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
-import ro.code4.votehack.util.QuestionNavigator;
+import ro.code4.votehack.util.QuestionDetailsNavigator;
 
-public class FormDetailsFragment extends BaseFragment implements QuestionNavigator {
+public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
+    private static final String ARGS_SECTION = "Section";
+    private static final String ARGS_START_INDEX = "StartIndex";
     private Section section;
     private List<Question> questions;
     private int currentQuestion = 0;
+    private int startIndex;
 
-    public static FormDetailsFragment newInstance(Section section) {
-        FormDetailsFragment fragment = new FormDetailsFragment();
+    public static QuestionsDetailsFragment newInstance(Section section) {
+        return newInstance(section, 0);
+    }
+
+    public static QuestionsDetailsFragment newInstance(Section section, int startIndex) {
+        QuestionsDetailsFragment fragment = new QuestionsDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable("Section", section);
+        args.putSerializable(ARGS_SECTION, section);
+        args.putInt(ARGS_START_INDEX, startIndex);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +40,8 @@ public class FormDetailsFragment extends BaseFragment implements QuestionNavigat
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.section = (Section) getArguments().getSerializable("Section");
+        this.section = (Section) getArguments().getSerializable(ARGS_SECTION);
+        this.startIndex = getArguments().getInt(ARGS_START_INDEX, 0);
         this.questions = this.section != null ? this.section.getQuestionList() : new ArrayList<Question>();
     }
 
@@ -40,13 +49,13 @@ public class FormDetailsFragment extends BaseFragment implements QuestionNavigat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        showQuestion(0);
+        showQuestion(startIndex);
         return rootView;
     }
 
     @Override
     public String getIdentifier() {
-        return "FormDetailsFragment";
+        return "QuestionsDetailsFragment";
     }
 
     private void showQuestion(int index) {

@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.util.FormRenderer;
-import ro.code4.votehack.util.QuestionNavigator;
+import ro.code4.votehack.util.QuestionDetailsNavigator;
 
 public class QuestionFragment extends BaseFragment {
     private static final String ARG_QUESTION = "question";
@@ -23,7 +21,7 @@ public class QuestionFragment extends BaseFragment {
     private static final String ARG_INDEX = "indexOfQuestion";
     private static final String ARG_SECTION_CODE = "section";
     private Question question;
-    private QuestionNavigator navigator;
+    private QuestionDetailsNavigator navigator;
     private String sectionCode;
     private int numberOfQuestions;
     private int questionIndex;
@@ -47,10 +45,10 @@ public class QuestionFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getParentFragment() == null || !(getParentFragment() instanceof QuestionNavigator)) {
-            throw new RuntimeException("Fragment must be a child of a fragment implementing QuestionNavigator");
+        if (getParentFragment() == null || !(getParentFragment() instanceof QuestionDetailsNavigator)) {
+            throw new RuntimeException("Fragment must be a child of a fragment implementing QuestionDetailsNavigator");
         } else {
-            navigator = (QuestionNavigator) getParentFragment();
+            navigator = (QuestionDetailsNavigator) getParentFragment();
         }
     }
 
