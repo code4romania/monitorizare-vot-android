@@ -12,26 +12,27 @@ import java.util.List;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
+import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
 public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
-    private static final String ARGS_SECTION = "Section";
+    private static final String ARGS_SECTION_CODE = "SectionCode";
     private static final String ARGS_START_INDEX = "StartIndex";
     private Section section;
     private List<Question> questions;
     private int currentQuestion = 0;
     private int startIndex;
 
-    public static QuestionsDetailsFragment newInstance(Section section) {
-        return newInstance(section, 0);
+    public static QuestionsDetailsFragment newInstance(String sectionCode) {
+        return newInstance(sectionCode, 0);
     }
 
-    public static QuestionsDetailsFragment newInstance(Section section, int startIndex) {
+    public static QuestionsDetailsFragment newInstance(String sectionCode, int startIndex) {
         QuestionsDetailsFragment fragment = new QuestionsDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARGS_SECTION, section);
+        args.putSerializable(ARGS_SECTION_CODE, sectionCode);
         args.putInt(ARGS_START_INDEX, startIndex);
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +41,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.section = (Section) getArguments().getSerializable(ARGS_SECTION);
+        this.section = Data.getInstance().getSection(getArguments().getString(ARGS_SECTION_CODE));
         this.startIndex = getArguments().getInt(ARGS_START_INDEX, 0);
         this.questions = this.section != null ? this.section.getQuestionList() : new ArrayList<Question>();
     }

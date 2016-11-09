@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
+import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.util.FormRenderer;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
 public class QuestionFragment extends BaseFragment {
-    private static final String ARG_QUESTION = "question";
+    private static final String ARG_QUESTION_ID = "questionId";
     private static final String ARG_SIZE = "numberOfQuestions";
     private static final String ARG_INDEX = "indexOfQuestion";
     private static final String ARG_SECTION_CODE = "section";
@@ -28,7 +29,7 @@ public class QuestionFragment extends BaseFragment {
 
     public static QuestionFragment newInstance(Section section, int index) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_QUESTION, section.getQuestionList().get(index));
+        args.putInt(ARG_QUESTION_ID, section.getQuestionList().get(index).getId());
         args.putInt(ARG_INDEX, index + 1);
         args.putInt(ARG_SIZE, section.getQuestionList().size());
         args.putString(ARG_SECTION_CODE, section.getSectionCode());
@@ -55,7 +56,7 @@ public class QuestionFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.question = (Question) getArguments().getSerializable(ARG_QUESTION);
+        this.question = Data.getInstance().getQuestion(getArguments().getInt(ARG_QUESTION_ID));
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
         this.sectionCode = getArguments().getString(ARG_SECTION_CODE);

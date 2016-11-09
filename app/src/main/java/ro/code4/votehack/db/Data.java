@@ -2,6 +2,7 @@ package ro.code4.votehack.db;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
 
 public class Data {
@@ -31,13 +32,24 @@ public class Data {
         return getSection("C");
     }
 
-    private Section getSection(String sectionCode) {
+    public Section getSection(String sectionCode) {
         realm = Realm.getDefaultInstance();
         RealmResults<Section> results = realm
                 .where(Section.class)
                 .equalTo("codSectiune", sectionCode)
                 .findAll();
         Section result = results.size() > 0 ? results.get(0) : null;
+        realm.close();
+        return result;
+    }
+
+    public Question getQuestion(Integer questionId) {
+        realm = Realm.getDefaultInstance();
+        RealmResults<Question> results = realm
+                .where(Question.class)
+                .equalTo("idIntrebare", questionId)
+                .findAll();
+        Question result = results.size() > 0 ? results.get(0) : null;
         realm.close();
         return result;
     }

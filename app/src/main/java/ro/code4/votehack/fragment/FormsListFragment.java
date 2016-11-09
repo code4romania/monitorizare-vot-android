@@ -57,7 +57,7 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
 
     private void showSection(Section section) {
         if (section != null && section.getQuestionList() != null && section.getQuestionList().size() > 0) {
-            navigateTo(QuestionsOverviewFragment.newInstance(section));
+            navigateTo(QuestionsOverviewFragment.newInstance(section.getSectionCode()));
         } else {
             Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
         }

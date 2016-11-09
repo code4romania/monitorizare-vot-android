@@ -12,16 +12,17 @@ import android.widget.TextView;
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.adapter.QuestionsOverviewAdapter;
+import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewFragment extends BaseFragment implements QuestionsOverviewNavigator {
-    private static final String ARG_SECTION = "section";
+    private static final String ARG_SECTION_CODE = "section";
     private Section section;
 
-    public static QuestionsOverviewFragment newInstance(Section section) {
+    public static QuestionsOverviewFragment newInstance(String sectionCode) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_SECTION, section);
+        args.putSerializable(ARG_SECTION_CODE, sectionCode);
         QuestionsOverviewFragment fragment = new QuestionsOverviewFragment();
         fragment.setArguments(args);
         return fragment;
@@ -30,7 +31,7 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.section = (Section) getArguments().getSerializable(ARG_SECTION);
+        this.section = Data.getInstance().getSection(getArguments().getString(ARG_SECTION_CODE));
     }
 
     @Nullable
@@ -54,6 +55,6 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
 
     @Override
     public void showQuestionDetails(int index) {
-        navigateTo(QuestionsDetailsFragment.newInstance(section, index));
+        navigateTo(QuestionsDetailsFragment.newInstance(section.getSectionCode(), index));
     }
 }
