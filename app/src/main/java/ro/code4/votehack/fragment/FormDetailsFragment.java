@@ -52,7 +52,7 @@ public class FormDetailsFragment extends BaseFragment implements QuestionNavigat
     private void showQuestion(int index) {
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.details_container, QuestionFragment.newInstance(questions, index))
+                .replace(R.id.details_container, QuestionFragment.newInstance(section, index))
                 .commit();
         currentQuestion = index;
     }

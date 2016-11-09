@@ -13,6 +13,7 @@ import java.util.List;
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Question;
+import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.util.FormRenderer;
 import ro.code4.votehack.util.QuestionNavigator;
 
@@ -20,16 +21,19 @@ public class QuestionFragment extends BaseFragment {
     private static final String ARG_QUESTION = "question";
     private static final String ARG_SIZE = "numberOfQuestions";
     private static final String ARG_INDEX = "indexOfQuestion";
+    private static final String ARG_SECTION_CODE = "section";
     private Question question;
     private QuestionNavigator navigator;
+    private String sectionCode;
     private int numberOfQuestions;
     private int questionIndex;
 
-    public static QuestionFragment newInstance(List<Question> questions, int index) {
+    public static QuestionFragment newInstance(Section section, int index) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_QUESTION, questions.get(index));
+        args.putSerializable(ARG_QUESTION, section.getQuestionList().get(index));
         args.putInt(ARG_INDEX, index + 1);
-        args.putInt(ARG_SIZE, questions.size());
+        args.putInt(ARG_SIZE, section.getQuestionList().size());
+        args.putString(ARG_SECTION_CODE, section.getSectionCode());
         QuestionFragment fragment = new QuestionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,6 +60,7 @@ public class QuestionFragment extends BaseFragment {
         this.question = (Question) getArguments().getSerializable(ARG_QUESTION);
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
+        this.sectionCode = getArguments().getString(ARG_SECTION_CODE);
     }
 
     @Nullable
@@ -88,7 +93,7 @@ public class QuestionFragment extends BaseFragment {
     }
 
     private void setProgress(TextView progress) {
-        progress.setText(questionIndex + " / " + numberOfQuestions);
+        progress.setText(sectionCode.concat(String.valueOf(questionIndex)));
     }
 
     private void setDescription(TextView description) {

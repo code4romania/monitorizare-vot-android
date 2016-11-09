@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.db.Data;
+import ro.code4.votehack.net.model.Section;
 
 public class FormsListFragment extends BaseFragment implements View.OnClickListener {
     public static FormsListFragment newInstance() {
@@ -40,16 +42,24 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_form_1:
-                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionA()));
+                showSection(Data.getInstance().getSectionA());
                 break;
             case R.id.button_form_2:
-                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionB()));
+                showSection(Data.getInstance().getSectionB());
                 break;
             case R.id.button_form_3:
-                navigateTo(FormDetailsFragment.newInstance(Data.getInstance().getSectionC()));
+                showSection(Data.getInstance().getSectionC());
                 break;
             case R.id.button_form_notes:
                 break;
+        }
+    }
+
+    private void showSection(Section section) {
+        if (section != null && section.getQuestionList() != null && section.getQuestionList().size() > 0) {
+            navigateTo(FormDetailsFragment.newInstance(section));
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
         }
     }
 }
