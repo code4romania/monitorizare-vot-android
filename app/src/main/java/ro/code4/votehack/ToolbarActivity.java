@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.util.Arrays;
 
 import io.realm.Realm;
+import ro.code4.votehack.fragment.BranchSelectionFragment;
 import ro.code4.votehack.fragment.FormsListFragment;
 import ro.code4.votehack.net.HttpCallback;
 import ro.code4.votehack.net.HttpClient;
@@ -39,7 +40,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         initToolbar();
         initNavigationDrawer();
 
-        navigateTo(FormsListFragment.newInstance(), false);
+        navigateTo(BranchSelectionFragment.newInstance(), false);
 
 //        checkFormVersion();
         getForms();

@@ -37,7 +37,7 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent(this, ToolbarActivity.class);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptions options;
-            Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background), getString(R.string.shared_element_purple_background));
+            Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background), getString(R.string.shared_element_login_background));
             Pair<View, String> sharedLogo = new Pair<>(findViewById(R.id.logo), getString(R.string.shared_element_logo));
             options = ActivityOptions
                     .makeSceneTransitionAnimation(this, sharedBackground, sharedLogo);

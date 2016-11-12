@@ -32,6 +32,12 @@
     </style>
 
     <!-- Overridden in values-v21 -->
-    <style name="SharedElementPurpleBackground" />
+    <style name="SharedElementLoginBackground" />
     <style name="SharedElementLogo"/>
+
+    <style name="label">
+        <item name="android:textSize">@dimen/label_text</item>
+        <item name="android:paddingTop">@dimen/label_top_spacing</item>
+        <item name="android:paddingBottom">@dimen/label_bottom_spacing</item>
+    </style>
 </resources>

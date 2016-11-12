@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">VoteHack</string>
 
+    <!-- General -->
+    <string name="button_continue">Continuă</string>
+    <string name="spinner_choose">Alege</string>
+
     <!-- Menu -->
     <string name="menu_forms">Formulare</string>
     <string name="menu_questions">Lista intrebari</string>
@@ -10,6 +14,7 @@
     <!-- Images -->
     <string name="content_icon_phone">Phone icon</string>
     <string name="content_icon_lock">Lock icon</string>
+    <string name="content_icon_building">Building icon</string>
 
     <!-- Login -->
     <string name="logo_vote">Vote</string>
@@ -17,6 +22,22 @@
     <string name="login_phone">Numărul de telefon</string>
     <string name="login_branch">Numărul secției de votare</string>
     <string name="login">Autentificare</string>
+
+    <!-- Branch selection -->
+    <string name="branch_title">Alege secția</string>
+    <string name="branch_subtitle">în care te afli</string>
+    <string name="branch_county">Județ</string>
+    <string name="branch_number">Număr secție</string>
+    <string name="branch_question_environment">În ce mediu se află secția?</string>
+    <string name="branch_answer_rural">Rural</string>
+    <string name="branch_answer_urban">Urban</string>
+    <string name="branch_question_sex">Preşedintele secţiei este</string>
+    <string name="branch_answer_man">Bărbat</string>
+    <string name="branch_answer_woman">Femeie</string>
+    <string name="branch_question_enter">Ora sosirii în secţie</string>
+    <string name="branch_question_leave">Ora plecării din secţie</string>
+    <string name="invalid_branch_county">Alege județul</string>
+    <string name="invalid_branch_number">Alege numărul secției</string>
 
     <!-- Forms list -->
     <string name="change_branch">Schimbă secția</string>

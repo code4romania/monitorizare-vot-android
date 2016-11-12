@@ -7,7 +7,7 @@
 
     <View
         android:id="@+id/purple_background"
-        style="@style/SharedElementPurpleBackground"
+        style="@style/SharedElementLoginBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

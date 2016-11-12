@@ -21,7 +21,7 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_forms_list, container, false);
 
         rootView.findViewById(R.id.button_form_1).setOnClickListener(this);
         rootView.findViewById(R.id.button_form_2).setOnClickListener(this);

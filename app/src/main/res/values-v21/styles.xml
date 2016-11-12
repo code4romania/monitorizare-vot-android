@@ -37,14 +37,14 @@
     </style>
 
     <style name="buttonEmbedded" parent="BaseButton">
-        <item name="android:colorButtonNormal">@color/backgroundLight</item>
-        <item name="android:colorAccent">@color/backgroundLight</item>
-        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:colorButtonNormal">@color/backgroundDark</item>
+        <item name="android:colorAccent">@color/backgroundDark</item>
+        <item name="android:textColor">@color/textLight</item>
     </style>
 
-    <style name="SharedElementPurpleBackground">
+    <style name="SharedElementLoginBackground">
         <item name="android:background">@color/primary</item>
-        <item name="android:transitionName">@string/shared_element_purple_background</item>
+        <item name="android:transitionName">@string/shared_element_login_background</item>
     </style>
 
     <style name="SharedElementLogo">
