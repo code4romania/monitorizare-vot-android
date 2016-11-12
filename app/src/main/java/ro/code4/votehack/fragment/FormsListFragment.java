@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import ro.code4.votehack.BaseFragment;
@@ -23,12 +22,10 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_forms_list, container, false);
 
-        rootView.findViewById(R.id.button_form_1).setOnClickListener(this);
-        rootView.findViewById(R.id.button_form_2).setOnClickListener(this);
-        rootView.findViewById(R.id.button_form_3).setOnClickListener(this);
-        rootView.findViewById(R.id.button_form_notes).setOnClickListener(this);
-
-        ((TextView) rootView.findViewById(R.id.votingBranch)).setText("GR 1123"); //set selected voting branch here
+        rootView.findViewById(R.id.tile_form_1).setOnClickListener(this);
+        rootView.findViewById(R.id.tile_form_2).setOnClickListener(this);
+        rootView.findViewById(R.id.tile_form_3).setOnClickListener(this);
+        rootView.findViewById(R.id.tile_form_notes).setOnClickListener(this);
 
         return rootView;
     }
@@ -41,16 +38,16 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_form_1:
+            case R.id.tile_form_1:
                 showSection(Data.getInstance().getSectionA());
                 break;
-            case R.id.button_form_2:
+            case R.id.tile_form_2:
                 showSection(Data.getInstance().getSectionB());
                 break;
-            case R.id.button_form_3:
+            case R.id.tile_form_3:
                 showSection(Data.getInstance().getSectionC());
                 break;
-            case R.id.button_form_notes:
+            case R.id.tile_form_notes:
                 break;
         }
     }

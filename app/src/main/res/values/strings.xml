@@ -28,6 +28,7 @@
     <string name="branch_subtitle">în care te afli</string>
     <string name="branch_county">Județ</string>
     <string name="branch_number">Număr secție</string>
+    <string name="branch_change">Schimbă secţia</string>
     <string name="branch_question_environment">În ce mediu se află secția?</string>
     <string name="branch_answer_rural">Rural</string>
     <string name="branch_answer_urban">Urban</string>
@@ -44,7 +45,7 @@
     <string name="form_1">Formular A</string>
     <string name="form_2">Formular B</string>
     <string name="form_3">Formular C</string>
-    <string name="form_notes">Vezi/Scrie note</string>
+    <string name="form_notes">Vezi/Adaugă note</string>
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
 
     <!-- Question details -->

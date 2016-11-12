@@ -14,6 +14,15 @@
     <dimen name="label_top_spacing">16dp</dimen>
     <dimen name="label_bottom_spacing">8dp</dimen>
 
+    <!-- Change branch bar -->
+    <dimen name="branch_bar_padding_vertical">10dp</dimen>
+    <dimen name="branch_bar_icon">32dp</dimen>
+    <dimen name="branch_bar_text">13sp</dimen>
+    <dimen name="branch_bar_text_spacing">10dp</dimen>
+    <dimen name="branch_bar_button_width">135dp</dimen>
+    <dimen name="branch_bar_button_height">35dp</dimen>
+    <dimen name="branch_bar_button_text">11sp</dimen>
+
     <!-- Dark container with bottom button -->
     <dimen name="header_text">21sp</dimen>
     <dimen name="subheader_text">16sp</dimen>

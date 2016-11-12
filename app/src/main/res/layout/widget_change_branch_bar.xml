@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:layout_width="@dimen/branch_bar_icon"
+        android:layout_height="@dimen/branch_bar_icon"
+        android:src="@drawable/ic_building"
+        android:contentDescription="@string/content_icon_building"/>
+
+    <TextView
+        android:id="@+id/branch_bar_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/branch_bar_text_spacing"
+        android:textStyle="bold"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/branch_bar_text"
+        android:text="CJ 1234"
+        tools:text="CJ 1234"/>
+
+    <Button
+        android:id="@+id/branch_bar_button"
+        android:layout_width="@dimen/branch_bar_button_width"
+        android:layout_height="@dimen/branch_bar_button_height"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/branch_bar_button_text"
+        android:text="@string/branch_change"/>
+</merge>
