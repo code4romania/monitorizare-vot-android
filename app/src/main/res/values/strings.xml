@@ -3,7 +3,9 @@
 
     <!-- General -->
     <string name="button_continue">Continuă</string>
+    <string name="button_continue_to_forms">Continuă către formulare</string>
     <string name="spinner_choose">Alege</string>
+    <string name="hint_time">hh:mm</string>
 
     <!-- Menu -->
     <string name="menu_forms">Formulare</string>
@@ -39,6 +41,8 @@
     <string name="branch_question_leave">Ora plecării din secţie</string>
     <string name="invalid_branch_county">Alege județul</string>
     <string name="invalid_branch_number">Alege numărul secției</string>
+    <string name="invalid_branch_environment">Alege urban sau rural</string>
+    <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
 
     <!-- Forms list -->
     <string name="change_branch">Schimbă secția</string>

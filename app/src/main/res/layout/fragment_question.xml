@@ -79,16 +79,14 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/button_height"
                 android:text="@string/question_notes"
-                android:theme="@style/buttonEmbedded"
-                android:background="@color/backgroundLight"/>
+                android:theme="@style/buttonEmbedded"/>
             <Button
                 android:id="@+id/button_question_next"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="@dimen/button_height"
                 android:text="@string/question_next"
-                android:theme="@style/buttonEmbedded"
-                android:background="@color/backgroundLight"/>
+                android:theme="@style/buttonEmbedded"/>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

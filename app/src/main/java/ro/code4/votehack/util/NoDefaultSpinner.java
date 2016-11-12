@@ -104,7 +104,7 @@ public class NoDefaultSpinner extends Spinner {
                         (TextView) ((LayoutInflater) getContext().getSystemService(
                                 Context.LAYOUT_INFLATER_SERVICE)).inflate(
                                 android.R.layout.simple_spinner_item, parent, false);
-                v.setTextColor(ContextCompat.getColor(getContext(), R.color.spinnerPlaceholder));
+                v.setTextColor(ContextCompat.getColor(getContext(), R.color.hint));
                 v.setText(getPrompt());
                 return v;
             }

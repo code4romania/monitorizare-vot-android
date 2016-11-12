@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape >
-            <solid android:color="@android:color/transparent" />
-            <corners android:radius="5dp" />
-            <stroke android:width="2dp" android:color="@color/spinnerBorder" />
-        </shape>
-    </item>
+    <item android:drawable="@drawable/background_input" />
     <item android:right="5dp">
         <bitmap android:src="@drawable/ic_spinner_arrow_down" android:gravity="right"/>
     </item>

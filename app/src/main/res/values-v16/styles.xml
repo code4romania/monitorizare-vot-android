@@ -4,17 +4,21 @@
     <style name="buttonLogin" parent="BaseButton">
         <item name="android:background">@color/accent</item>
         <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/button_text</item>
     </style>
     <style name="buttonDark" parent="BaseButton">
         <item name="android:background">@color/backgroundDark</item>
         <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/button_text</item>
     </style>
     <style name="buttonLight" parent="BaseButton">
         <item name="android:background">@color/backgroundLight</item>
         <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/button_text</item>
     </style>
     <style name="buttonEmbedded" parent="BaseButton">
         <item name="android:background">@color/backgroundDark</item>
         <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/button_text_embedded</item>
     </style>
 </resources>

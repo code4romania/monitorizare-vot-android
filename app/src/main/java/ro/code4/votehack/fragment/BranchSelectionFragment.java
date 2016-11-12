@@ -83,7 +83,7 @@ public class BranchSelectionFragment extends BaseFragment {
                 } else if (selectedNumber == null) {
                     Toast.makeText(getActivity(), R.string.invalid_branch_number, Toast.LENGTH_SHORT).show();
                 } else {
-                    navigateTo(FormsListFragment.newInstance(), false);
+                    navigateTo(BranchDetailsFragment.newInstance(), false);
                 }
             }
         });

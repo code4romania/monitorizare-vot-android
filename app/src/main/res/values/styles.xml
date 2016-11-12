@@ -40,4 +40,22 @@
         <item name="android:paddingTop">@dimen/label_top_spacing</item>
         <item name="android:paddingBottom">@dimen/label_bottom_spacing</item>
     </style>
+
+    <style name="horizontalSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+
+    <style name="input">
+        <item name="android:background">@drawable/background_input</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorHint">@color/hint</item>
+    </style>
 </resources>

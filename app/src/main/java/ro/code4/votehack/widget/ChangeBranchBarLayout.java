@@ -37,8 +37,7 @@ public class ChangeBranchBarLayout extends LinearLayout {
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER_VERTICAL);
 
-        int horizontalPadding = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
         int verticalPadding = getResources().getDimensionPixelSize(R.dimen.branch_bar_padding_vertical);
-        setPadding(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
+        setPadding(0, verticalPadding, 0, verticalPadding);
     }
 }
