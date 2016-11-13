@@ -1,8 +1,8 @@
 package ro.code4.votehack;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import io.realm.Realm;
 
@@ -17,7 +17,7 @@ public abstract class BaseFragment extends Fragment implements Navigator {
         if (!(context instanceof Navigator)) {
             throw new IllegalStateException("Must be attached to an activity implementing Navigator");
         } else {
-            this.navigator = (Navigator) getActivity();
+            this.navigator = (Navigator) context;
         }
     }
 

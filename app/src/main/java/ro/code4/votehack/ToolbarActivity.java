@@ -1,10 +1,10 @@
 package ro.code4.votehack;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 import io.realm.Realm;
 import ro.code4.votehack.fragment.BranchSelectionFragment;
-import ro.code4.votehack.fragment.FormsListFragment;
 import ro.code4.votehack.net.HttpCallback;
 import ro.code4.votehack.net.HttpClient;
 import ro.code4.votehack.net.model.Section;
@@ -162,7 +161,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
     @Override
     public void navigateTo(BaseFragment fragment, boolean addToBackStack) {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment, fragment.getIdentifier());
         if (addToBackStack) {
             transaction.addToBackStack(fragment.getIdentifier());
@@ -172,8 +171,8 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
     @Override
     public void navigateBack() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         }
     }
 }
