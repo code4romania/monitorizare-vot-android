@@ -47,11 +47,22 @@
     </style>
 
     <style name="SharedElementLoginBackground">
-        <item name="android:background">@color/primary</item>
+        <item name="android:background">@drawable/ic_login_bkg</item>
         <item name="android:transitionName">@string/shared_element_login_background</item>
     </style>
 
     <style name="SharedElementLogo">
         <item name="android:transitionName">@string/shared_element_logo</item>
+    </style>
+
+    <style name="InputLogin" parent="@android:style/Widget.Holo.Light.EditText">
+        <item name="android:background">@drawable/background_input_login</item>
+        <item name="android:textColor">@color/textDark</item>
+        <item name="android:textColorHint">@color/textDark</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginLeft">@dimen/login_margin_input</item>
+        <item name="android:layout_marginRight">@dimen/login_margin_input</item>
+        <item name="android:textSize">@dimen/login_text_size</item>
     </style>
 </resources>

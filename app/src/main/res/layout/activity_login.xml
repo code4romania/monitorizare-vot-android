@@ -9,110 +9,86 @@
         android:id="@+id/purple_background"
         style="@style/SharedElementLoginBackground"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <RelativeLayout
-        android:id="@+id/email_login_form"
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ro.code4.votehack.widget.LogoText
-            android:id="@+id/logo"
-            style="@style/SharedElementLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/logo_spacing"
-            android:gravity="center_horizontal"
-            app:textSize="32sp" />
-
-        <ImageView
-            android:id="@+id/icon_phone"
-            android:layout_width="@dimen/login_icon_size"
-            android:layout_height="@dimen/login_row_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/logo"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:contentDescription="@string/content_icon_phone"
-            android:src="@drawable/ic_phone_white" />
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_row_height"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/logo"
-            android:layout_toEndOf="@+id/icon_phone"
-            android:layout_toRightOf="@+id/icon_phone"
-            android:textColorHint="@color/textLight">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
 
-            <EditText
-                android:id="@+id/phone"
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:hint="@string/login_phone"
-                android:inputType="phone"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/textLight"
-                android:textColorHint="@color/textLight" />
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_login"
+                android:id="@+id/logo"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-        </android.support.design.widget.TextInputLayout>
-
-        <ImageView
-            android:id="@+id/icon_lock"
-            android:layout_width="@dimen/login_icon_size"
-            android:layout_height="@dimen/login_row_height"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/icon_phone"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:contentDescription="@string/content_icon_lock"
-            android:src="@drawable/ic_home_white" />
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/login_row_height"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/icon_phone"
-            android:layout_toEndOf="@+id/icon_lock"
-            android:layout_toRightOf="@+id/icon_lock"
-            android:textColorHint="@color/textLight">
+            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/branch"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:hint="@string/login_branch"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/textLight"
-                android:textColorHint="@color/textLight" />
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/logo"
+                android:layout_toEndOf="@+id/icon_phone"
+                android:layout_toRightOf="@+id/icon_phone"
+                android:textColorHint="@color/textDark">
 
-        </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:hint="@string/login_phone"
+                    android:inputType="phone"
+                    style="@style/InputLogin"/>
 
-        <Button
-            android:id="@+id/login_button"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            android:layout_below="@+id/icon_lock"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/logo_spacing"
-            android:text="@string/login"
-            android:textStyle="bold"
-            android:theme="@style/buttonLogin" />
+            </android.support.design.widget.TextInputLayout>
 
-    </RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/icon_phone"
+                android:layout_toEndOf="@+id/icon_lock"
+                android:layout_toRightOf="@+id/icon_lock"
+                android:textColorHint="@color/textDark"
+                android:layout_marginBottom="@dimen/login_margin_bottom">
+
+                <EditText
+                    android:id="@+id/branch"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/input_height"
+                    android:hint="@string/login_branch"
+                    android:inputType="text"
+                    style="@style/InputLogin"/>
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:text="@string/login"
+                android:theme="@style/buttonEmbedded"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </FrameLayout>

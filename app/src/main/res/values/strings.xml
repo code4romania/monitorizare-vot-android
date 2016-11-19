@@ -22,8 +22,8 @@
     <string name="logo_vote">Vote</string>
     <string name="logo_hack">Hack</string>
     <string name="login_phone">Numărul de telefon</string>
-    <string name="login_branch">Numărul secției de votare</string>
-    <string name="login">Autentificare</string>
+    <string name="login_branch">Cod primit</string>
+    <string name="login">Login</string>
 
     <!-- Branch selection -->
     <string name="branch_title">Alege secția</string>

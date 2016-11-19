@@ -3,7 +3,7 @@
     <color name="primary">#ffc107</color>
     <color name="primaryDark">#ffa000</color>
     <color name="primaryLight">#fff2bd</color>
-    <color name="accent">#009688</color>
+    <color name="accent">#000000</color>
     <color name="accentLight">#B2DFDB</color>
     <color name="backgroundDark">#333333</color>
     <color name="backgroundLight">#FFFFFF</color>
@@ -11,6 +11,7 @@
     <color name="textPrimary">#333333</color>
     <color name="textSecondary">#757575</color>
     <color name="textLight">#FFFFFF</color>
+    <color name="textDark">#000000</color>
     <color name="divider">#BDBDBD</color>
     <color name="inputBorder">#E7E7E7</color>
     <color name="hint">#8C8C8C</color>
