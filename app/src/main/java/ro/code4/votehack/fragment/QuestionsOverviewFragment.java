@@ -14,6 +14,7 @@ import ro.code4.votehack.R;
 import ro.code4.votehack.adapter.QuestionsOverviewAdapter;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.util.GridSpacingItemDecoration;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewFragment extends BaseFragment implements QuestionsOverviewNavigator {
@@ -44,6 +45,8 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_overview_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(new QuestionsOverviewAdapter(section, this));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,
+                getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin), false));
 
         return rootView;
     }
