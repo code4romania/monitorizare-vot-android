@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="FormSelectorCard">
         <attr name="src" format="reference" />
+        <attr name="letter" format="reference" />
         <attr name="text" format="reference" />
     </declare-styleable>
 </resources>

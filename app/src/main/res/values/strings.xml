@@ -6,6 +6,7 @@
     <string name="button_continue_to_forms">Continuă către formulare</string>
     <string name="spinner_choose">Alege</string>
     <string name="hint_time">hh:mm</string>
+    <string name="empty" />
 
     <!-- Fragment titles -->
     <string name="title_branch_details">Detalii secție</string>
@@ -55,8 +56,11 @@
     <!-- Forms list -->
     <string name="change_branch">Schimbă secția</string>
     <string name="form_1">Formular A</string>
+    <string name="form_1_letter">A</string>
     <string name="form_2">Formular B</string>
+    <string name="form_2_letter">B</string>
     <string name="form_3">Formular C</string>
+    <string name="form_3_letter">C</string>
     <string name="form_notes">Vezi/Adaugă note</string>
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
 

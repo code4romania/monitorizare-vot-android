@@ -11,8 +11,6 @@ import android.widget.TextView;
 import ro.code4.votehack.R;
 
 public class FormSelectorCard extends CardView {
-    private ImageView icon;
-    private TextView text;
 
     public FormSelectorCard(Context context) {
         super(context);
@@ -34,14 +32,21 @@ public class FormSelectorCard extends CardView {
 
         setSelectableForeground(context);
 
-        icon = (ImageView) findViewById(R.id.form_card_image);
-        text = (TextView) findViewById(R.id.form_card_text);
+        TextView letter = (TextView) findViewById(R.id.form_card_letter);
+        ImageView icon = (ImageView) findViewById(R.id.form_card_image);
+        TextView text = (TextView) findViewById(R.id.form_card_text);
 
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FormSelectorCard, 0, 0);
 
-            icon.setImageResource(array.getResourceId(R.styleable.FormSelectorCard_src, 0));
-            text.setText(array.getResourceId(R.styleable.FormSelectorCard_text, 0));
+            if (array.hasValue(R.styleable.FormSelectorCard_src)) {
+                icon.setBackgroundResource(array.getResourceId(R.styleable.FormSelectorCard_src, 0));
+                letter.setVisibility(GONE);
+            } else {
+                icon.setVisibility(GONE);
+                letter.setText(array.getResourceId(R.styleable.FormSelectorCard_letter, R.string.empty));
+            }
+            text.setText(array.getResourceId(R.styleable.FormSelectorCard_text, R.string.empty));
 
             array.recycle();
         }
