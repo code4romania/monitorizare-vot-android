@@ -40,7 +40,7 @@ public class FormSelectorCard extends CardView {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FormSelectorCard, 0, 0);
 
             if (array.hasValue(R.styleable.FormSelectorCard_src)) {
-                icon.setBackgroundResource(array.getResourceId(R.styleable.FormSelectorCard_src, 0));
+                icon.setImageResource(array.getResourceId(R.styleable.FormSelectorCard_src, 0));
                 letter.setVisibility(GONE);
             } else {
                 icon.setVisibility(GONE);
