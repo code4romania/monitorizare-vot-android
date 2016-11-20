@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -21,22 +21,19 @@ import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.net.model.response.VersionResponse;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
-    private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private View menuButton;
+    private TextView toolbarTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        menuButton = toolbar.findViewById(R.id.toolbar_menu);
-
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        menuButton = findViewById(R.id.toolbar_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
 
-        initToolbar();
         initNavigationDrawer();
 
         navigateTo(BranchSelectionFragment.newInstance(), false);
@@ -49,7 +46,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(Gravity.LEFT);
+                drawerLayout.openDrawer(Gravity.START);
             }
         });
         findViewById(R.id.menu_forms).setOnClickListener(new View.OnClickListener() {
@@ -144,10 +141,6 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         });
     }
 
-    private void initToolbar() {
-        toolbar.setTitle(null);
-    }
-
     private void callSupportCenter() {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:" + App.SERVICE_CENTER_PHONE_NUMBER));
@@ -162,9 +155,9 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     @Override
     public void navigateTo(BaseFragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment, fragment.getIdentifier());
+        transaction.replace(R.id.container, fragment);
         if (addToBackStack) {
-            transaction.addToBackStack(fragment.getIdentifier());
+            transaction.addToBackStack(fragment.getClass().getName());
         }
         transaction.commit();
     }
@@ -174,5 +167,10 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         }
+    }
+
+    @Override
+    public void setTitle(String title) {
+        toolbarTitle.setText(title);
     }
 }

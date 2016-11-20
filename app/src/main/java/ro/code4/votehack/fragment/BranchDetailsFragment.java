@@ -62,11 +62,6 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
     }
 
     @Override
-    public String getIdentifier() {
-        return "BranchDetailsFragment";
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.branch_time_enter:
@@ -107,5 +102,10 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
 
     private void updateTimeText(Calendar calendar, TextView text) {
         text.setText(new SimpleDateFormat("HH:mm", Locale.US).format(calendar.getTime()));
+    }
+
+    @Override
+    public String getTitle() {
+        return getString(R.string.title_branch_details);
     }
 }

@@ -39,11 +39,6 @@ public class QuestionFragment extends BaseFragment {
     }
 
     @Override
-    public String getIdentifier() {
-        return "QuestionFragment";
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (getParentFragment() == null || !(getParentFragment() instanceof QuestionDetailsNavigator)) {
@@ -60,6 +55,11 @@ public class QuestionFragment extends BaseFragment {
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
         this.sectionCode = getArguments().getString(ARG_SECTION_CODE);
+    }
+
+    @Override
+    public String getTitle() {
+        return getQuestionIdentifier();
     }
 
     @Nullable
@@ -92,10 +92,14 @@ public class QuestionFragment extends BaseFragment {
     }
 
     private void setProgress(TextView progress) {
-        progress.setText(sectionCode.concat(String.valueOf(questionIndex)));
+        progress.setText(getQuestionIdentifier());
     }
 
     private void setDescription(TextView description) {
         description.setText(question.getText());
+    }
+
+    private String getQuestionIdentifier() {
+        return sectionCode.concat(String.valueOf(questionIndex));
     }
 }

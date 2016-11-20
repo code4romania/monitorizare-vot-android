@@ -2,12 +2,13 @@ package ro.code4.votehack;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import io.realm.Realm;
 
 public abstract class BaseFragment extends Fragment implements Navigator {
-    public abstract String getIdentifier();
     private Navigator navigator;
     private Realm realm;
 
@@ -25,6 +26,12 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         realm = Realm.getDefaultInstance();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setTitle(getTitle());
     }
 
     @Override
@@ -47,4 +54,11 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     public void navigateBack() {
         navigator.navigateBack();
     }
+
+    @Override
+    public void setTitle(String title) {
+        navigator.setTitle(title);
+    }
+
+    public abstract String getTitle();
 }

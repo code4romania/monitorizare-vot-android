@@ -33,7 +33,6 @@
 
     <!-- Overridden in values-v21 -->
     <style name="SharedElementLoginBackground" />
-    <style name="SharedElementLogo"/>
 
     <style name="label">
         <item name="android:textSize">@dimen/label_text</item>

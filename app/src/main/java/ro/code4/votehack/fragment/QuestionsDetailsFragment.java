@@ -55,8 +55,8 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     }
 
     @Override
-    public String getIdentifier() {
-        return "QuestionsDetailsFragment";
+    public String getTitle() {
+        return "";
     }
 
     private void showQuestion(int index) {

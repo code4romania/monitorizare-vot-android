@@ -7,6 +7,12 @@
     <string name="spinner_choose">Alege</string>
     <string name="hint_time">hh:mm</string>
 
+    <!-- Fragment titles -->
+    <string name="title_branch_details">Detalii secție</string>
+    <string name="title_branch_selection">Alege secția</string>
+    <string name="title_forms_list">Formulare</string>
+    <string name="title_form">Formular %1$s</string>
+
     <!-- Menu -->
     <string name="menu_forms">Formulare</string>
     <string name="menu_questions">Lista intrebari</string>

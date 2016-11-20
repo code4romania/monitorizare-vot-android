@@ -47,12 +47,8 @@
     </style>
 
     <style name="SharedElementLoginBackground">
-        <item name="android:background">@drawable/ic_login_bkg</item>
+        <item name="android:background">@color/primary</item>
         <item name="android:transitionName">@string/shared_element_login_background</item>
-    </style>
-
-    <style name="SharedElementLogo">
-        <item name="android:transitionName">@string/shared_element_logo</item>
     </style>
 
     <style name="InputLogin" parent="@android:style/Widget.Holo.Light.EditText">

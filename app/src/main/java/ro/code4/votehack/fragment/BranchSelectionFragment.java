@@ -90,7 +90,7 @@ public class BranchSelectionFragment extends BaseFragment {
     }
 
     @Override
-    public String getIdentifier() {
-        return "BranchSelectionFragment";
+    public String getTitle() {
+        return getString(R.string.title_branch_selection);
     }
 }

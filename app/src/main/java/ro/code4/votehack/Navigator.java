@@ -9,4 +9,6 @@ public interface Navigator {
     void navigateTo(BaseFragment fragment, boolean addToBackStack);
 
     void navigateBack();
+
+    void setTitle(String title);
 }

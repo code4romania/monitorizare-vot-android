@@ -49,8 +49,8 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
     }
 
     @Override
-    public String getIdentifier() {
-        return "QuestionsOverviewFragment";
+    public String getTitle() {
+        return getString(R.string.title_form, section.getSectionCode());
     }
 
     @Override

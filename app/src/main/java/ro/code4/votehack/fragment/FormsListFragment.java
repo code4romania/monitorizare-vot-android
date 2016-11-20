@@ -31,11 +31,6 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     }
 
     @Override
-    public String getIdentifier() {
-        return "FormsListFragment";
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tile_form_1:
@@ -58,5 +53,10 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
         } else {
             Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public String getTitle() {
+        return getString(R.string.title_forms_list);
     }
 }
