@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -28,8 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_login"
-                android:id="@+id/logo"
-                android:layout_weight="1" />
+                android:id="@+id/logo" />
         </LinearLayout>
 
         <LinearLayout
@@ -40,12 +38,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/logo"
-                android:layout_toEndOf="@+id/icon_phone"
-                android:layout_toRightOf="@+id/icon_phone"
-                android:textColorHint="@color/textDark">
+                android:textColorHint="@color/textPrimary">
 
                 <EditText
                     android:id="@+id/phone"
@@ -60,12 +53,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/icon_phone"
-                android:layout_toEndOf="@+id/icon_lock"
-                android:layout_toRightOf="@+id/icon_lock"
-                android:textColorHint="@color/textDark"
+                android:textColorHint="@color/textPrimary"
                 android:layout_marginBottom="@dimen/login_margin_bottom">
 
                 <EditText
@@ -76,7 +64,6 @@
                     android:inputType="text"
                     style="@style/InputLogin"/>
 
-
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -85,8 +72,7 @@
                 android:layout_height="@dimen/button_height"
                 android:text="@string/login"
                 android:theme="@style/buttonEmbedded"
-                android:layout_gravity="bottom"
-                android:layout_weight="1" />
+                android:layout_gravity="bottom" />
         </LinearLayout>
 
     </LinearLayout>

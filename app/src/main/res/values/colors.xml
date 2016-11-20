@@ -8,10 +8,9 @@
     <color name="backgroundDark">#333333</color>
     <color name="backgroundLight">#FFFFFF</color>
     <color name="backgroundAccent">#757575</color>
-    <color name="textPrimary">#333333</color>
+    <color name="textPrimary">#212121</color>
     <color name="textSecondary">#757575</color>
     <color name="textLight">#FFFFFF</color>
-    <color name="textDark">#000000</color>
     <color name="divider">#BDBDBD</color>
     <color name="inputBorder">#E7E7E7</color>
     <color name="hint">#8C8C8C</color>

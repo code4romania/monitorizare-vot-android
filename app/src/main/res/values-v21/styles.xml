@@ -57,8 +57,8 @@
 
     <style name="InputLogin" parent="@android:style/Widget.Holo.Light.EditText">
         <item name="android:background">@drawable/background_input_login</item>
-        <item name="android:textColor">@color/textDark</item>
-        <item name="android:textColorHint">@color/textDark</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorHint">@color/textPrimary</item>
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginLeft">@dimen/login_margin_input</item>
