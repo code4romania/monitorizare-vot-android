@@ -23,19 +23,25 @@
             android:id="@+id/branch_group_environment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/label_top_spacing"
             android:orientation="horizontal">
             <ro.code4.votehack.widget.AnswerRadioButton
                 android:id="@+id/branch_environment_urban"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/branch_answer_urban"/>
+                android:layout_height="@dimen/button_height"
+                android:text="@string/branch_answer_urban"
+                style="@style/radioButton" />
+            <Space
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent" />
             <ro.code4.votehack.widget.AnswerRadioButton
                 android:id="@+id/branch_environment_rural"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/branch_answer_rural"/>
+                android:layout_height="@dimen/button_height"
+                android:text="@string/branch_answer_rural"
+                style="@style/radioButton" />
         </RadioGroup>
 
         <View style="@style/horizontalSeparator" />
@@ -50,19 +56,25 @@
             android:id="@+id/branch_group_sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/label_top_spacing"
             android:orientation="horizontal">
             <ro.code4.votehack.widget.AnswerRadioButton
                 android:id="@+id/branch_sex_man"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_height"
                 android:layout_weight="1"
-                android:text="@string/branch_answer_man"/>
+                android:text="@string/branch_answer_man"
+                style="@style/radioButton"/>
+            <Space
+                android:layout_width="@dimen/activity_horizontal_margin"
+                android:layout_height="match_parent" />
             <ro.code4.votehack.widget.AnswerRadioButton
                 android:id="@+id/branch_sex_woman"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_height"
                 android:layout_weight="1"
-                android:text="@string/branch_answer_woman"/>
+                android:text="@string/branch_answer_woman"
+                style="@style/radioButton"/>
         </RadioGroup>
 
         <View style="@style/horizontalSeparator" />
