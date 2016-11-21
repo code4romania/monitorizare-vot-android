@@ -6,6 +6,7 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class Question extends RealmObject implements Serializable {
     @PrimaryKey
@@ -13,6 +14,7 @@ public class Question extends RealmObject implements Serializable {
     private String textIntrebare;
     private Integer idTipIntrebare;
     private RealmList<Answer> raspunsuriDisponibile;
+    private ResponseAnswer raspunsIntrebare;
 
     public Integer getId() {
         return idIntrebare;
@@ -28,5 +30,13 @@ public class Question extends RealmObject implements Serializable {
 
     public List<Answer> getAnswerList() {
         return raspunsuriDisponibile;
+    }
+
+    public ResponseAnswer getRaspunsIntrebare() {
+        return raspunsIntrebare;
+    }
+
+    public void setRaspunsIntrebare(ResponseAnswer raspunsIntrebare) {
+        this.raspunsIntrebare = raspunsIntrebare;
     }
 }

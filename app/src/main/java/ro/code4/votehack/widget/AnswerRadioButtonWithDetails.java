@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class AnswerRadioButtonWithDetails extends LinearLayout implements AnswerLayout, CompoundButton.OnCheckedChangeListener, Checkable {
     private AnswerRadioButton radioButton;
@@ -53,6 +54,12 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
     @Override
     public void setAnswer(Answer answer) {
         radioButton.setAnswer(answer);
+    }
+
+    @Override
+    public ResponseAnswer getAnswer() {
+        return new ResponseAnswer(radioButton.getAnswer().getIdOptiune(),
+                details.getText().toString());
     }
 
     @Override

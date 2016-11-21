@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class AnswerCheckboxWithDetails extends LinearLayout implements AnswerLayout, CompoundButton.OnCheckedChangeListener, Checkable {
     private AnswerCheckbox checkbox;
@@ -53,6 +54,12 @@ public class AnswerCheckboxWithDetails extends LinearLayout implements AnswerLay
     @Override
     public void setAnswer(Answer answer) {
         checkbox.setAnswer(answer);
+    }
+
+    @Override
+    public ResponseAnswer getAnswer() {
+        return new ResponseAnswer(checkbox.getAnswer().getIdOptiune(),
+                details.getText().toString());
     }
 
     @Override

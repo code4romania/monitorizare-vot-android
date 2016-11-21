@@ -12,6 +12,7 @@ import java.util.List;
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
@@ -37,7 +38,7 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
         holder.header.setText(sectionCode.concat(String.valueOf(position + 1)));
         holder.description.setText(questions.get(position).getText());
-        holder.status.setText("Necompletat");
+        holder.status.setText(questions.get(position).getRaspunsIntrebare() != null ? "Completat" : "Necompletat");
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class AnswerCheckbox extends CheckBox implements AnswerLayout {
     public AnswerCheckbox(Context context) {
@@ -38,6 +39,12 @@ public class AnswerCheckbox extends CheckBox implements AnswerLayout {
 
     @Override
     public void setAnswer(Answer answer) {
+        setTag(new ResponseAnswer(answer.getId()));
         setText(answer.getText());
+    }
+
+    @Override
+    public ResponseAnswer getAnswer() {
+        return (ResponseAnswer) getTag();
     }
 }

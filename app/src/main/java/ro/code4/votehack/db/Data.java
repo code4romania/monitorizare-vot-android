@@ -1,9 +1,12 @@
 package ro.code4.votehack.db;
 
+import com.google.gson.Gson;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class Data {
     private static Data instance;
@@ -52,5 +55,15 @@ public class Data {
         Question result = results.size() > 0 ? results.get(0) : null;
         realm.close();
         return result;
+    }
+
+    public void saveAnswerResponse(Question question, ResponseAnswer responseAnswer) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        ResponseAnswer answer = realm.createOrUpdateObjectFromJson(ResponseAnswer.class, new Gson().toJson(responseAnswer));
+        question.setRaspunsIntrebare(answer);
+        realm.copyToRealmOrUpdate(question);
+        realm.commitTransaction();
+        realm.close();
     }
 }

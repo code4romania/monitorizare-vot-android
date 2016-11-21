@@ -15,6 +15,8 @@ import ro.code4.votehack.R;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.response.ResponseAnswer;
+import ro.code4.votehack.presenter.QuestionsDetailsPresenter;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
 public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
@@ -24,6 +26,8 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     private List<Question> questions;
     private int currentQuestion = 0;
     private int startIndex;
+
+    private QuestionsDetailsPresenter mPresenter;
 
     public static QuestionsDetailsFragment newInstance(String sectionCode) {
         return newInstance(sectionCode, 0);
@@ -44,6 +48,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         this.section = Data.getInstance().getSection(getArguments().getString(ARGS_SECTION_CODE));
         this.startIndex = getArguments().getInt(ARGS_START_INDEX, 0);
         this.questions = this.section != null ? this.section.getQuestionList() : new ArrayList<Question>();
+        this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
     @Nullable
@@ -82,6 +87,15 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
             //TODO form is done
             navigateBack();
             Toast.makeText(getActivity(), "Formular complet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onSaveAnswerIfCompleted(ViewGroup questionContainer) {
+        ResponseAnswer answer = mPresenter.getAnswerIfCompleted(questionContainer);
+        if (answer != null) {
+            Question question = questions.get(currentQuestion);
+            Data.getInstance().saveAnswerResponse(question, answer);
         }
     }
 }
