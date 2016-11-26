@@ -15,6 +15,7 @@ import ro.code4.votehack.widget.AnswerCheckbox;
 import ro.code4.votehack.widget.AnswerCheckboxWithDetails;
 import ro.code4.votehack.widget.AnswerRadioButton;
 import ro.code4.votehack.widget.AnswerRadioButtonWithDetails;
+import ro.code4.votehack.widget.AnswerRadioGroup;
 
 public class FormRenderer {
     public static View renderQuestion(Context context, Question question) {
@@ -52,17 +53,19 @@ public class FormRenderer {
     }
 
     private static View renderSingleAnswerQuestion(Context context, Question question) {
-        RadioGroup group = new RadioGroup(context);
+        AnswerRadioGroup group = new AnswerRadioGroup(context);
         int marginBottom = context.getResources().getDimensionPixelSize(R.dimen.question_option_margin);
         for(Answer answer : question.getAnswerList()) {
             if (answer.hasManualInput()) {
                 AnswerRadioButtonWithDetails child = new AnswerRadioButtonWithDetails(context);
                 setMargins(child, 0, 0, 0, marginBottom);
+                child.setOnCheckedChangeListener(group);
                 child.setAnswer(answer);
                 group.addView(child, group.getChildCount());
             } else {
                 AnswerRadioButton child = new AnswerRadioButton(context, null, R.attr.customAnswerRadioButton);
                 setMargins(child, 0, 0, 0, marginBottom);
+                child.setOnCheckedChangeListener(group);
                 child.setAnswer(answer);
                 group.addView(child, group.getChildCount());
             }

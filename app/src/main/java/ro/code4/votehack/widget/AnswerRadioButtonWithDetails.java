@@ -16,9 +16,15 @@ import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
 import ro.code4.votehack.net.model.response.ResponseAnswer;
 
-public class AnswerRadioButtonWithDetails extends LinearLayout implements AnswerLayout, CompoundButton.OnCheckedChangeListener, Checkable {
+public class AnswerRadioButtonWithDetails extends LinearLayout implements AnswerLayout, Checkable {
     private AnswerRadioButton radioButton;
     private EditText details;
+    private CompoundButton.OnCheckedChangeListener innerCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            updateDetailsVisibility(isChecked);
+        }
+    };
 
     public AnswerRadioButtonWithDetails(Context context) {
         super(context);
@@ -53,7 +59,7 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
         radioButton = (AnswerRadioButton) findViewById(R.id.answer_radio);
         details = (EditText) findViewById(R.id.answer_details);
 
-        radioButton.setOnCheckedChangeListener(this);
+        radioButton.setOnCheckedChangeListener(innerCheckedChangeListener);
         updateDetailsVisibility(isChecked());
     }
 
@@ -68,9 +74,14 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
                 details.getText().toString());
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        updateDetailsVisibility(isChecked);
+    public void setOnCheckedChangeListener(final CompoundButton.OnCheckedChangeListener outerCheckedChangeListener) {
+        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                innerCheckedChangeListener.onCheckedChanged(buttonView, isChecked);
+                outerCheckedChangeListener.onCheckedChanged(buttonView, isChecked);
+            }
+        });
     }
 
     private void updateDetailsVisibility(boolean isChecked) {
