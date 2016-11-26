@@ -5,10 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
@@ -43,6 +45,10 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
         LayoutInflater.from(context).inflate(R.layout.widget_answer_radio_details, this, true);
 
         setOrientation(VERTICAL);
+        setLayoutParams(new RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
 
         radioButton = (AnswerRadioButton) findViewById(R.id.answer_radio);
         details = (EditText) findViewById(R.id.answer_details);

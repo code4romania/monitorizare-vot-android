@@ -67,7 +67,6 @@ public class QuestionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
-        setProgress((TextView) rootView.findViewById(R.id.question_progress));
         setDescription((TextView) rootView.findViewById(R.id.question_description));
 
         if (questionIndex == numberOfQuestions) {

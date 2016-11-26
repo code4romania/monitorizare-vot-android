@@ -4,7 +4,8 @@
     <ro.code4.votehack.widget.AnswerRadioButton
         android:id="@+id/answer_radio"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/button_height"
+        style="@style/radioButton"/>
 
     <EditText
         android:id="@+id/answer_details"

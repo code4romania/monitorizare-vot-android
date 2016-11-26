@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
@@ -35,6 +36,10 @@ public class AnswerRadioButton extends RadioButton implements AnswerLayout {
 
     private void init(Context context) {
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.question_option_text));
+        setLayoutParams(new RadioGroup.LayoutParams(
+                RadioGroup.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelSize(R.dimen.button_height)
+        ));
     }
 
     @Override

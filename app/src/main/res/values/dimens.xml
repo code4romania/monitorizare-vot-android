@@ -45,6 +45,7 @@
 
     <!-- Question -->
     <dimen name="question_option_text">18sp</dimen>
+    <dimen name="question_option_margin">10dp</dimen>
     <dimen name="question_overview_title">20sp</dimen>
     <dimen name="question_overview_title_spacing">30dp</dimen>
     <dimen name="question_overview_item_header">16sp</dimen>

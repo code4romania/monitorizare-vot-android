@@ -5,4 +5,5 @@
         <attr name="letter" format="reference" />
         <attr name="text" format="reference" />
     </declare-styleable>
+    <attr name="customAnswerRadioButton" format="reference" />
 </resources>
