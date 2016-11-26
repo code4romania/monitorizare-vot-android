@@ -33,13 +33,16 @@ public class FormRenderer {
     private static View renderMultipleAnswersQuestion(Context context, Question question) {
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
+        int marginBottom = context.getResources().getDimensionPixelSize(R.dimen.question_option_margin);
         for (Answer answer : question.getAnswerList()) {
             if (answer.hasManualInput()) {
                 AnswerCheckboxWithDetails child = new AnswerCheckboxWithDetails(context);
+                setMargins(child, 0, 0, 0, marginBottom);
                 child.setAnswer(answer);
                 layout.addView(child, layout.getChildCount());
             } else {
-                AnswerCheckbox child = new AnswerCheckbox(context);
+                AnswerCheckbox child = new AnswerCheckbox(context, null, R.attr.customAnswerCheckbox);
+                setMargins(child, 0, 0, 0, marginBottom);
                 child.setAnswer(answer);
                 layout.addView(child, layout.getChildCount());
             }

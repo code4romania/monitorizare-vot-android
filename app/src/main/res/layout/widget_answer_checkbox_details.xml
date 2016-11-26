@@ -4,7 +4,8 @@
     <ro.code4.votehack.widget.AnswerCheckbox
         android:id="@+id/answer_checkbox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="@dimen/button_height"
+        style="@style/checkbox" />
 
     <EditText
         android:id="@+id/answer_details"

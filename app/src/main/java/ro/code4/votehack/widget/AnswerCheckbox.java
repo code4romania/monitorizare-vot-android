@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Answer;
@@ -34,6 +35,10 @@ public class AnswerCheckbox extends CheckBox implements AnswerLayout {
     }
 
     private void init(Context context) {
+        setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                getResources().getDimensionPixelSize(R.dimen.button_height)
+        ));
         setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.question_option_text));
     }
 

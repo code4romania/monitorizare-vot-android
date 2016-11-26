@@ -6,4 +6,5 @@
         <attr name="text" format="reference" />
     </declare-styleable>
     <attr name="customAnswerRadioButton" format="reference" />
+    <attr name="customAnswerCheckbox" format="reference" />
 </resources>

@@ -35,11 +35,11 @@ public class AnswerRadioButton extends RadioButton implements AnswerLayout {
     }
 
     private void init(Context context) {
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.question_option_text));
         setLayoutParams(new RadioGroup.LayoutParams(
                 RadioGroup.LayoutParams.MATCH_PARENT,
                 getResources().getDimensionPixelSize(R.dimen.button_height)
         ));
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.question_option_text));
     }
 
     @Override
