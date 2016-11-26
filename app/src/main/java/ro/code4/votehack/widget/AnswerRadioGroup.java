@@ -11,7 +11,6 @@ import android.widget.RadioButton;
 
 import ro.code4.votehack.net.model.response.ResponseAnswer;
 import ro.code4.votehack.util.LayoutTraverser;
-import ro.code4.votehack.util.Logify;
 
 public class AnswerRadioGroup extends LinearLayout implements CompoundButton.OnCheckedChangeListener {
     public AnswerRadioGroup(Context context) {
@@ -55,8 +54,7 @@ public class AnswerRadioGroup extends LinearLayout implements CompoundButton.OnC
     }
 
     public ResponseAnswer getCheckedAnswer() {
-        AnswerRadioButton button = (AnswerRadioButton)
-                LayoutTraverser.build(new LayoutTraverser.Processor() {
+        View view = LayoutTraverser.build(new LayoutTraverser.Processor() {
             @Override
             public boolean process(View view) {
                 if (view instanceof AnswerRadioButton) {
@@ -64,10 +62,24 @@ public class AnswerRadioGroup extends LinearLayout implements CompoundButton.OnC
                     if (button.isChecked()) {
                         return true;
                     }
+                } else if(view instanceof AnswerRadioButtonWithDetails){
+                    AnswerRadioButtonWithDetails buttonWithDetails = (AnswerRadioButtonWithDetails) view;
+                    if(buttonWithDetails.isChecked()){
+                        return true;
+                    }
                 }
                 return false;
             }
         }).traverse(this);
-        return button != null ? button.getAnswer() : null;
+
+        if(view instanceof AnswerRadioButton){
+            AnswerRadioButton button = (AnswerRadioButton) view;
+            return button != null ? button.getAnswer() : null;
+        } else if (view instanceof AnswerRadioButtonWithDetails){
+            AnswerRadioButtonWithDetails buttonWithDetails = (AnswerRadioButtonWithDetails) view;
+            return buttonWithDetails != null ? buttonWithDetails.getAnswer() : null;
+        }
+
+        return null;
     }
 }

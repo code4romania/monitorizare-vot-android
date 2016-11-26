@@ -69,6 +69,11 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
     }
 
     @Override
+    public void setDetail(String detail) {
+        details.setText(detail);
+    }
+
+    @Override
     public ResponseAnswer getAnswer() {
         return new ResponseAnswer(radioButton.getAnswer().getIdOptiune(),
                 details.getText().toString());

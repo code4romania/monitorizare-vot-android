@@ -37,6 +37,7 @@ public class Question extends RealmObject implements Serializable {
     }
 
     public void setRaspunsuriIntrebare(List<ResponseAnswer> raspunsuriIntrebare) {
+        this.raspunsuriIntrebare.clear();
         this.raspunsuriIntrebare.addAll(raspunsuriIntrebare);
     }
 }

@@ -53,7 +53,9 @@ public class QuestionsDetailsPresenter {
     private List<ResponseAnswer> getAnswerFromRadioButton(ViewGroup questionContainer) {
         List<ResponseAnswer> responseAnswerList = new ArrayList<>();
         AnswerRadioGroup radioButtons = (AnswerRadioGroup) questionContainer.getChildAt(0);
-        responseAnswerList.add(radioButtons.getCheckedAnswer());
+        if(radioButtons.getCheckedAnswer() != null){
+            responseAnswerList.add(radioButtons.getCheckedAnswer());
+        }
         return responseAnswerList;
     }
 

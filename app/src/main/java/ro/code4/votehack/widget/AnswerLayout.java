@@ -5,5 +5,6 @@ import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public interface AnswerLayout {
     void setAnswer(Answer answer);
+    void setDetail(String detail);
     ResponseAnswer getAnswer();
 }

@@ -49,6 +49,11 @@ public class AnswerCheckbox extends CheckBox implements AnswerLayout {
     }
 
     @Override
+    public void setDetail(String detail) {
+
+    }
+
+    @Override
     public ResponseAnswer getAnswer() {
         return (ResponseAnswer) getTag();
     }
