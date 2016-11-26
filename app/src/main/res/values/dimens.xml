@@ -41,6 +41,7 @@
 
     <!-- Forms -->
     <dimen name="form_description_text">18sp</dimen>
+    <dimen name="form_card_height">150dp</dimen>
 
     <!-- Question -->
     <dimen name="question_option_text">18sp</dimen>
@@ -48,4 +49,5 @@
     <dimen name="question_overview_title_spacing">30dp</dimen>
     <dimen name="question_overview_item_header">16sp</dimen>
     <dimen name="question_overview_item_text">14sp</dimen>
+    <dimen name="question_card_height">200dp</dimen>
 </resources>

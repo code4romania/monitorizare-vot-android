@@ -12,8 +12,8 @@
     <TextView
         android:id="@+id/form_card_letter"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:textSize="55dp"
+        android:layout_height="90dp"
+        android:textSize="75dp"
         android:textColor="@color/primary"
         android:gravity="top"
         android:includeFontPadding="false"
@@ -23,7 +23,7 @@
     <ImageView
         android:id="@+id/form_card_image"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="90dp"
         android:padding="5dp"
         tools:src="@drawable/ic_notes"
         tools:ignore="ContentDescription" />
@@ -34,6 +34,6 @@
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:textColor="@color/textPrimary"
-        android:textSize="13sp"
+        android:textSize="15sp"
         tools:text="Formular exemplu"/>
 </LinearLayout>

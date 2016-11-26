@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="@dimen/question_card_height"
     android:foreground="?android:attr/selectableItemBackground">
     <LinearLayout
         android:layout_width="match_parent"
