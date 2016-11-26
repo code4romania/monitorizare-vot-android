@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -57,29 +58,16 @@ public class AnswerRadioGroup extends LinearLayout implements CompoundButton.OnC
         View view = LayoutTraverser.build(new LayoutTraverser.Processor() {
             @Override
             public boolean process(View view) {
-                if (view instanceof AnswerRadioButton) {
-                    AnswerRadioButton button = (AnswerRadioButton) view;
+                if (view instanceof AnswerRadioButton ||
+                        view instanceof AnswerRadioButtonWithDetails) {
+                    Checkable button = (Checkable) view;
                     if (button.isChecked()) {
-                        return true;
-                    }
-                } else if(view instanceof AnswerRadioButtonWithDetails){
-                    AnswerRadioButtonWithDetails buttonWithDetails = (AnswerRadioButtonWithDetails) view;
-                    if(buttonWithDetails.isChecked()){
                         return true;
                     }
                 }
                 return false;
             }
         }).traverse(this);
-
-        if(view instanceof AnswerRadioButton){
-            AnswerRadioButton button = (AnswerRadioButton) view;
-            return button != null ? button.getAnswer() : null;
-        } else if (view instanceof AnswerRadioButtonWithDetails){
-            AnswerRadioButtonWithDetails buttonWithDetails = (AnswerRadioButtonWithDetails) view;
-            return buttonWithDetails != null ? buttonWithDetails.getAnswer() : null;
-        }
-
-        return null;
+        return view != null ? ((AnswerLayout) view).getAnswer() : null;
     }
 }
