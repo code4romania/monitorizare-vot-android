@@ -1,5 +1,7 @@
 package ro.code4.votehack.adapter;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,11 +18,13 @@ import ro.code4.votehack.net.model.response.ResponseAnswer;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
+    private Context context;
     private QuestionsOverviewNavigator navigator;
     private String sectionCode;
     private List<Question> questions;
 
-    public QuestionsOverviewAdapter(Section section, QuestionsOverviewNavigator navigator) {
+    public QuestionsOverviewAdapter(Context context, Section section, QuestionsOverviewNavigator navigator) {
+        this.context = context;
         this.sectionCode = section.getSectionCode();
         this.questions = section.getQuestionList();
         this.navigator = navigator;
@@ -36,9 +40,15 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
+        boolean hasAnswer = questions.get(position).getRaspunsIntrebare() != null;
         holder.header.setText(sectionCode.concat(String.valueOf(position + 1)));
         holder.description.setText(questions.get(position).getText());
-        holder.status.setText(questions.get(position).getRaspunsIntrebare() != null ? "Completat" : "Necompletat");
+        holder.status.setText(hasAnswer ?
+                context.getString(R.string.question_complete) :
+                context.getString(R.string.question_incomplete));
+        holder.status.setTextColor(hasAnswer ?
+                ContextCompat.getColor(context, R.color.complete) :
+                ContextCompat.getColor(context, R.color.incomplete));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

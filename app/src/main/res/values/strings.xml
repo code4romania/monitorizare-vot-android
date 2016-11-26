@@ -65,6 +65,8 @@
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
 
     <!-- Question details -->
+    <string name="question_complete">Completat</string>
+    <string name="question_incomplete">Necompletat</string>
     <string name="question_notes">Note</string>
     <string name="question_next">Înainte</string>
     <string name="question_finish">Trimite</string>

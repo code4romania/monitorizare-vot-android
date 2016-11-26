@@ -44,7 +44,7 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_overview_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(new QuestionsOverviewAdapter(section, this));
+        recyclerView.setAdapter(new QuestionsOverviewAdapter(getActivity(), section, this));
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,
                 getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin), false));
 

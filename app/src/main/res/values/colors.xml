@@ -15,4 +15,6 @@
     <color name="inputBorder">#E7E7E7</color>
     <color name="inputBorderSelected">#757575</color>
     <color name="hint">#8C8C8C</color>
+    <color name="complete">#00C121</color>
+    <color name="incomplete">#ACB4BE</color>
 </resources>
