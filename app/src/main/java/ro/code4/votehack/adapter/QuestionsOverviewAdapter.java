@@ -40,7 +40,7 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
-        boolean hasAnswer = questions.get(position).getRaspunsIntrebare() != null;
+        boolean hasAnswer = questions.get(position).getRaspunsuriIntrebare().size() > 0;
         holder.header.setText(sectionCode.concat(String.valueOf(position + 1)));
         holder.description.setText(questions.get(position).getText());
         holder.status.setText(hasAnswer ?

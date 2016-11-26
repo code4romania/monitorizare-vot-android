@@ -14,7 +14,7 @@ public class Question extends RealmObject implements Serializable {
     private String textIntrebare;
     private Integer idTipIntrebare;
     private RealmList<Answer> raspunsuriDisponibile;
-    private ResponseAnswer raspunsIntrebare;
+    private RealmList<ResponseAnswer> raspunsuriIntrebare = new RealmList<>();
 
     public Integer getId() {
         return idIntrebare;
@@ -32,11 +32,11 @@ public class Question extends RealmObject implements Serializable {
         return raspunsuriDisponibile;
     }
 
-    public ResponseAnswer getRaspunsIntrebare() {
-        return raspunsIntrebare;
+    public List<ResponseAnswer> getRaspunsuriIntrebare() {
+        return raspunsuriIntrebare;
     }
 
-    public void setRaspunsIntrebare(ResponseAnswer raspunsIntrebare) {
-        this.raspunsIntrebare = raspunsIntrebare;
+    public void setRaspunsuriIntrebare(List<ResponseAnswer> raspunsuriIntrebare) {
+        this.raspunsuriIntrebare.addAll(raspunsuriIntrebare);
     }
 }

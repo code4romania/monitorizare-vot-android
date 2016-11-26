@@ -92,10 +92,10 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
 
     @Override
     public void onSaveAnswerIfCompleted(ViewGroup questionContainer) {
-        ResponseAnswer answer = mPresenter.getAnswerIfCompleted(questionContainer);
-        if (answer != null) {
+        List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
+        if (answers.size() > 0) {
             Question question = questions.get(currentQuestion);
-            Data.getInstance().saveAnswerResponse(question, answer);
+            Data.getInstance().saveAnswerResponse(question, answers);
         }
     }
 }

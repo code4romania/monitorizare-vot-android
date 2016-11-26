@@ -1,6 +1,6 @@
 package ro.code4.votehack.db;
 
-import com.google.gson.Gson;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -57,11 +57,10 @@ public class Data {
         return result;
     }
 
-    public void saveAnswerResponse(Question question, ResponseAnswer responseAnswer) {
+    public void saveAnswerResponse(Question question, List<ResponseAnswer> responseAnswer) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        ResponseAnswer answer = realm.createOrUpdateObjectFromJson(ResponseAnswer.class, new Gson().toJson(responseAnswer));
-        question.setRaspunsIntrebare(answer);
+        question.setRaspunsuriIntrebare(responseAnswer);
         realm.copyToRealmOrUpdate(question);
         realm.commitTransaction();
         realm.close();
