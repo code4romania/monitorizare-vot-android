@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
@@ -17,14 +18,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Login"
-            android:screenOrientation="portrait">
+            android:name=".StartActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.Login"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ToolbarActivity"
             android:theme="@style/AppTheme"
@@ -46,7 +51,7 @@
         </service>
         <service
             android:name=".service.SyncService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -54,6 +59,11 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+        <provider
+            android:authorities="ro.code4.votehack"
+            android:name="ro.code4.votehack.util.StubProvider"
+            android:exported="false"
+            android:syncable="true"/>
     </application>
 
 </manifest>

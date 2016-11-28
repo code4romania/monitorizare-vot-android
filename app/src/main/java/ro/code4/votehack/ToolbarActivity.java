@@ -11,14 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
-
-import io.realm.Realm;
+import ro.code4.votehack.adapter.SyncAdapter;
+import ro.code4.votehack.constants.Constants;
 import ro.code4.votehack.fragment.BranchSelectionFragment;
-import ro.code4.votehack.net.HttpCallback;
-import ro.code4.votehack.net.HttpClient;
-import ro.code4.votehack.net.model.Section;
-import ro.code4.votehack.net.model.response.VersionResponse;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
     private DrawerLayout drawerLayout;
@@ -36,10 +31,8 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
         initNavigationDrawer();
 
+        SyncAdapter.requestSync(this);
         navigateTo(BranchSelectionFragment.newInstance(), false);
-
-//        checkFormVersion();
-        getForms();
     }
 
     private void initNavigationDrawer() {
@@ -75,75 +68,9 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         });
     }
 
-    private void checkFormVersion() {
-
-    }
-
-    private void getFormVersion() {
-        HttpClient.getInstance().getFormVersion(new HttpCallback<VersionResponse>(VersionResponse.class) {
-            @Override
-            public void onSuccess(VersionResponse response) {
-
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-    }
-
-    private void getForms() {
-        HttpClient.getInstance().getForm("A", new HttpCallback<Section[]>(Section[].class) {
-            @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-        HttpClient.getInstance().getForm("B", new HttpCallback<Section[]>(Section[].class) {
-            @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-        HttpClient.getInstance().getForm("C", new HttpCallback<Section[]>(Section[].class) {
-            @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
-            }
-
-            @Override
-            public void onError() {
-
-            }
-        });
-    }
-
     private void callSupportCenter() {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + App.SERVICE_CENTER_PHONE_NUMBER));
+        callIntent.setData(Uri.parse("tel:" + Constants.SERVICE_CENTER_PHONE_NUMBER));
         startActivity(callIntent);
     }
 
