@@ -7,7 +7,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Section extends RealmObject implements Serializable {
+public class Form extends RealmObject implements Serializable {
     @PrimaryKey
     private String codSectiune;
     private String descriere;

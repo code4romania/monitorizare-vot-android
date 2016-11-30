@@ -12,20 +12,16 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 import ro.code4.votehack.constants.Sync;
+import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.HttpCallback;
 import ro.code4.votehack.net.HttpClient;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.net.model.Version;
 import ro.code4.votehack.net.model.response.VersionResponse;
 import ro.code4.votehack.util.Logify;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
-    private ContentResolver contentResolver;
-
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         init(context);
@@ -37,7 +33,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void init(Context context) {
-        contentResolver = context.getContentResolver();
+
     }
 
     @Override
@@ -51,17 +47,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         HttpClient.getInstance().getFormVersion(new HttpCallback<VersionResponse>(VersionResponse.class) {
             @Override
             public void onSuccess(VersionResponse response) {
-                RealmResults<Version> queryResult = Realm.getDefaultInstance()
-                        .where(Version.class)
-                        .findAll();
-                Version existingVersion = queryResult.size() > 0 ? queryResult.first() : null;
+                Version existingVersion = Data.getInstance().getFormVersion();
                 if(!versionsEqual(existingVersion, response.getVersion())) {
-                    Realm realm = Realm.getDefaultInstance();
-                    realm.beginTransaction();
-                    realm.copyToRealmOrUpdate(response.getVersion());
-                    realm.commitTransaction();
-                    realm.close();
-                    // TODO separate code
+                    Data.getInstance().saveFormsVersion(response.getVersion());
                     // TODO clear any saved question when definition changes
                     getForms();
                 }
@@ -82,14 +70,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void getForms() {
-        HttpClient.getInstance().getForm("A", new HttpCallback<Section[]>(Section[].class) {
+        HttpClient.getInstance().getForm("A", new HttpCallback<Form[]>(Form[].class) {
             @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
+            public void onSuccess(Form[] forms) {
+                Data.getInstance().saveFormsDefinition(Arrays.asList(forms));
             }
 
             @Override
@@ -97,14 +81,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
             }
         });
-        HttpClient.getInstance().getForm("B", new HttpCallback<Section[]>(Section[].class) {
+        HttpClient.getInstance().getForm("B", new HttpCallback<Form[]>(Form[].class) {
             @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
+            public void onSuccess(Form[] forms) {
+                Data.getInstance().saveFormsDefinition(Arrays.asList(forms));
             }
 
             @Override
@@ -112,14 +92,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
             }
         });
-        HttpClient.getInstance().getForm("C", new HttpCallback<Section[]>(Section[].class) {
+        HttpClient.getInstance().getForm("C", new HttpCallback<Form[]>(Form[].class) {
             @Override
-            public void onSuccess(Section[] sections) {
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                realm.copyToRealmOrUpdate(Arrays.asList(sections));
-                realm.commitTransaction();
-                realm.close();
+            public void onSuccess(Form[] forms) {
+                Data.getInstance().saveFormsDefinition(Arrays.asList(forms));
             }
 
             @Override
