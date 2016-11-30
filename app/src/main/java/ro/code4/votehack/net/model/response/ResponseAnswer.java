@@ -9,7 +9,8 @@ import io.realm.annotations.PrimaryKey;
 public class ResponseAnswer extends RealmObject implements Serializable{
     @PrimaryKey
     private Integer idOptiune;
-    private String textRaspuns;
+    private String value;
+    private boolean isSynced;
 
     public ResponseAnswer(){
 
@@ -21,7 +22,7 @@ public class ResponseAnswer extends RealmObject implements Serializable{
 
     public ResponseAnswer(Integer idOptiune, String textRaspuns) {
         this.idOptiune = idOptiune;
-        this.textRaspuns = textRaspuns;
+        this.value = textRaspuns;
     }
 
     public Integer getIdOptiune() {
@@ -32,11 +33,19 @@ public class ResponseAnswer extends RealmObject implements Serializable{
         this.idOptiune = idOptiune;
     }
 
-    public String getTextRaspuns() {
-        return textRaspuns;
+    public String getValue() {
+        return value;
     }
 
-    public void setTextRaspuns(String textRaspuns) {
-        this.textRaspuns = textRaspuns;
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public boolean isSynced() {
+        return isSynced;
+    }
+
+    public void setSynced(boolean synced) {
+        isSynced = synced;
     }
 }

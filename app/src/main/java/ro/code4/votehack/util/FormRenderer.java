@@ -85,7 +85,7 @@ public class FormRenderer {
     }
 
     private static String getDetailFromAnswer(Question question, int responseIndex) {
-        return responseIndex != -1 ? question.getRaspunsuriIntrebare().get(responseIndex).getTextRaspuns() : "";
+        return responseIndex != -1 ? question.getRaspunsuriIntrebare().get(responseIndex).getValue() : "";
     }
 
     private static int getPositionResponseIndex(Integer idOptiune, List<ResponseAnswer> raspunsuriIntrebare) {

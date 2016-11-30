@@ -13,9 +13,12 @@ import java.util.List;
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.db.Data;
+import ro.code4.votehack.net.HttpCallback;
+import ro.code4.votehack.net.HttpClient;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.net.model.response.ResponseAnswer;
+import ro.code4.votehack.net.model.response.VersionResponse;
 import ro.code4.votehack.presenter.QuestionsDetailsPresenter;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
@@ -97,5 +100,19 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
             Question question = questions.get(currentQuestion);
             Data.getInstance().saveAnswerResponse(question, answers);
         }
+    }
+
+    public void postQuestionResponse(){
+        HttpClient.getInstance().postQuestionAnswer(new HttpCallback<VersionResponse>(VersionResponse.class) {
+            @Override
+            public void onSuccess(VersionResponse response) {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        }, null);
     }
 }
