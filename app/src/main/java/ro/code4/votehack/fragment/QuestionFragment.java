@@ -12,7 +12,7 @@ import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Question;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.util.FormRenderer;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
@@ -27,12 +27,12 @@ public class QuestionFragment extends BaseFragment {
     private int numberOfQuestions;
     private int questionIndex;
 
-    public static QuestionFragment newInstance(Section section, int index) {
+    public static QuestionFragment newInstance(Form form, int index) {
         Bundle args = new Bundle();
-        args.putInt(ARG_QUESTION_ID, section.getQuestionList().get(index).getId());
+        args.putInt(ARG_QUESTION_ID, form.getQuestionList().get(index).getId());
         args.putInt(ARG_INDEX, index + 1);
-        args.putInt(ARG_SIZE, section.getQuestionList().size());
-        args.putString(ARG_SECTION_CODE, section.getSectionCode());
+        args.putInt(ARG_SIZE, form.getQuestionList().size());
+        args.putString(ARG_SECTION_CODE, form.getSectionCode());
         QuestionFragment fragment = new QuestionFragment();
         fragment.setArguments(args);
         return fragment;

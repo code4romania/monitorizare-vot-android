@@ -4,8 +4,9 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.net.model.Question;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.Version;
 import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class Data {
@@ -19,31 +20,38 @@ public class Data {
         return instance;
     }
 
-    public Data() {
+    private Data() {
 
     }
 
-    public Section getSectionA() {
-        return getSection("A");
+    public Form getFormA() {
+        return getForm("A");
     }
 
-    public Section getSectionB() {
-        return getSection("B");
+    public Form getFormB() {
+        return getForm("B");
     }
 
-    public Section getSectionC() {
-        return getSection("C");
+    public Form getFormC() {
+        return getForm("C");
     }
 
-    public Section getSection(String sectionCode) {
+    public Form getForm(String formCode) {
         realm = Realm.getDefaultInstance();
-        RealmResults<Section> results = realm
-                .where(Section.class)
-                .equalTo("codSectiune", sectionCode)
+        RealmResults<Form> results = realm
+                .where(Form.class)
+                .equalTo("codSectiune", formCode)
                 .findAll();
-        Section result = results.size() > 0 ? results.get(0) : null;
+        Form result = results.size() > 0 ? results.get(0) : null;
         realm.close();
         return result;
+    }
+
+    public Version getFormVersion() {
+        RealmResults<Version> queryResult = Realm.getDefaultInstance()
+                .where(Version.class)
+                .findAll();
+        return queryResult.size() > 0 ? queryResult.first() : null;
     }
 
     public Question getQuestion(Integer questionId) {
@@ -62,6 +70,22 @@ public class Data {
         realm.beginTransaction();
         question.setRaspunsuriIntrebare(responseAnswer);
         realm.copyToRealmOrUpdate(question);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public void saveFormsDefinition(List<Form> forms) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(forms);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public void saveFormsVersion(Version version) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(version);
         realm.commitTransaction();
         realm.close();
     }

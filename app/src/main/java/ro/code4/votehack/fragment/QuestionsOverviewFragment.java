@@ -13,13 +13,13 @@ import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.adapter.QuestionsOverviewAdapter;
 import ro.code4.votehack.db.Data;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.util.GridSpacingItemDecoration;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewFragment extends BaseFragment implements QuestionsOverviewNavigator {
-    private static final String ARG_SECTION_CODE = "section";
-    private Section section;
+    private static final String ARG_SECTION_CODE = "form";
+    private Form form;
 
     public static QuestionsOverviewFragment newInstance(String sectionCode) {
         Bundle args = new Bundle();
@@ -32,7 +32,7 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.section = Data.getInstance().getSection(getArguments().getString(ARG_SECTION_CODE));
+        this.form = Data.getInstance().getForm(getArguments().getString(ARG_SECTION_CODE));
     }
 
     @Nullable
@@ -40,11 +40,11 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_questions_overview, container, false);
 
-        ((TextView) rootView.findViewById(R.id.questions_overview_description)).setText(section.getDescription());
+        ((TextView) rootView.findViewById(R.id.questions_overview_description)).setText(form.getDescription());
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_overview_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(new QuestionsOverviewAdapter(getActivity(), section, this));
+        recyclerView.setAdapter(new QuestionsOverviewAdapter(getActivity(), form, this));
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,
                 getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin), false));
 
@@ -53,11 +53,11 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
 
     @Override
     public String getTitle() {
-        return getString(R.string.title_form, section.getSectionCode());
+        return getString(R.string.title_form, form.getSectionCode());
     }
 
     @Override
     public void showQuestionDetails(int index) {
-        navigateTo(QuestionsDetailsFragment.newInstance(section.getSectionCode(), index));
+        navigateTo(QuestionsDetailsFragment.newInstance(form.getSectionCode(), index));
     }
 }

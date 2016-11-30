@@ -12,9 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import ro.code4.votehack.R;
+import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.net.model.Question;
-import ro.code4.votehack.net.model.Section;
-import ro.code4.votehack.net.model.response.ResponseAnswer;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
@@ -23,10 +22,10 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     private String sectionCode;
     private List<Question> questions;
 
-    public QuestionsOverviewAdapter(Context context, Section section, QuestionsOverviewNavigator navigator) {
+    public QuestionsOverviewAdapter(Context context, Form form, QuestionsOverviewNavigator navigator) {
         this.context = context;
-        this.sectionCode = section.getSectionCode();
-        this.questions = section.getQuestionList();
+        this.sectionCode = form.getSectionCode();
+        this.questions = form.getQuestionList();
         this.navigator = navigator;
     }
 
