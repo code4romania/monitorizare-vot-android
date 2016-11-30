@@ -14,12 +14,9 @@ import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.adapter.SyncAdapter;
 import ro.code4.votehack.db.Data;
-import ro.code4.votehack.net.HttpCallback;
-import ro.code4.votehack.net.HttpClient;
-import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.response.ResponseAnswer;
-import ro.code4.votehack.net.model.response.VersionResponse;
 import ro.code4.votehack.presenter.QuestionsDetailsPresenter;
 import ro.code4.votehack.util.QuestionDetailsNavigator;
 
@@ -48,9 +45,9 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.section = Data.getInstance().getSection(getArguments().getString(ARGS_SECTION_CODE));
+        this.form = Data.getInstance().getForm(getArguments().getString(ARGS_SECTION_CODE));
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
-        this.questions = this.section != null ? this.section.getQuestionList() : new ArrayList<Question>();
+        this.questions = this.form != null ? this.form.getQuestionList() : new ArrayList<Question>();
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
@@ -70,7 +67,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     private void showQuestion(int index) {
         getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.details_container, QuestionFragment.newInstance(section, index))
+                .replace(R.id.details_container, QuestionFragment.newInstance(form, index))
                 .commit();
         currentQuestion = index;
     }
