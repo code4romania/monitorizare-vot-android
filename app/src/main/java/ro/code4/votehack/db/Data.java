@@ -42,7 +42,7 @@ public class Data {
                 .where(Form.class)
                 .equalTo("codSectiune", formCode)
                 .findAll();
-        Form result = results.size() > 0 ? results.get(0) : null;
+        Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
         realm.close();
         return result;
     }
@@ -52,6 +52,16 @@ public class Data {
                 .where(Version.class)
                 .findAll();
         return queryResult.size() > 0 ? queryResult.first() : null;
+    }
+
+    public List<Question> getUnSyncedQuestions(){
+        realm = Realm.getDefaultInstance();
+        RealmResults<Question> questions = realm.where(Question.class)
+                .equalTo("isSynced", false)
+                .findAll();
+        List<Question> unSyncedQuestions = realm.copyFromRealm(questions);
+        realm.close();
+        return unSyncedQuestions;
     }
 
     public Question getQuestion(Integer questionId) {
@@ -87,6 +97,21 @@ public class Data {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(version);
         realm.commitTransaction();
+        realm.close();
+    }
+
+    public void updateQuestionStatus(Integer questionId) {
+        realm = Realm.getDefaultInstance();
+        Question question = realm
+                .where(Question.class)
+                .equalTo("idIntrebare", questionId)
+                .findFirst();
+
+        realm.beginTransaction();
+        question.setSynced(true);
+        realm.copyToRealmOrUpdate(question);
+        realm.commitTransaction();
+
         realm.close();
     }
 }

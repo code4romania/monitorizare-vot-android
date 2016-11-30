@@ -16,7 +16,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.votehack.BuildConfig;
-import ro.code4.votehack.net.model.Section;
+import ro.code4.votehack.db.Data;
+import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.QuestionAnswer;
 import ro.code4.votehack.net.model.ResponseAnswerContainer;
 import ro.code4.votehack.net.model.response.VersionResponse;
 import ro.code4.votehack.net.model.response.question.QuestionResponse;
@@ -60,11 +62,11 @@ public class NetworkService {
                 .build();
     }
 
-    public static List<Section> doGetForm(int formId) throws IOException {
-        Response<List<Section>> listResponse = getApiService().getForm(formId).execute();
+    public static void doGetForm(String formId) throws IOException {
+        Response<List<Form>> listResponse = getApiService().getForm(formId).execute();
         if(listResponse != null){
             if (listResponse.isSuccessful()) {
-                return listResponse.body();
+                Data.getInstance().saveFormsDefinition(listResponse.body());
             } else {
                 throw new IOException(listResponse.message() + " " + listResponse.code());
             }
@@ -88,15 +90,22 @@ public class NetworkService {
     }
 
     public static QuestionResponse postQuestionAnswer(ResponseAnswerContainer responseMapper) throws IOException {
-        Response<QuestionResponse> response = getApiService().postQuestionAnswer(responseMapper).execute();
-        if(response != null){
-            if(response.isSuccessful()){
-                return response.body();
+        if(responseMapper != null && responseMapper.getReponseMapperList().size()>0){
+            Response<QuestionResponse> response = getApiService().postQuestionAnswer(responseMapper).execute();
+            if(response != null){
+                if(response.isSuccessful()){
+                    for (QuestionAnswer questionAnswer : responseMapper.getReponseMapperList()) {
+                        Data.getInstance().updateQuestionStatus(questionAnswer.getIdIntrebare());
+                    }
+                    return response.body();
+                } else {
+                    throw new IOException(response.message() + " " + response.code());
+                }
             } else {
-                throw new IOException(response.message() + " " + response.code());
+                throw new IOException();
             }
         } else {
-            throw new IOException();
+            return null;
         }
     }
 

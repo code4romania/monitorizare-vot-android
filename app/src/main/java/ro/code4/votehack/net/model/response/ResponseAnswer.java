@@ -1,6 +1,8 @@
 package ro.code4.votehack.net.model.response;
 
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 import io.realm.RealmObject;
@@ -8,9 +10,12 @@ import io.realm.annotations.PrimaryKey;
 
 public class ResponseAnswer extends RealmObject implements Serializable{
     @PrimaryKey
+    @Expose
     private Integer idOptiune;
+    @Expose
     private String value;
-    private boolean isSynced;
+    private String codJudet;
+    private Integer numarSectie;
 
     public ResponseAnswer(){
 
@@ -38,14 +43,21 @@ public class ResponseAnswer extends RealmObject implements Serializable{
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.value = value;}
+
+    public String getCodJudet() {
+        return codJudet;
     }
 
-    public boolean isSynced() {
-        return isSynced;
+    public void setCodJudet(String codJudet) {
+        this.codJudet = codJudet;
     }
 
-    public void setSynced(boolean synced) {
-        isSynced = synced;
+    public Integer getNumarSectie() {
+        return numarSectie;
+    }
+
+    public void setNumarSectie(Integer numarSectie) {
+        this.numarSectie = numarSectie;
     }
 }

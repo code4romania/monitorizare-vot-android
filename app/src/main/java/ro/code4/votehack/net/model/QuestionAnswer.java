@@ -1,18 +1,32 @@
 package ro.code4.votehack.net.model;
 
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.List;
 
 import ro.code4.votehack.net.model.response.ResponseAnswer;
 
 public class QuestionAnswer implements Serializable {
-
+    @Expose
     private Integer idIntrebare;
+    @Expose
     private String codJudet;
+    @Expose
     private Integer numarSectie;
+    @Expose
     private String codFormular;
+    @Expose
     private List<ResponseAnswer> optiuni;
+
+    public QuestionAnswer(Integer idIntrebare, String codJudet, Integer numarSectie, String codFormular, List<ResponseAnswer> optiuni) {
+        this.idIntrebare = idIntrebare;
+        this.codJudet = codJudet;
+        this.numarSectie = numarSectie;
+        this.codFormular = codFormular;
+        this.optiuni = optiuni;
+    }
 
     public Integer getIdIntrebare() {
         return idIntrebare;

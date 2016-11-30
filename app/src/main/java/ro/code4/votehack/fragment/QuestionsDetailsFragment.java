@@ -12,6 +12,7 @@ import java.util.List;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
+import ro.code4.votehack.adapter.SyncAdapter;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.HttpCallback;
 import ro.code4.votehack.net.HttpClient;
@@ -88,6 +89,8 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
             showQuestion(currentQuestion + 1);
         } else {
             //TODO form is done
+            //TODO make just upload here,not the whole sync
+            SyncAdapter.requestSync(getActivity());
             navigateBack();
             Toast.makeText(getActivity(), "Formular complet", Toast.LENGTH_SHORT).show();
         }
