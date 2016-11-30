@@ -43,6 +43,7 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
                 showSection(Data.getInstance().getSectionC());
                 break;
             case R.id.tile_form_notes:
+                navigateTo(AddNoteFragment.newInstance());
                 break;
         }
     }

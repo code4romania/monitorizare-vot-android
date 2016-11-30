@@ -27,8 +27,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     private static final String ARGS_START_INDEX = "StartIndex";
     private Section section;
     private List<Question> questions;
-    private int currentQuestion = 0;
-    private int startIndex;
+    private int currentQuestion = -1;
 
     private QuestionsDetailsPresenter mPresenter;
 
@@ -49,7 +48,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.section = Data.getInstance().getSection(getArguments().getString(ARGS_SECTION_CODE));
-        this.startIndex = getArguments().getInt(ARGS_START_INDEX, 0);
+        this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
         this.questions = this.section != null ? this.section.getQuestionList() : new ArrayList<Question>();
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
@@ -58,7 +57,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
-        showQuestion(startIndex);
+        showQuestion(currentQuestion);
         return rootView;
     }
 
@@ -77,9 +76,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
 
     @Override
     public void onNotes() {
-        if (currentQuestion > 0) {
-            showQuestion(currentQuestion - 1);
-        }
+        navigateTo(AddNoteFragment.newInstance(questions.get(currentQuestion).getId()));
     }
 
     @Override
