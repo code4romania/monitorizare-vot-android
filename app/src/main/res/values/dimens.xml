@@ -15,6 +15,7 @@
     <dimen name="label_text">15sp</dimen>
     <dimen name="label_top_spacing">20dp</dimen>
     <dimen name="label_bottom_spacing">12dp</dimen>
+    <dimen name="section_header_height">200dp</dimen>
 
     <!-- Change branch bar -->
     <dimen name="branch_bar_padding_vertical">10dp</dimen>
