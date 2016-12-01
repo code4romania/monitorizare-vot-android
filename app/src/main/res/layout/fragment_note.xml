@@ -56,13 +56,16 @@
             android:layout_height="100dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:gravity="top"
             android:lines="4"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:hint="@string/note_description_hint"
             style="@style/input"/>
         <LinearLayout
             android:id="@+id/note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_vertical"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:orientation="horizontal">
@@ -75,11 +78,10 @@
             <Space
                 android:layout_width="@dimen/activity_horizontal_margin"
                 android:layout_height="match_parent" />
-            <ImageView
+            <ro.code4.votehack.widget.FileSelectorButton
                 android:layout_width="0dp"
-                android:layout_height="@dimen/button_height"
-                android:layout_weight="1"
-                style="@style/input"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
         </LinearLayout>
     </LinearLayout>
 

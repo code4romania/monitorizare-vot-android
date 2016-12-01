@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <ImageView
+        android:id="@+id/file_selector_icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:src="@drawable/ic_camera"
+        style="@style/input"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/file_selector_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        style="@style/input"/>
+</merge>
