@@ -42,7 +42,6 @@
 
         </LinearLayout>
         <TextView
-            android:id="@+id/note_label_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -79,6 +78,7 @@
                 android:layout_width="@dimen/activity_horizontal_margin"
                 android:layout_height="match_parent" />
             <ro.code4.votehack.widget.FileSelectorButton
+                android:id="@+id/note_file_selector"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>

@@ -1,9 +1,14 @@
 package ro.code4.votehack;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 
 import io.realm.Realm;
 
@@ -60,4 +65,20 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     }
 
     public abstract String getTitle();
+
+    protected boolean hasPermission(String permission) {
+        return ContextCompat.checkSelfPermission(getActivity(), permission)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected boolean hasGrantedPermission(@NonNull int[] grantResults) {
+        return grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected void requestPermission(String permission, int requestCode) {
+        ActivityCompat.requestPermissions(getActivity(),
+                new String[]{ permission },
+                requestCode);
+    }
 }
