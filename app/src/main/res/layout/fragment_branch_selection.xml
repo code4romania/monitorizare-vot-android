@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ro.code4.votehack.widget.ScrollViewWithFixedBottom
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,71 +8,74 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/section_header_height"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="@dimen/icon_block_size"
-            android:layout_height="@dimen/icon_block_size"
-            android:src="@drawable/ic_building"
-            android:contentDescription="@string/content_icon_building" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/header_text"
-            android:textColor="@color/textPrimary"
-            android:text="@string/branch_title"
-            android:layout_marginTop="@dimen/header_margin_vertial"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/subheader_text"
-            android:textColor="@color/textPrimary"
-            android:text="@string/branch_subtitle"
-            android:layout_marginBottom="@dimen/header_margin_vertial"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/label"
-            android:text="@string/branch_county"/>
+            android:layout_height="@dimen/section_header_height"
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <ro.code4.votehack.util.NoDefaultSpinner
-            android:id="@+id/branch_selector_county"
+            <ImageView
+                android:layout_width="@dimen/icon_block_size"
+                android:layout_height="@dimen/icon_block_size"
+                android:src="@drawable/ic_building"
+                android:contentDescription="@string/content_icon_building" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/header_text"
+                android:textColor="@color/textPrimary"
+                android:text="@string/branch_title"
+                android:layout_marginTop="@dimen/header_margin_vertial"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/subheader_text"
+                android:textColor="@color/textPrimary"
+                android:text="@string/branch_subtitle"
+                android:layout_marginBottom="@dimen/header_margin_vertial"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:background="@drawable/background_spinner"
-            android:prompt="@string/spinner_choose"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/label"
-            android:text="@string/branch_number"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/label"
+                android:text="@string/branch_county"/>
 
-        <ro.code4.votehack.util.NoDefaultSpinner
-            android:id="@+id/branch_selector_number"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            android:background="@drawable/background_spinner"
-            android:prompt="@string/spinner_choose" />
+            <ro.code4.votehack.util.NoDefaultSpinner
+                android:id="@+id/branch_selector_county"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/background_spinner"
+                android:prompt="@string/spinner_choose"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/label"
+                android:text="@string/branch_number"/>
+
+            <ro.code4.votehack.util.NoDefaultSpinner
+                android:id="@+id/branch_selector_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:background="@drawable/background_spinner"
+                android:prompt="@string/spinner_choose" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <Button
@@ -81,4 +84,4 @@
         android:layout_height="@dimen/button_height"
         android:text="@string/button_continue"
         android:theme="@style/buttonEmbedded" />
-</LinearLayout>
+</ro.code4.votehack.widget.ScrollViewWithFixedBottom>
