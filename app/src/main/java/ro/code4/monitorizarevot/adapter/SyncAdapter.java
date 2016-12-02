@@ -16,6 +16,7 @@ import java.util.List;
 
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
@@ -77,7 +78,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             for (Question question : questionList) {
                 if(!question.isSynced() && question.getRaspunsuriIntrebare().size() > 0){
                     QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),
-                            "AB", 1, form.getId(), question.getRaspunsuriIntrebare());
+                            Preferences.getCountyCode(),
+                            Preferences.getBranchNumber(),
+                            form.getId(),
+                            question.getRaspunsuriIntrebare());
                     questionAnswers.add(questionAnswer);
                 }
             }
