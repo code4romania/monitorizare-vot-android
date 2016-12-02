@@ -1,6 +1,5 @@
 package ro.code4.monitorizarevot.net.model.response;
 
-
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
@@ -8,7 +7,7 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class ResponseAnswer extends RealmObject implements Serializable{
+public class ResponseAnswer extends RealmObject implements Serializable {
     @PrimaryKey
     @Expose
     private Integer idOptiune;
@@ -43,7 +42,8 @@ public class ResponseAnswer extends RealmObject implements Serializable{
     }
 
     public void setValue(String value) {
-        this.value = value;}
+        this.value = value;
+    }
 
     public String getCodJudet() {
         return codJudet;

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,10 +16,13 @@ import java.util.List;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
+import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.widget.FileSelectorButton;
 import vn.tungdx.mediapicker.MediaItem;
 import vn.tungdx.mediapicker.MediaOptions;
 import vn.tungdx.mediapicker.activities.MediaPickerActivity;
+import vn.tungdx.mediapicker.utils.MediaUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -29,6 +33,8 @@ public class AddNoteFragment extends BaseFragment {
     private Integer questionId;
     private EditText description;
     private FileSelectorButton fileSelectorButton;
+    private Button send;
+    private MediaItem mediaItem;
 
     public static AddNoteFragment newInstance() {
         return new AddNoteFragment();
@@ -58,6 +64,7 @@ public class AddNoteFragment extends BaseFragment {
 
         description = (EditText) rootView.findViewById(R.id.note_description);
         fileSelectorButton = (FileSelectorButton) rootView.findViewById(R.id.note_file_selector);
+        send = (Button) rootView.findViewById(R.id.button_continue);
 
         fileSelectorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +77,16 @@ public class AddNoteFragment extends BaseFragment {
                 }
             }
         });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNote(mediaItem);
+                navigateBack();
+            }
+        });
+
+        disableSend();
 
         return rootView;
     }
@@ -106,6 +123,35 @@ public class AddNoteFragment extends BaseFragment {
         if (requestCode == REQUEST_MEDIA && resultCode == RESULT_OK) {
             List<MediaItem> mediaSelectedList = MediaPickerActivity
                     .getMediaItemSelected(data);
+            if (mediaSelectedList != null && mediaSelectedList.size() > 0) {
+                mediaItem = mediaSelectedList.get(0);
+                enableSend();
+                fileSelectorButton.setText(getFileName(mediaItem));
+            }
         }
+    }
+
+    private void enableSend() {
+        send.setEnabled(true);
+    }
+
+    private void disableSend() {
+        send.setEnabled(false);
+    }
+
+    private void saveNote(MediaItem item) {
+        Note note = new Note();
+        note.setUriPath(item.getPathOrigin(getActivity()));
+        note.setBranchNumber(123);
+        note.setCountyCode("AB");
+        note.setDescription(description.getText().toString());
+        note.setQuestionId(questionId);
+
+        Data.getInstance().saveNote(note);
+    }
+
+    private String getFileName(MediaItem item) {
+        String path = item.getPathOrigin(getActivity());
+        return path.substring(path.lastIndexOf("/")+1);
     }
 }

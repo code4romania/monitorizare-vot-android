@@ -1,25 +1,30 @@
 package ro.code4.monitorizarevot.net;
 
-
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import io.realm.RealmObject;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
+import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.net.model.response.question.QuestionResponse;
 
@@ -27,7 +32,7 @@ public class NetworkService {
 
     private static ApiService mApiService;
 
-    public static ApiService getApiService() {
+    private static ApiService getApiService() {
         if (mApiService == null) {
             mApiService = initRetrofitInstanceWithUrl(BuildConfig.WEB_BASE_URL).create(ApiService.class);
         }
@@ -109,4 +114,23 @@ public class NetworkService {
         }
     }
 
+    public static ResponseNote postNote(Note note) throws IOException {
+        File file = new File(note.getUriPath());
+        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        Response<ResponseNote> response = getApiService().postNote(body,
+                note.getCountyCode(),
+                note.getBranchNumber(),
+                note.getQuestionId() != null ? note.getQuestionId() : -1,
+                note.getDescription()).execute();
+        if (response != null) {
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new IOException();
+            }
+        } else {
+            throw new IOException();
+        }
+    }
 }

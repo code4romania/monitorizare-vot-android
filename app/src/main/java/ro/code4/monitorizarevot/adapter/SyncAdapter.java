@@ -18,6 +18,7 @@ import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.Form;
+import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
@@ -48,6 +49,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         try {
             postQuestionAnswers();
+            postNotes();
             getFormsDefinition();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +62,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
         getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
         NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
+    }
+
+    private void postNotes() throws IOException {
+        List<Note> notes = Data.getInstance().getNotes();
+        for (Note note : notes) {
+            NetworkService.postNote(note);
+            Data.getInstance().deleteNote(note);
+        }
     }
 
     private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {

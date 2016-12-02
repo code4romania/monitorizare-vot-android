@@ -6,6 +6,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 import ro.code4.monitorizarevot.net.model.Form;
+import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.Version;
@@ -56,6 +57,16 @@ public class Data {
         return queryResult.size() > 0 ? queryResult.first() : null;
     }
 
+    public List<Note> getNotes() {
+        realm = Realm.getDefaultInstance();
+        RealmResults<Note> result = realm
+                .where(Note.class)
+                .findAll();
+        List<Note> notes = realm.copyFromRealm(result);
+        realm.close();
+        return notes;
+    }
+
     public List<Question> getUnSyncedQuestions(){
         realm = Realm.getDefaultInstance();
         RealmResults<Question> questions = realm.where(Question.class)
@@ -97,9 +108,17 @@ public class Data {
     }
 
     public void saveFormsVersion(Version version) {
-        Realm realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(version);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public void saveNote(Note note) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(note);
         realm.commitTransaction();
         realm.close();
     }
@@ -116,6 +135,17 @@ public class Data {
         realm.copyToRealmOrUpdate(question);
         realm.commitTransaction();
 
+        realm.close();
+    }
+
+    public void deleteNote(Note note) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmResults<Note> results = realm.where(Note.class)
+                .equalTo("id", note.getId())
+                .findAll();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
         realm.close();
     }
 }
