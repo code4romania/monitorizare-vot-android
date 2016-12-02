@@ -6,6 +6,7 @@
     <string name="button_continue_to_forms">Continuă către formulare</string>
     <string name="button_send">Trimite</string>
     <string name="spinner_choose">Alege</string>
+    <string name="hint_input">Scrie aici</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
 
@@ -51,7 +52,9 @@
     <string name="branch_choose_time_enter">Alege ora sosirii</string>
     <string name="branch_choose_time_leave">Alege ora plecării</string>
     <string name="invalid_branch_county">Alege județul</string>
-    <string name="invalid_branch_number">Alege numărul secției</string>
+    <string name="invalid_branch_number">Introdu numărul secției</string>
+    <string name="invalid_branch_number_minus">Numărul secției trebuie să fie pozitiv</string>
+    <string name="invalid_branch_number_max">Numărul maxim pentru județul %1$s este %2$s</string>
     <string name="invalid_branch_environment">Alege urban sau rural</string>
     <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
 

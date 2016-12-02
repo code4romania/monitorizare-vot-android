@@ -22,7 +22,6 @@ import ro.code4.monitorizarevot.widget.FileSelectorButton;
 import vn.tungdx.mediapicker.MediaItem;
 import vn.tungdx.mediapicker.MediaOptions;
 import vn.tungdx.mediapicker.activities.MediaPickerActivity;
-import vn.tungdx.mediapicker.utils.MediaUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -142,8 +141,6 @@ public class AddNoteFragment extends BaseFragment {
     private void saveNote(MediaItem item) {
         Note note = new Note();
         note.setUriPath(item.getPathOrigin(getActivity()));
-        note.setBranchNumber(123);
-        note.setCountyCode("AB");
         note.setDescription(description.getText().toString());
         note.setQuestionId(questionId);
 

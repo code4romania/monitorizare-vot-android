@@ -20,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
@@ -119,8 +120,8 @@ public class NetworkService {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
         Response<ResponseNote> response = getApiService().postNote(body,
-                note.getCountyCode(),
-                note.getBranchNumber(),
+                Preferences.getCountyCode(),
+                Preferences.getBranchNumber(),
                 note.getQuestionId() != null ? note.getQuestionId() : -1,
                 note.getDescription()).execute();
         if (response != null) {

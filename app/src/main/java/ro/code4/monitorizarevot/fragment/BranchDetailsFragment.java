@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
+import ro.code4.monitorizarevot.db.Preferences;
 
 public class BranchDetailsFragment extends BaseFragment implements View.OnClickListener {
     private RadioGroup environmentRadioGroup, sexRadioGroup;

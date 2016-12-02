@@ -68,12 +68,12 @@
                 android:theme="@style/label"
                 android:text="@string/branch_number"/>
 
-            <ro.code4.monitorizarevot.util.NoDefaultSpinner
-                android:id="@+id/branch_selector_number"
+            <EditText
+                android:id="@+id/branch_number_input"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:background="@drawable/background_spinner"
-                android:prompt="@string/spinner_choose" />
+                android:inputType="number"
+                style="@style/input"/>
 
         </LinearLayout>
     </LinearLayout>

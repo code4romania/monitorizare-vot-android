@@ -77,14 +77,6 @@ public enum County {
         return counties;
     }
 
-    public static List<String> getCountyBranches(County county) {
-        List<String> branches = new ArrayList<>();
-        for (int index = 1; index <= county.getBranchesCount(); index++) {
-            branches.add(String.valueOf(index));
-        }
-        return branches;
-    }
-
     public static County getCountyByIndex(int index) {
         return County.values()[index];
     }

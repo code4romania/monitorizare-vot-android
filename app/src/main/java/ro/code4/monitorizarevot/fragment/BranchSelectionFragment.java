@@ -7,19 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import java.util.List;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.constants.County;
+import ro.code4.monitorizarevot.db.Preferences;
 
 public class BranchSelectionFragment extends BaseFragment {
-    private Spinner branchNumberSpinner;
+    private Spinner countySpinner;
+    private EditText branchNumber;
     private County selectedCounty;
-    private Integer selectedNumber;
 
     public static BranchSelectionFragment newInstance() {
         return new BranchSelectionFragment();
@@ -30,9 +30,12 @@ public class BranchSelectionFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_branch_selection, container, false);
 
-        branchNumberSpinner = (Spinner) rootView.findViewById(R.id.branch_selector_number);
+        countySpinner = (Spinner) rootView.findViewById(R.id.branch_selector_county);
+        branchNumber = (EditText) rootView.findViewById(R.id.branch_number_input);
 
-        setCountiesDropdown((Spinner) rootView.findViewById(R.id.branch_selector_county));
+        branchNumber.setEnabled(false);
+
+        setCountiesDropdown(countySpinner);
         setContinueButton(rootView.findViewById(R.id.button_continue));
 
         return rootView;
@@ -46,25 +49,7 @@ public class BranchSelectionFragment extends BaseFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedCounty = County.getCountyByIndex(position);
-                selectedNumber = null;
-                setNumberDropdown(branchNumberSpinner, County.getCountyBranches(selectedCounty));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
-
-    private void setNumberDropdown(Spinner dropdown, List<String> values) {
-        ArrayAdapter<String> countyAdapter = new ArrayAdapter<>(getActivity(),
-                R.layout.support_simple_spinner_dropdown_item, values);
-        dropdown.setAdapter(countyAdapter);
-        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedNumber = position + 1;
+                branchNumber.setEnabled(true);
             }
 
             @Override
@@ -80,9 +65,15 @@ public class BranchSelectionFragment extends BaseFragment {
             public void onClick(View v) {
                 if (selectedCounty == null) {
                     Toast.makeText(getActivity(), R.string.invalid_branch_county, Toast.LENGTH_SHORT).show();
-                } else if (selectedNumber == null) {
+                } else if (branchNumber.getText().toString().length() == 0) {
                     Toast.makeText(getActivity(), R.string.invalid_branch_number, Toast.LENGTH_SHORT).show();
+                } else if (getBranchNumber() <= 0) {
+                    Toast.makeText(getActivity(), R.string.invalid_branch_number_minus, Toast.LENGTH_SHORT).show();
+                } else if (getBranchNumber() > selectedCounty.getBranchesCount()) {
+                    Toast.makeText(getActivity(), getBranchExceededError(), Toast.LENGTH_SHORT).show();
                 } else {
+                    Preferences.saveCountyCode(County.getCountyByIndex(countySpinner.getSelectedItemPosition()).getCode());
+                    Preferences.saveBranchNumber(getBranchNumber());
                     navigateTo(BranchDetailsFragment.newInstance());
                 }
             }
@@ -92,5 +83,18 @@ public class BranchSelectionFragment extends BaseFragment {
     @Override
     public String getTitle() {
         return getString(R.string.title_branch_selection);
+    }
+
+    public int getBranchNumber() {
+        try {
+            return Integer.parseInt(branchNumber.getText().toString());
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    public String getBranchExceededError() {
+        return getString(R.string.invalid_branch_number_max,
+                selectedCounty.getName(), String.valueOf(selectedCounty.getBranchesCount()));
     }
 }

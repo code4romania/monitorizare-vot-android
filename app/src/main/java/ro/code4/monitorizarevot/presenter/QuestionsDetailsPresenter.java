@@ -1,6 +1,5 @@
 package ro.code4.monitorizarevot.presenter;
 
-
 import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;

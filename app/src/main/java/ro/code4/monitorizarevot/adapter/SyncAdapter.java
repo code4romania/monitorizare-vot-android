@@ -19,7 +19,6 @@ import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;

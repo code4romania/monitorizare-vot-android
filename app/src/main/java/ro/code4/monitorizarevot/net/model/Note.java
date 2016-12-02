@@ -13,10 +13,6 @@ public class Note extends RealmObject {
     @Expose
     private String description;
     @Expose
-    private String codJudet;
-    @Expose
-    private Integer numarSectie;
-    @Expose
     private Integer idIntrebare;
 
     public int getId() {
@@ -37,22 +33,6 @@ public class Note extends RealmObject {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCountyCode() {
-        return codJudet;
-    }
-
-    public void setCountyCode(String countyCode) {
-        this.codJudet = countyCode;
-    }
-
-    public Integer getBranchNumber() {
-        return numarSectie;
-    }
-
-    public void setBranchNumber(Integer branchNumber) {
-        this.numarSectie = branchNumber;
     }
 
     public Integer getQuestionId() {

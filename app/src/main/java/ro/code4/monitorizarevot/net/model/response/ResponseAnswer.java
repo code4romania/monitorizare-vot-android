@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import ro.code4.monitorizarevot.db.Preferences;
 
 public class ResponseAnswer extends RealmObject implements Serializable {
     @PrimaryKey
@@ -17,14 +18,17 @@ public class ResponseAnswer extends RealmObject implements Serializable {
     private Integer numarSectie;
 
     public ResponseAnswer(){
-
+        this.codJudet = Preferences.getCountyCode();
+        this.numarSectie = Preferences.getBranchNumber();
     }
 
     public ResponseAnswer(Integer idOptiune) {
+        this();
         this.idOptiune = idOptiune;
     }
 
     public ResponseAnswer(Integer idOptiune, String textRaspuns) {
+        this();
         this.idOptiune = idOptiune;
         this.value = textRaspuns;
     }
