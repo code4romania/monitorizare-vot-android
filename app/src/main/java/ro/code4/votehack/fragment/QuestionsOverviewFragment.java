@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
@@ -18,12 +17,12 @@ import ro.code4.votehack.util.GridSpacingItemDecoration;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewFragment extends BaseFragment implements QuestionsOverviewNavigator {
-    private static final String ARG_SECTION_CODE = "form";
+    private static final String ARG_FORM_ID = "form";
     private Form form;
 
-    public static QuestionsOverviewFragment newInstance(String sectionCode) {
+    public static QuestionsOverviewFragment newInstance(String formId) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_SECTION_CODE, sectionCode);
+        args.putSerializable(ARG_FORM_ID, formId);
         QuestionsOverviewFragment fragment = new QuestionsOverviewFragment();
         fragment.setArguments(args);
         return fragment;
@@ -32,15 +31,13 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.form = Data.getInstance().getForm(getArguments().getString(ARG_SECTION_CODE));
+        this.form = Data.getInstance().getForm(getArguments().getString(ARG_FORM_ID));
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_questions_overview, container, false);
-
-        ((TextView) rootView.findViewById(R.id.questions_overview_description)).setText(form.getDescription());
 
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_overview_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
@@ -53,11 +50,11 @@ public class QuestionsOverviewFragment extends BaseFragment implements Questions
 
     @Override
     public String getTitle() {
-        return getString(R.string.title_form, form.getSectionCode());
+        return getString(R.string.title_form, form.getId());
     }
 
     @Override
     public void showQuestionDetails(int index) {
-        navigateTo(QuestionsDetailsFragment.newInstance(form.getSectionCode(), index));
+        navigateTo(QuestionsDetailsFragment.newInstance(form.getId(), index));
     }
 }

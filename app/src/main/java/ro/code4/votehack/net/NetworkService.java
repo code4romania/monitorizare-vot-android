@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.votehack.BuildConfig;
 import ro.code4.votehack.db.Data;
-import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.net.model.QuestionAnswer;
 import ro.code4.votehack.net.model.ResponseAnswerContainer;
 import ro.code4.votehack.net.model.response.VersionResponse;
@@ -63,10 +63,10 @@ public class NetworkService {
     }
 
     public static void doGetForm(String formId) throws IOException {
-        Response<List<Form>> listResponse = getApiService().getForm(formId).execute();
+        Response<List<Section>> listResponse = getApiService().getForm(formId).execute();
         if(listResponse != null){
             if (listResponse.isSuccessful()) {
-                Data.getInstance().saveFormsDefinition(listResponse.body());
+                Data.getInstance().saveFormDefinition(formId, listResponse.body());
             } else {
                 throw new IOException(listResponse.message() + " " + listResponse.code());
             }

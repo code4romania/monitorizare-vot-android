@@ -14,19 +14,18 @@ import java.util.List;
 import ro.code4.votehack.R;
 import ro.code4.votehack.net.model.Form;
 import ro.code4.votehack.net.model.Question;
+import ro.code4.votehack.util.FormUtils;
 import ro.code4.votehack.util.QuestionsOverviewNavigator;
 
 public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     private Context context;
     private QuestionsOverviewNavigator navigator;
-    private String sectionCode;
-    private List<Question> questions;
+    private List<QuestionViewModel> questions;
 
     public QuestionsOverviewAdapter(Context context, Form form, QuestionsOverviewNavigator navigator) {
         this.context = context;
-        this.sectionCode = form.getSectionCode();
-        this.questions = form.getQuestionList();
         this.navigator = navigator;
+        this.questions = FormUtils.getQuestionViewModelList(form.getId());
     }
 
     @Override
@@ -39,9 +38,11 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
-        boolean hasAnswer = questions.get(position).getRaspunsuriIntrebare().size() > 0;
+        Question question = questions.get(position).getQuestion();
+        String sectionCode = questions.get(position).getSectionCode();
+        boolean hasAnswer = question.getRaspunsuriIntrebare().size() > 0;
         holder.header.setText(sectionCode.concat(String.valueOf(position + 1)));
-        holder.description.setText(questions.get(position).getText());
+        holder.description.setText(question.getText());
         holder.status.setText(hasAnswer ?
                 context.getString(R.string.question_complete) :
                 context.getString(R.string.question_incomplete));

@@ -2,31 +2,32 @@ package ro.code4.votehack.net.model;
 
 import com.google.gson.annotations.Expose;
 
-import java.io.Serializable;
 import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Form extends RealmObject implements Serializable {
+public class Form extends RealmObject {
     @PrimaryKey
     @Expose
-    private String codSectiune;
+    private String id;
     @Expose
-    private String descriere;
-    @Expose
-    private RealmList<Question> intrebari;
+    private RealmList<Section> sectiuni;
 
-    public String getSectionCode() {
-        return codSectiune;
+    public String getId() {
+        return id;
     }
 
-    public String getDescription() {
-        return descriere;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public List<Question> getQuestionList() {
-        return intrebari;
+    public List<Section> getSections() {
+        return sectiuni;
+    }
+
+    public void setSections(RealmList<Section> sectiuni) {
+        this.sectiuni = sectiuni;
     }
 }

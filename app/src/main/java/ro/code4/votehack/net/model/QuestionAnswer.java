@@ -1,6 +1,5 @@
 package ro.code4.votehack.net.model;
 
-
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;

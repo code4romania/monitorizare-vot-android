@@ -1,6 +1,7 @@
 package ro.code4.votehack.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,11 +11,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.widget.FileSelectorButton;
+import vn.tungdx.mediapicker.MediaItem;
 import vn.tungdx.mediapicker.MediaOptions;
 import vn.tungdx.mediapicker.activities.MediaPickerActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 public class AddNoteFragment extends BaseFragment {
     private static final String ARGS_QUESTION_ID = "QuestionId";
@@ -92,5 +98,14 @@ public class AddNoteFragment extends BaseFragment {
         MediaOptions.Builder optionsBuilder = new MediaOptions.Builder();
         optionsBuilder.canSelectBothPhotoVideo();
         MediaPickerActivity.open(AddNoteFragment.this, REQUEST_MEDIA, optionsBuilder.build());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_MEDIA && resultCode == RESULT_OK) {
+            List<MediaItem> mediaSelectedList = MediaPickerActivity
+                    .getMediaItemSelected(data);
+        }
     }
 }

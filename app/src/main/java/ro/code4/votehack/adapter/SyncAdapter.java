@@ -18,11 +18,13 @@ import ro.code4.votehack.constants.Sync;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.NetworkService;
 import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.QuestionAnswer;
 import ro.code4.votehack.net.model.ResponseAnswerContainer;
 import ro.code4.votehack.net.model.Version;
 import ro.code4.votehack.net.model.response.VersionResponse;
+import ro.code4.votehack.util.FormUtils;
 import ro.code4.votehack.util.Logify;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
@@ -54,19 +56,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void postQuestionAnswers() throws IOException {
         List<QuestionAnswer> questionAnswers = new ArrayList<>();
-        getAnswersFromSectionA(Data.getInstance().getFormA(), questionAnswers);
-        getAnswersFromSectionA(Data.getInstance().getFormB(), questionAnswers);
-        getAnswersFromSectionA(Data.getInstance().getFormC(), questionAnswers);
+        getAnswersFromForm(Data.getInstance().getFormA(), questionAnswers);
+        getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
+        getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
         NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
     }
 
-    private void getAnswersFromSectionA(Form form, List<QuestionAnswer> questionAnswers) {
+    private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {
         if(form != null){
-            List<Question> questionList = form.getQuestionList();
+            List<Question> questionList = FormUtils.getAllQuestions(form.getId());
             for (Question question : questionList) {
                 if(!question.isSynced() && question.getRaspunsuriIntrebare().size() > 0){
                     QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),
-                            "AB", 1, form.getSectionCode(), question.getRaspunsuriIntrebare());
+                            "AB", 1, form.getId(), question.getRaspunsuriIntrebare());
                     questionAnswers.add(questionAnswer);
                 }
             }

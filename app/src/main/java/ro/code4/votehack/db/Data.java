@@ -3,8 +3,10 @@ package ro.code4.votehack.db;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.Section;
 import ro.code4.votehack.net.model.Question;
 import ro.code4.votehack.net.model.Version;
 import ro.code4.votehack.net.model.response.ResponseAnswer;
@@ -36,11 +38,11 @@ public class Data {
         return getForm("C");
     }
 
-    public Form getForm(String formCode) {
+    public Form getForm(String formId) {
         realm = Realm.getDefaultInstance();
         RealmResults<Form> results = realm
                 .where(Form.class)
-                .equalTo("codSectiune", formCode)
+                .equalTo("id", formId)
                 .findAll();
         Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
         realm.close();
@@ -66,13 +68,13 @@ public class Data {
 
     public Question getQuestion(Integer questionId) {
         realm = Realm.getDefaultInstance();
-        RealmResults<Question> results = realm
+        Question result = realm
                 .where(Question.class)
                 .equalTo("idIntrebare", questionId)
-                .findAll();
-        Question result = results.size() > 0 ? results.get(0) : null;
+                .findFirst();
+        Question question = realm.copyFromRealm(result);
         realm.close();
-        return result;
+        return question;
     }
 
     public void saveAnswerResponse(Question question, List<ResponseAnswer> responseAnswer) {
@@ -84,10 +86,12 @@ public class Data {
         realm.close();
     }
 
-    public void saveFormsDefinition(List<Form> forms) {
-        Realm realm = Realm.getDefaultInstance();
+    public void saveFormDefinition(String formId, List<Section> sections) {
+        realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(forms);
+        Form form = realm.createObject(Form.class, formId);
+        form.setSections(new RealmList<Section>());
+        form.getSections().addAll(sections);
         realm.commitTransaction();
         realm.close();
     }

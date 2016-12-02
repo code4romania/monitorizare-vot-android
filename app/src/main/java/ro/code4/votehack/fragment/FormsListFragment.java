@@ -11,6 +11,7 @@ import ro.code4.votehack.BaseFragment;
 import ro.code4.votehack.R;
 import ro.code4.votehack.db.Data;
 import ro.code4.votehack.net.model.Form;
+import ro.code4.votehack.net.model.Section;
 
 public class FormsListFragment extends BaseFragment implements View.OnClickListener {
     public static FormsListFragment newInstance() {
@@ -34,13 +35,13 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tile_form_1:
-                showSection(Data.getInstance().getFormA());
+                showForm(Data.getInstance().getFormA());
                 break;
             case R.id.tile_form_2:
-                showSection(Data.getInstance().getFormB());
+                showForm(Data.getInstance().getFormB());
                 break;
             case R.id.tile_form_3:
-                showSection(Data.getInstance().getFormC());
+                showForm(Data.getInstance().getFormC());
                 break;
             case R.id.tile_form_notes:
                 navigateTo(AddNoteFragment.newInstance());
@@ -48,9 +49,9 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
         }
     }
 
-    private void showSection(Form form) {
-        if (form != null && form.getQuestionList() != null && form.getQuestionList().size() > 0) {
-            navigateTo(QuestionsOverviewFragment.newInstance(form.getSectionCode()));
+    private void showForm(Form form) {
+        if (form != null && form.getSections() != null && form.getSections().size() > 0) {
+            navigateTo(QuestionsOverviewFragment.newInstance(form.getId()));
         } else {
             Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
         }
