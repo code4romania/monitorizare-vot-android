@@ -11,7 +11,6 @@ import java.util.List;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
-import ro.code4.monitorizarevot.adapter.QuestionViewModel;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.model.Form;
@@ -24,8 +23,7 @@ import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
     private static final String ARGS_FORM_ID = "FormId";
     private static final String ARGS_START_INDEX = "StartIndex";
-    private Form form;
-    private List<QuestionViewModel> questions;
+    private List<Question> questions;
     private int currentQuestion = -1;
 
     private QuestionsDetailsPresenter mPresenter;
@@ -46,9 +44,9 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.form = Data.getInstance().getForm(getArguments().getString(ARGS_FORM_ID));
+        Form form = Data.getInstance().getForm(getArguments().getString(ARGS_FORM_ID));
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
-        this.questions = FormUtils.getQuestionViewModelList(form.getId());
+        this.questions = FormUtils.getAllQuestions(form.getId());
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
@@ -66,21 +64,20 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     }
 
     private void showQuestion(int index) {
-        QuestionViewModel viewModel = questions.get(index);
+        Question question = questions.get(index);
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.details_container, QuestionFragment.newInstance(
-                        viewModel.getQuestion().getId(),
+                        question.getId(),
                         index,
-                        questions.size(),
-                        viewModel.getSectionCode()))
+                        questions.size()))
                 .commit();
         currentQuestion = index;
     }
 
     @Override
     public void onNotes() {
-        navigateTo(AddNoteFragment.newInstance(questions.get(currentQuestion).getQuestion().getId()));
+        navigateTo(AddNoteFragment.newInstance(questions.get(currentQuestion).getId()));
     }
 
     @Override
@@ -100,7 +97,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     public void onSaveAnswerIfCompleted(ViewGroup questionContainer) {
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
         if (answers.size() > 0) {
-            Question question = questions.get(currentQuestion).getQuestion();
+            Question question = questions.get(currentQuestion);
             Data.getInstance().saveAnswerResponse(question, answers);
         }
     }

@@ -17,6 +17,8 @@ public class Question extends RealmObject implements Serializable {
     @Expose
     private String textIntrebare;
     @Expose
+    private String codIntrebare;
+    @Expose
     private Integer idTipIntrebare;
     @Expose
     private RealmList<Answer> raspunsuriDisponibile;
@@ -29,6 +31,10 @@ public class Question extends RealmObject implements Serializable {
 
     public String getText() {
         return textIntrebare;
+    }
+
+    public String getCode() {
+        return codIntrebare;
     }
 
     public Integer getTypeId() {

@@ -19,19 +19,16 @@ public class QuestionFragment extends BaseFragment {
     private static final String ARG_QUESTION_ID = "questionId";
     private static final String ARG_SIZE = "numberOfQuestions";
     private static final String ARG_INDEX = "indexOfQuestion";
-    private static final String ARG_SECTION_CODE = "section";
     private Question question;
     private QuestionDetailsNavigator navigator;
-    private String sectionCode;
     private int numberOfQuestions;
     private int questionIndex;
 
-    public static QuestionFragment newInstance(int questionId, int index, int numberOfQuestions, String sectionCode) {
+    public static QuestionFragment newInstance(int questionId, int index, int numberOfQuestions) {
         Bundle args = new Bundle();
         args.putInt(ARG_QUESTION_ID, questionId);
         args.putInt(ARG_INDEX, index + 1);
         args.putInt(ARG_SIZE, numberOfQuestions);
-        args.putString(ARG_SECTION_CODE, sectionCode);
         QuestionFragment fragment = new QuestionFragment();
         fragment.setArguments(args);
         return fragment;
@@ -53,12 +50,11 @@ public class QuestionFragment extends BaseFragment {
         this.question = Data.getInstance().getQuestion(getArguments().getInt(ARG_QUESTION_ID));
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
-        this.sectionCode = getArguments().getString(ARG_SECTION_CODE);
     }
 
     @Override
     public String getTitle() {
-        return getQuestionIdentifier();
+        return question.getCode();
     }
 
     @Nullable
@@ -90,15 +86,7 @@ public class QuestionFragment extends BaseFragment {
         return rootView;
     }
 
-    private void setProgress(TextView progress) {
-        progress.setText(getQuestionIdentifier());
-    }
-
     private void setDescription(TextView description) {
         description.setText(question.getText());
-    }
-
-    private String getQuestionIdentifier() {
-        return sectionCode.concat(String.valueOf(questionIndex));
     }
 }

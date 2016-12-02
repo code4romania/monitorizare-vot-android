@@ -20,12 +20,12 @@ import ro.code4.monitorizarevot.util.QuestionsOverviewNavigator;
 public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     private Context context;
     private QuestionsOverviewNavigator navigator;
-    private List<QuestionViewModel> questions;
+    private List<Question> questions;
 
     public QuestionsOverviewAdapter(Context context, Form form, QuestionsOverviewNavigator navigator) {
         this.context = context;
         this.navigator = navigator;
-        this.questions = FormUtils.getQuestionViewModelList(form.getId());
+        this.questions = FormUtils.getAllQuestions(form.getId());
     }
 
     @Override
@@ -38,10 +38,9 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
-        Question question = questions.get(position).getQuestion();
-        String sectionCode = questions.get(position).getSectionCode();
+        Question question = questions.get(position);
         boolean hasAnswer = question.getRaspunsuriIntrebare().size() > 0;
-        holder.header.setText(sectionCode.concat(String.valueOf(position + 1)));
+        holder.header.setText(question.getCode());
         holder.description.setText(question.getText());
         holder.status.setText(hasAnswer ?
                 context.getString(R.string.question_complete) :
