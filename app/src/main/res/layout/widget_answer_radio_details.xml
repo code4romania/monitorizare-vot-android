@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ro.code4.votehack.widget.AnswerRadioButton
+    <ro.code4.monitorizarevot.widget.AnswerRadioButton
         android:id="@+id/answer_radio"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"

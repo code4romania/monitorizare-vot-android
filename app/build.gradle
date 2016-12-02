@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "ro.code4.votehack"
+        applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1

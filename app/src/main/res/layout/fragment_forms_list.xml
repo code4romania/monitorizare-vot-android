@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ro.code4.votehack.widget.ChangeBranchBarLayout
+    <ro.code4.monitorizarevot.widget.ChangeBranchBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -27,7 +27,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:clipToPadding="false">
-            <ro.code4.votehack.widget.FormSelectorCard
+            <ro.code4.monitorizarevot.widget.FormSelectorCard
                 android:id="@+id/tile_form_1"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/form_card_height"
@@ -37,7 +37,7 @@
             <Space
                 android:layout_width="@dimen/activity_horizontal_margin"
                 android:layout_height="match_parent" />
-            <ro.code4.votehack.widget.FormSelectorCard
+            <ro.code4.monitorizarevot.widget.FormSelectorCard
                 android:id="@+id/tile_form_2"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/form_card_height"
@@ -54,7 +54,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:clipToPadding="false">
-            <ro.code4.votehack.widget.FormSelectorCard
+            <ro.code4.monitorizarevot.widget.FormSelectorCard
                 android:id="@+id/tile_form_3"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/form_card_height"
@@ -64,7 +64,7 @@
             <Space
                 android:layout_width="@dimen/activity_horizontal_margin"
                 android:layout_height="match_parent" />
-            <ro.code4.votehack.widget.FormSelectorCard
+            <ro.code4.monitorizarevot.widget.FormSelectorCard
                 android:id="@+id/tile_form_notes"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/form_card_height"

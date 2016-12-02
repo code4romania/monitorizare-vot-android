@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VoteHack</string>
+    <string name="app_name">Monitorizare Vot</string>
 
     <!-- General -->
     <string name="button_continue">Continuă</string>

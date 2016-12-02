@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sync-adapter
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="ro.code4.votehack"
+    android:contentAuthority="ro.code4.monitorizarevot"
     android:accountType="code4.ro"
     android:userVisible="false"
     android:supportsUploading="true"
     android:allowParallelSyncs="false"
-    android:isAlwaysSyncable="false">
-
-</sync-adapter>
+    android:isAlwaysSyncable="false"/>

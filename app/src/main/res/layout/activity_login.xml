@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="ro.code4.votehack.LoginActivity">
+    tools:context="ro.code4.monitorizarevot.LoginActivity">
 
     <View
         android:id="@+id/purple_background"

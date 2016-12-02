@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ro.code4.votehack.widget.ScrollViewWithFixedBottom
+<ro.code4.monitorizarevot.widget.ScrollViewWithFixedBottom
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -55,7 +55,7 @@
                 android:theme="@style/label"
                 android:text="@string/branch_county"/>
 
-            <ro.code4.votehack.util.NoDefaultSpinner
+            <ro.code4.monitorizarevot.util.NoDefaultSpinner
                 android:id="@+id/branch_selector_county"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
@@ -68,7 +68,7 @@
                 android:theme="@style/label"
                 android:text="@string/branch_number"/>
 
-            <ro.code4.votehack.util.NoDefaultSpinner
+            <ro.code4.monitorizarevot.util.NoDefaultSpinner
                 android:id="@+id/branch_selector_number"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
@@ -84,4 +84,4 @@
         android:layout_height="@dimen/button_height"
         android:text="@string/button_continue"
         android:theme="@style/buttonEmbedded" />
-</ro.code4.votehack.widget.ScrollViewWithFixedBottom>
+</ro.code4.monitorizarevot.widget.ScrollViewWithFixedBottom>
