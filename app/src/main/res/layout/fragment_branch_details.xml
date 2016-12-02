@@ -10,6 +10,7 @@
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin">
         <ro.code4.monitorizarevot.widget.ChangeBranchBarLayout
+            android:id="@+id/change_branch_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <TextView

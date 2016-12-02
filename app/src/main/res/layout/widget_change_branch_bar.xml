@@ -16,7 +16,6 @@
         android:textStyle="bold"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/branch_bar_text"
-        android:text="CJ 1234"
         tools:text="CJ 1234"/>
 
     <Button

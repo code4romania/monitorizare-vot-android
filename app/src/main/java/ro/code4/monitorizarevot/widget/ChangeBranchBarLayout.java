@@ -5,9 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import ro.code4.monitorizarevot.R;
+import ro.code4.monitorizarevot.db.Preferences;
 
 public class ChangeBranchBarLayout extends LinearLayout {
     public ChangeBranchBarLayout(Context context) {
@@ -39,5 +42,13 @@ public class ChangeBranchBarLayout extends LinearLayout {
 
         int verticalPadding = getResources().getDimensionPixelSize(R.dimen.branch_bar_padding_vertical);
         setPadding(getPaddingLeft(), verticalPadding, getPaddingRight(), verticalPadding);
+    }
+
+    public void setBranchText(String text) {
+        ((TextView) findViewById(R.id.branch_bar_text)).setText(text);
+    }
+
+    public void setChangeBranchClickListener(OnClickListener listener) {
+        findViewById(R.id.branch_bar_button).setOnClickListener(listener);
     }
 }

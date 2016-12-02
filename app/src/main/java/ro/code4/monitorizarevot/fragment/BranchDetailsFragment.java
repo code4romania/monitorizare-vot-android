@@ -19,8 +19,10 @@ import java.util.Locale;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Preferences;
+import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
 public class BranchDetailsFragment extends BaseFragment implements View.OnClickListener {
+    private ChangeBranchBarLayout branchBarLayout;
     private RadioGroup environmentRadioGroup, sexRadioGroup;
     private TextView timeEnterText, timeLeaveText;
     private Calendar timeEnter, timeLeave; //TODO persist these values
@@ -34,6 +36,7 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_branch_details, container, false);
 
+        branchBarLayout = (ChangeBranchBarLayout) rootView.findViewById(R.id.change_branch_bar);
         environmentRadioGroup = (RadioGroup) rootView.findViewById(R.id.branch_group_environment);
         sexRadioGroup = (RadioGroup) rootView.findViewById(R.id.branch_group_sex);
         timeEnterText = (TextView) rootView.findViewById(R.id.branch_time_enter);
@@ -41,6 +44,14 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
 
         timeEnterText.setOnClickListener(this);
         timeLeaveText.setOnClickListener(this);
+
+        branchBarLayout.setBranchText(Preferences.getCountyCode() + " " + Preferences.getBranchNumber());
+        branchBarLayout.setChangeBranchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateBack();
+            }
+        });
 
         setContinueButton((Button) rootView.findViewById(R.id.button_continue));
 

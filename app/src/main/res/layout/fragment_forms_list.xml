@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <ro.code4.monitorizarevot.widget.ChangeBranchBarLayout
+        android:id="@+id/change_branch_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
