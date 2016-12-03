@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,7 +31,6 @@ public class AddNoteFragment extends BaseFragment {
     private Integer questionId;
     private EditText description;
     private FileSelectorButton fileSelectorButton;
-    private Button send;
     private MediaItem mediaItem;
 
     public static AddNoteFragment newInstance() {
@@ -52,7 +50,6 @@ public class AddNoteFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             questionId = getArguments().getInt(ARGS_QUESTION_ID);
-            Toast.makeText(getActivity(), getArguments().getInt(ARGS_QUESTION_ID) + "", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -63,7 +60,6 @@ public class AddNoteFragment extends BaseFragment {
 
         description = (EditText) rootView.findViewById(R.id.note_description);
         fileSelectorButton = (FileSelectorButton) rootView.findViewById(R.id.note_file_selector);
-        send = (Button) rootView.findViewById(R.id.button_continue);
 
         fileSelectorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,15 +73,17 @@ public class AddNoteFragment extends BaseFragment {
             }
         });
 
-        send.setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.button_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveNote(mediaItem);
-                navigateBack();
+                if (description.getText().toString().length() == 0 && mediaItem == null) {
+                    Toast.makeText(getActivity(), getString(R.string.invalid_note), Toast.LENGTH_SHORT).show();
+                } else {
+                    saveNote(mediaItem);
+                    navigateBack();
+                }
             }
         });
-
-        disableSend();
 
         return rootView;
     }
@@ -124,27 +122,16 @@ public class AddNoteFragment extends BaseFragment {
                     .getMediaItemSelected(data);
             if (mediaSelectedList != null && mediaSelectedList.size() > 0) {
                 mediaItem = mediaSelectedList.get(0);
-                enableSend();
                 fileSelectorButton.setText(getFileName(mediaItem));
             }
         }
     }
 
-    private void enableSend() {
-        send.setEnabled(true);
-    }
-
-    private void disableSend() {
-        send.setEnabled(false);
-    }
-
     private void saveNote(MediaItem item) {
-        Note note = new Note();
-        note.setUriPath(item.getPathOrigin(getActivity()));
-        note.setDescription(description.getText().toString());
-        note.setQuestionId(questionId);
-
-        Data.getInstance().saveNote(note);
+        Data.getInstance().saveNote(
+                mediaItem != null ? item.getPathOrigin(getActivity()) : null,
+                description.getText().toString(),
+                questionId);
     }
 
     private String getFileName(MediaItem item) {

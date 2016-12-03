@@ -15,7 +15,11 @@ public class Note extends RealmObject {
     @Expose
     private Integer idIntrebare;
 
-    public int getId() {
+    public Note() {
+
+    }
+
+    public long getId() {
         return id;
     }
 
