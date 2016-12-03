@@ -20,6 +20,7 @@ import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.NetworkService;
+import ro.code4.monitorizarevot.net.model.CityBranch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Question;
@@ -95,12 +96,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             List<Question> questionList = new FormUtils().getAllQuestions(form.getId());
             for (Question question : questionList) {
                 if(!question.isSynced() && question.getRaspunsuriIntrebare().size() > 0){
-                    QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),
-                            Preferences.getCountyCode(),
-                            Preferences.getBranchNumber(),
-                            form.getId(),
-                            question.getRaspunsuriIntrebare());
-                    questionAnswers.add(questionAnswer);
+                    List<CityBranch> cityBranches = FormUtils.getCityBranchesFromQuestion(question);
+                    for (CityBranch cityBranch : cityBranches) {
+                        QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),
+                                cityBranch.getCountryCode(), cityBranch.getBranch(), form.getId(),
+                                new FormUtils().getResponseAnswerForBranch(question.getRaspunsuriIntrebare(),
+                                cityBranch.getCountryCode(), cityBranch.getBranch()));
+                        questionAnswers.add(questionAnswer);
+                    }
                 }
             }
         }

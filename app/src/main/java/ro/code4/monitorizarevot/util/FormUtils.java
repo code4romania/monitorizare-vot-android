@@ -7,6 +7,7 @@ import java.util.List;
 
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
+import ro.code4.monitorizarevot.net.model.CityBranch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.Section;
@@ -33,22 +34,30 @@ public class FormUtils {
         Form form = Data.getInstance().getForm(formId);
         List<Question> questions = new ArrayList<>();
         for (Section section : form.getSections()) {
-            for (Question question : section.getQuestionList()) {
-                if (showCurrentBranch) {
-                    question.setRaspunsuriIntrebare(getResponseAnswersForCityBranch(question));
+            if (showCurrentBranch) {
+                for (Question question : section.getQuestionList()) {
+                    question.setRaspunsuriIntrebare(getResponseAnswersForCityBranchFromQuestion(question));
+                    questions.add(question);
                 }
-                questions.add(question);
+            } else {
+                questions.addAll(section.getQuestionList());
             }
         }
         return questions;
     }
 
     @NonNull
-    private List<ResponseAnswer> getResponseAnswersForCityBranch(Question question) {
+    private List<ResponseAnswer> getResponseAnswersForCityBranchFromQuestion(Question question) {
+        return getResponseAnswerForBranch(question.getRaspunsuriIntrebare(), mCountryCode, mBranchNo);
+    }
+
+    public List<ResponseAnswer> getResponseAnswerForBranch(List<ResponseAnswer> allResponseAnswerFromQuestion,
+                                            String countryCode, int branchNo) {
+
         List<ResponseAnswer> responseAnswerList = new ArrayList<>();
-        for (ResponseAnswer responseAnswer : question.getRaspunsuriIntrebare()) {
-            if(mCountryCode.equalsIgnoreCase(responseAnswer.getCodJudet())
-                    && mBranchNo == responseAnswer.getNumarSectie()){
+        for (ResponseAnswer responseAnswer : allResponseAnswerFromQuestion) {
+            if(countryCode.equalsIgnoreCase(responseAnswer.getCodJudet())
+                    && branchNo == responseAnswer.getNumarSectie()){
                 responseAnswerList.add(responseAnswer);
             }
         }
@@ -57,7 +66,19 @@ public class FormUtils {
 
     public Question getQuestion(int questionIndex) {
         Question question = Data.getInstance().getQuestion(questionIndex);
-        question.setRaspunsuriIntrebare(getResponseAnswersForCityBranch(question));
+        question.setRaspunsuriIntrebare(getResponseAnswersForCityBranchFromQuestion(question));
         return question;
+    }
+
+    public static List<CityBranch> getCityBranchesFromQuestion(Question question) {
+        List<CityBranch> cityBranches = new ArrayList<>();
+        for (ResponseAnswer responseAnswer : question.getRaspunsuriIntrebare()) {
+            CityBranch cityBranch = new CityBranch(responseAnswer.getCodJudet(),
+                    responseAnswer.getNumarSectie());
+            if(!cityBranches.contains(cityBranch)){
+                cityBranches.add(cityBranch);
+            }
+        }
+        return cityBranches;
     }
 }
