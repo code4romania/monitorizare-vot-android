@@ -86,8 +86,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
             showQuestion(currentQuestion + 1);
         } else {
             //TODO form is done
-            //TODO make just upload here,not the whole sync
-            SyncAdapter.requestSync(getActivity());
+            SyncAdapter.requestUploadSync(getActivity());
             navigateBack();
             Toast.makeText(getActivity(), "Formular complet", Toast.LENGTH_SHORT).show();
         }

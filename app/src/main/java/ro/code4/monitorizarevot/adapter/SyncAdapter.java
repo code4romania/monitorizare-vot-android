@@ -8,6 +8,8 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -28,7 +30,11 @@ import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.Logify;
 
+import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT;
+import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT_TYPE;
+
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         init(context);
@@ -48,12 +54,24 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         Logify.d("SyncAdapter", "performing sync");
 
         try {
-            postQuestionAnswers();
-            postNotes();
-            getFormsDefinition();
+            if (extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
+                doUpload();
+            } else {
+                doSync();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void doUpload() throws IOException {
+        postQuestionAnswers();
+        postNotes();
+    }
+
+    private void doSync() throws IOException {
+        doUpload();
+        getFormsDefinition();
     }
 
     private void postQuestionAnswers() throws IOException {
@@ -112,22 +130,32 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     public static void requestSync(Context context) {
-        Bundle settingsBundle = new Bundle();
-        settingsBundle.putBoolean(
-                ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        settingsBundle.putBoolean(
-                ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, settingsBundle);
+        ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(false));
+    }
+
+    public static void requestUploadSync(Context context) {
+        if (ContentResolver.getMasterSyncAutomatically()) {
+            ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(true));
+        }
+    }
+
+    @NonNull
+    private static Bundle getBundle(boolean isUpload) {
+        Bundle extras = new Bundle();
+        extras.putBoolean( ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
+        return extras;
     }
 
     private static Account createSyncAccount(Context context) {
-        Account newAccount = new Account(Sync.ACCOUNT, Sync.ACCOUNT_TYPE);
+        Account newAccount = new Account(ACCOUNT, ACCOUNT_TYPE);
         AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
         if (accountManager.addAccountExplicitly(newAccount, null, null)) {
             return newAccount;
         }
         try {
-            return accountManager.getAccountsByType(Sync.ACCOUNT_TYPE)[0];
+            return accountManager.getAccountsByType(ACCOUNT_TYPE)[0];
         } catch (SecurityException e) {
             Toast.makeText(context, "Eroare permisiune " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
             return null;

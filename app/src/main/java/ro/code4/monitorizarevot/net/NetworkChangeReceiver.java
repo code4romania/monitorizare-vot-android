@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import ro.code4.monitorizarevot.adapter.SyncAdapter;
+
 public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(isOnline(context)) {
-            //do stuff when connection received
+            SyncAdapter.requestSync(context);
         } else {
             //do stuff when connection lost
         }
