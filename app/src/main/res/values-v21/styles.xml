@@ -14,7 +14,7 @@
         <item name="android:colorControlHighlight">@color/accent</item>
     </style>
 
-    <style name="BaseButton">
+    <style name="BaseButton" parent="BaseButtonCommon">
         <item name="android:textAllCaps">false</item>
     </style>
 
