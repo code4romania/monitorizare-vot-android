@@ -16,11 +16,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
         }
 
         debug {
             debuggable true
-
             buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
         }
     }
