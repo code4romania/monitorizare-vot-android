@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -18,7 +17,6 @@ import java.util.List;
 
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
-import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.CityBranch;
 import ro.code4.monitorizarevot.net.model.Form;
@@ -95,13 +93,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         if(form != null){
             List<Question> questionList = new FormUtils().getAllQuestions(form.getId());
             for (Question question : questionList) {
-                if(!question.isSynced() && question.getRaspunsuriIntrebare().size() > 0){
-                    List<CityBranch> cityBranches = FormUtils.getCityBranchesFromQuestion(question);
-                    for (CityBranch cityBranch : cityBranches) {
-                        QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),
-                                cityBranch.getCountryCode(), cityBranch.getBranch(), form.getId(),
-                                new FormUtils().getResponseAnswerForBranch(question.getRaspunsuriIntrebare(),
-                                cityBranch.getCountryCode(), cityBranch.getBranch()));
+                if(!question.isSynced()){
+                    for (CityBranch cityBranch : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
+                        QuestionAnswer questionAnswer = new QuestionAnswer(cityBranch, form.getId());
                         questionAnswers.add(questionAnswer);
                     }
                 }

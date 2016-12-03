@@ -19,12 +19,12 @@ public class QuestionAnswer implements Serializable {
     @Expose
     private List<ResponseAnswer> optiuni;
 
-    public QuestionAnswer(Integer idIntrebare, String codJudet, Integer numarSectie, String codFormular, List<ResponseAnswer> optiuni) {
-        this.idIntrebare = idIntrebare;
-        this.codJudet = codJudet;
-        this.numarSectie = numarSectie;
-        this.codFormular = codFormular;
-        this.optiuni = optiuni;
+    public QuestionAnswer(CityBranch cityBranch, String formId) {
+        this.idIntrebare = cityBranch.getQuestionId();
+        this.codJudet = cityBranch.getCountryCode();
+        this.numarSectie = cityBranch.getBranch();
+        this.codFormular = formId;
+        this.optiuni = cityBranch.getRaspunsuriIntrebare();
     }
 
     public Integer getIdIntrebare() {

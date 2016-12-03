@@ -1,16 +1,18 @@
 package ro.code4.monitorizarevot.db;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
+import ro.code4.monitorizarevot.net.model.CityBranch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.Question;
+import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.Version;
-import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class Data {
     private static Data instance;
@@ -88,11 +90,10 @@ public class Data {
         return question;
     }
 
-    public void saveAnswerResponse(Question question, List<ResponseAnswer> responseAnswer) {
+    public void saveAnswerResponse(CityBranch cityBranch) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        question.setRaspunsuriIntrebare(responseAnswer);
-        realm.copyToRealmOrUpdate(question);
+        realm.copyToRealmOrUpdate(cityBranch);
         realm.commitTransaction();
         realm.close();
     }
@@ -147,5 +148,34 @@ public class Data {
         results.deleteAllFromRealm();
         realm.commitTransaction();
         realm.close();
+    }
+
+    public CityBranch getCityBranch(Integer quetionId) {
+        realm = Realm.getDefaultInstance();
+        CityBranch result = realm
+                .where(CityBranch.class)
+                .equalTo("cityBranchId", getCityBranchId(quetionId))
+                .findFirst();
+        CityBranch cityBranch = result != null ? realm.copyFromRealm(result) : null;
+        realm.close();
+        return cityBranch;
+    }
+
+    @NonNull
+    private String getCityBranchId(Integer quetionId) {
+        return Preferences.getCountyCode() +
+                String.valueOf(Preferences.getBranchNumber()) +
+                String.valueOf(quetionId);
+    }
+
+    public List<CityBranch> getCityBranchPerQuestion(Integer quetionId) {
+        realm = Realm.getDefaultInstance();
+        RealmResults<CityBranch> result = realm
+                .where(CityBranch.class)
+                .equalTo("cityBranchId", getCityBranchId(quetionId))
+                .findAll();
+        List<CityBranch> cityBranches = realm.copyFromRealm(result);
+        realm.close();
+        return cityBranches;
     }
 }

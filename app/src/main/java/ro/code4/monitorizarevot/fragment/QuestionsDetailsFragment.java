@@ -13,6 +13,7 @@ import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.net.model.CityBranch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
@@ -46,7 +47,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         super.onCreate(savedInstanceState);
         Form form = Data.getInstance().getForm(getArguments().getString(ARGS_FORM_ID));
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
-        this.questions = new FormUtils().getAllQuestionsForCurrentBranch(form.getId());
+        this.questions = FormUtils.getAllQuestions(form.getId());
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
@@ -97,7 +98,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
         if (answers.size() > 0) {
             Question question = questions.get(currentQuestion);
-            Data.getInstance().saveAnswerResponse(question, answers);
+            Data.getInstance().saveAnswerResponse(new CityBranch(question.getId(), answers));
         }
     }
 

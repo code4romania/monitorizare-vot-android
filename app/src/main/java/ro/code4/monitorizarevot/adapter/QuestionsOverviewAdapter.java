@@ -25,7 +25,7 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
     public QuestionsOverviewAdapter(Context context, Form form, QuestionsOverviewNavigator navigator) {
         this.context = context;
         this.navigator = navigator;
-        this.questions = new FormUtils().getAllQuestionsForCurrentBranch(form.getId());
+        this.questions = FormUtils.getAllQuestions(form.getId());
     }
 
     @Override

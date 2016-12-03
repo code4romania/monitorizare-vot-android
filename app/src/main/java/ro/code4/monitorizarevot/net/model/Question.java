@@ -3,6 +3,7 @@ package ro.code4.monitorizarevot.net.model;
 import com.google.gson.annotations.Expose;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
@@ -22,7 +23,7 @@ public class Question extends RealmObject implements Serializable {
     private Integer idTipIntrebare;
     @Expose
     private RealmList<Answer> raspunsuriDisponibile;
-    private RealmList<ResponseAnswer> raspunsuriIntrebare = new RealmList<>();
+    private CityBranch cityBranch;
     private boolean isSynced;
 
     public Integer getId() {
@@ -45,20 +46,26 @@ public class Question extends RealmObject implements Serializable {
         return raspunsuriDisponibile;
     }
 
-    public List<ResponseAnswer> getRaspunsuriIntrebare() {
-        return raspunsuriIntrebare;
-    }
-
-    public void setRaspunsuriIntrebare(List<ResponseAnswer> raspunsuriIntrebare) {
-        this.raspunsuriIntrebare.clear();
-        this.raspunsuriIntrebare.addAll(raspunsuriIntrebare);
-    }
-
     public boolean isSynced() {
         return isSynced;
     }
 
     public void setSynced(boolean synced) {
         isSynced = synced;
+    }
+
+    public CityBranch getCityBranch() {
+        return cityBranch;
+    }
+
+    public void setCityBranch(CityBranch cityBranch) {
+        this.cityBranch = cityBranch;
+    }
+
+    public List<ResponseAnswer> getRaspunsuriIntrebare() {
+        if(cityBranch != null){
+            return cityBranch.getRaspunsuriIntrebare();
+        }
+        return new ArrayList<>();
     }
 }
