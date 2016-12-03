@@ -13,6 +13,7 @@ import ro.code4.monitorizarevot.net.model.Version;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class Data {
+    private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
     private static Data instance;
     private Realm realm;
 
@@ -21,6 +22,11 @@ public class Data {
             instance = new Data();
         }
         return instance;
+    }
+
+    private static int getNextPrimaryKey(Realm realm, Class realmClass) {
+        Number maxPrimaryKeyValue = realm.where(realmClass).max(AUTO_INCREMENT_PRIMARY_KEY);
+        return maxPrimaryKeyValue != null ? maxPrimaryKeyValue.intValue() + 1 : 0;
     }
 
     private Data() {
@@ -115,10 +121,13 @@ public class Data {
         realm.close();
     }
 
-    public void saveNote(Note note) {
+    public void saveNote(String uriPath, String description, Integer questionId) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(note);
+        Note note = realm.createObject(Note.class, getNextPrimaryKey(realm, Note.class));
+        note.setUriPath(uriPath);
+        note.setDescription(description);
+        note.setQuestionId(questionId);
         realm.commitTransaction();
         realm.close();
     }
