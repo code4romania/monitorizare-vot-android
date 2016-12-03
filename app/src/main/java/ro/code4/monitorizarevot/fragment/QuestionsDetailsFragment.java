@@ -46,7 +46,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         super.onCreate(savedInstanceState);
         Form form = Data.getInstance().getForm(getArguments().getString(ARGS_FORM_ID));
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
-        this.questions = FormUtils.getAllQuestions(form.getId());
+        this.questions = new FormUtils().getAllQuestionsForCurrentBranch(form.getId());
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 

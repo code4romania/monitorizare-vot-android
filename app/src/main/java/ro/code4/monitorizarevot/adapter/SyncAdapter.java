@@ -92,7 +92,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {
         if(form != null){
-            List<Question> questionList = FormUtils.getAllQuestions(form.getId());
+            List<Question> questionList = new FormUtils().getAllQuestions(form.getId());
             for (Question question : questionList) {
                 if(!question.isSynced() && question.getRaspunsuriIntrebare().size() > 0){
                     QuestionAnswer questionAnswer = new QuestionAnswer(question.getId(),

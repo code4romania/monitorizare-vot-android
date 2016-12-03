@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
-import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.util.FormRenderer;
+import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 
 public class QuestionFragment extends BaseFragment {
@@ -47,7 +47,7 @@ public class QuestionFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.question = Data.getInstance().getQuestion(getArguments().getInt(ARG_QUESTION_ID));
+        this.question = new FormUtils().getQuestion(getArguments().getInt(ARG_QUESTION_ID));
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
     }

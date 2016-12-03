@@ -15,18 +15,20 @@ public class ResponseAnswer extends RealmObject implements Serializable {
     @Expose
     private String value;
     private String codJudet;
-    private Integer numarSectie;
+    private int numarSectie;
 
     public ResponseAnswer(){
-
+        this.codJudet = Preferences.getCountyCode();
+        this.numarSectie = Preferences.getBranchNumber();
     }
 
     public ResponseAnswer(Integer idOptiune) {
+        this();
         this.idOptiune = idOptiune;
     }
 
     public ResponseAnswer(Integer idOptiune, String textRaspuns) {
-        this.idOptiune = idOptiune;
+        this(idOptiune);
         this.value = textRaspuns;
     }
 
@@ -54,11 +56,11 @@ public class ResponseAnswer extends RealmObject implements Serializable {
         this.codJudet = codJudet;
     }
 
-    public Integer getNumarSectie() {
+    public int getNumarSectie() {
         return numarSectie;
     }
 
-    public void setNumarSectie(Integer numarSectie) {
+    public void setNumarSectie(int numarSectie) {
         this.numarSectie = numarSectie;
     }
 }
