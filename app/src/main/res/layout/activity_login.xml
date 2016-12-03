@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
                     android:hint="@string/login_branch"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     style="@style/InputLogin"/>
 
             </android.support.design.widget.TextInputLayout>
