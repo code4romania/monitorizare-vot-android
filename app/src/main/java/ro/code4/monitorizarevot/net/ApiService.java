@@ -14,8 +14,10 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
+import ro.code4.monitorizarevot.net.model.response.Ack;
 import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.net.model.response.question.QuestionResponse;
@@ -26,6 +28,9 @@ public interface ApiService {
 
     @GET("/api/v1/formular/versiune")
     Call<VersionResponse> getFormVersion();
+
+    @POST("/api/v1/sectie")
+    Call<Ack> postBranchDetails(@Body BranchDetails branchDetails);
 
     @POST("/api/v1/raspuns")
     Call<QuestionResponse> postQuestionAnswer(@Body ResponseAnswerContainer responseAnswer);

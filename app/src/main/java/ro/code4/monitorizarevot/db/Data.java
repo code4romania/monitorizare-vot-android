@@ -6,12 +6,15 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmModel;
 import io.realm.RealmResults;
-import ro.code4.monitorizarevot.net.model.Branch;
+import ro.code4.monitorizarevot.net.model.BranchDetails;
+import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.Section;
+import ro.code4.monitorizarevot.net.model.Syncable;
 import ro.code4.monitorizarevot.net.model.Version;
 
 public class Data {
@@ -33,6 +36,18 @@ public class Data {
 
     private Data() {
 
+    }
+
+    public BranchDetails getCurrentBranchDetails() {
+        realm = Realm.getDefaultInstance();
+        RealmResults<BranchDetails> results = realm
+                .where(BranchDetails.class)
+                .equalTo("codJudet", Preferences.getCountyCode())
+                .equalTo("numarSectie", Preferences.getBranchNumber())
+                .findAll();
+        BranchDetails result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
+        realm.close();
+        return result;
     }
 
     public Form getFormA() {
@@ -96,10 +111,18 @@ public class Data {
         return question;
     }
 
-    public void saveAnswerResponse(Branch branch) {
+    public void saveAnswerResponse(BranchQuestionAnswer branchQuestionAnswer) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(branch);
+        realm.copyToRealmOrUpdate(branchQuestionAnswer);
+        realm.commitTransaction();
+        realm.close();
+    }
+
+    public void saveBranchDetails(BranchDetails branchDetails) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(branchDetails);
         realm.commitTransaction();
         realm.close();
     }
@@ -159,15 +182,15 @@ public class Data {
         realm.close();
     }
 
-    public Branch getCityBranch(Integer quetionId) {
+    public BranchQuestionAnswer getCityBranch(Integer quetionId) {
         realm = Realm.getDefaultInstance();
-        Branch result = realm
-                .where(Branch.class)
-                .equalTo("cityBranchId", getCityBranchId(quetionId))
+        BranchQuestionAnswer result = realm
+                .where(BranchQuestionAnswer.class)
+                .equalTo("id", getCityBranchId(quetionId))
                 .findFirst();
-        Branch branch = result != null ? realm.copyFromRealm(result) : null;
+        BranchQuestionAnswer branchQuestionAnswer = result != null ? realm.copyFromRealm(result) : null;
         realm.close();
-        return branch;
+        return branchQuestionAnswer;
     }
 
     @NonNull
@@ -177,14 +200,42 @@ public class Data {
                 String.valueOf(quetionId);
     }
 
-    public List<Branch> getCityBranchPerQuestion(Integer quetionId) {
+    public List<BranchQuestionAnswer> getCityBranchPerQuestion(Integer quetionId) {
         realm = Realm.getDefaultInstance();
-        RealmResults<Branch> result = realm
-                .where(Branch.class)
-                .equalTo("cityBranchId", getCityBranchId(quetionId))
+        RealmResults<BranchQuestionAnswer> result = realm
+                .where(BranchQuestionAnswer.class)
+                .equalTo("id", getCityBranchId(quetionId))
                 .findAll();
-        List<Branch> branches = realm.copyFromRealm(result);
+        List<BranchQuestionAnswer> branchQuestionAnswers = realm.copyFromRealm(result);
         realm.close();
-        return branches;
+        return branchQuestionAnswers;
+    }
+
+    public <T extends Syncable & RealmModel> List<T> getUnsyncedList(Class<T> objectClass) {
+        realm = Realm.getDefaultInstance();
+        RealmResults<T> results = realm
+                .where(objectClass)
+                .equalTo("isSynced", false)
+                .findAll();
+        List<T> resultList = realm.copyFromRealm(results);
+        realm.close();
+        return resultList;
+    }
+
+    public <T extends Syncable & RealmModel> void markSynced(T object) {
+        markSyncable(object, true);
+    }
+
+    public <T extends Syncable & RealmModel> void markUnsynced(T object) {
+        markSyncable(object, false);
+    }
+
+    private <T extends Syncable & RealmModel> void markSyncable(T object, boolean isSynced) {
+        realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        object.setSynced(isSynced);
+        realm.copyToRealmOrUpdate(object);
+        realm.commitTransaction();
+        realm.close();
     }
 }

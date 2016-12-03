@@ -6,6 +6,10 @@ public class Preferences {
     private static final String PREFS_COUNTY_CODE = "PREFS_COUNTY_CODE";
     private static final String PREFS_BRANCH_NUMBER = "PREFS_BRANCH_NUMBER";
 
+    public static void clear() {
+        Prefs.clear();
+    }
+
     public static void saveCountyCode(String countyCode) {
         Prefs.putString(PREFS_COUNTY_CODE, countyCode);
     }

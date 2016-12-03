@@ -21,10 +21,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
+import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
+import ro.code4.monitorizarevot.net.model.response.Ack;
 import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.net.model.response.question.QuestionResponse;
@@ -84,6 +86,19 @@ public class NetworkService {
 
     public static VersionResponse doGetFormVersion() throws IOException {
         Response<VersionResponse> response = getApiService().getFormVersion().execute();
+        if(response != null){
+            if(response.isSuccessful()){
+                return response.body();
+            } else {
+                throw new IOException(response.message() + " " + response.code());
+            }
+        } else {
+            throw new IOException();
+        }
+    }
+
+    public static Ack postBranchDetails(BranchDetails branchDetails) throws IOException {
+        Response<Ack> response = getApiService().postBranchDetails(branchDetails).execute();
         if(response != null){
             if(response.isSuccessful()){
                 return response.body();

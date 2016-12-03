@@ -13,7 +13,7 @@ import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.db.Data;
-import ro.code4.monitorizarevot.net.model.Branch;
+import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
@@ -98,7 +98,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
         if (answers.size() > 0) {
             Question question = questions.get(currentQuestion);
-            Data.getInstance().saveAnswerResponse(new Branch(question.getId(), answers));
+            Data.getInstance().saveAnswerResponse(new BranchQuestionAnswer(question.getId(), answers));
         }
     }
 

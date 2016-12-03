@@ -12,7 +12,6 @@ import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.Form;
-import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
 public class FormsListFragment extends BaseFragment implements View.OnClickListener {
@@ -25,23 +24,25 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_forms_list, container, false);
 
-        ChangeBranchBarLayout branchBarLayout = (ChangeBranchBarLayout) rootView.findViewById(R.id.change_branch_bar);
-
         rootView.findViewById(R.id.tile_form_1).setOnClickListener(this);
         rootView.findViewById(R.id.tile_form_2).setOnClickListener(this);
         rootView.findViewById(R.id.tile_form_3).setOnClickListener(this);
         rootView.findViewById(R.id.tile_form_notes).setOnClickListener(this);
 
-        branchBarLayout.setBranchText(Preferences.getCountyCode() + " " + Preferences.getBranchNumber());
-        branchBarLayout.setChangeBranchClickListener(new View.OnClickListener() {
+        setBranchBar((ChangeBranchBarLayout) rootView.findViewById(R.id.change_branch_bar));
+
+        return rootView;
+    }
+
+    private void setBranchBar(ChangeBranchBarLayout barLayout) {
+        barLayout.setBranchText(Preferences.getCountyCode() + " " + Preferences.getBranchNumber());
+        barLayout.setChangeBranchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateBack();
                 navigateBack();
             }
         });
-
-        return rootView;
     }
 
     @Override

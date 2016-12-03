@@ -18,7 +18,8 @@ import java.util.List;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
-import ro.code4.monitorizarevot.net.model.Branch;
+import ro.code4.monitorizarevot.net.model.BranchDetails;
+import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Question;
@@ -64,6 +65,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void doUpload() throws IOException {
+        postBranchDetails();
         postQuestionAnswers();
         postNotes();
     }
@@ -71,6 +73,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void doSync() throws IOException {
         doUpload();
         getFormsDefinition();
+    }
+
+    private void postBranchDetails() throws IOException {
+        List<BranchDetails> branchDetailsList = Data.getInstance().getUnsyncedList(BranchDetails.class);
+        for (BranchDetails branchDetails : branchDetailsList) {
+            NetworkService.postBranchDetails(branchDetails);
+            Data.getInstance().markSynced(branchDetails);   //TODO move this to success if throws is removed
+        }
     }
 
     private void postQuestionAnswers() throws IOException {
@@ -85,17 +95,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         List<Note> notes = Data.getInstance().getNotes();
         for (Note note : notes) {
             NetworkService.postNote(note);
-            Data.getInstance().deleteNote(note);
+            Data.getInstance().deleteNote(note);    //TODO move this to success if throws is removed
         }
     }
 
     private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {
         if(form != null){
-            List<Question> questionList = new FormUtils().getAllQuestions(form.getId());
+            List<Question> questionList = FormUtils.getAllQuestions(form.getId());
             for (Question question : questionList) {
                 if(!question.isSynced()){
-                    for (Branch branch : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
-                        QuestionAnswer questionAnswer = new QuestionAnswer(branch, form.getId());
+                    for (BranchQuestionAnswer branchQuestionAnswer : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
+                        QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer, form.getId());
                         questionAnswers.add(questionAnswer);
                     }
                 }

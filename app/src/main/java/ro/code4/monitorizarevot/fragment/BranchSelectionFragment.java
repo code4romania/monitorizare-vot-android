@@ -72,8 +72,7 @@ public class BranchSelectionFragment extends BaseFragment {
                 } else if (getBranchNumber() > selectedCounty.getBranchesCount()) {
                     Toast.makeText(getActivity(), getBranchExceededError(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Preferences.saveCountyCode(County.getCountyByIndex(countySpinner.getSelectedItemPosition()).getCode());
-                    Preferences.saveBranchNumber(getBranchNumber());
+                    persistSelection();
                     navigateTo(BranchDetailsFragment.newInstance());
                 }
             }
@@ -83,6 +82,11 @@ public class BranchSelectionFragment extends BaseFragment {
     @Override
     public String getTitle() {
         return getString(R.string.title_branch_selection);
+    }
+
+    private void persistSelection() {
+        Preferences.saveCountyCode(County.getCountyByIndex(countySpinner.getSelectedItemPosition()).getCode());
+        Preferences.saveBranchNumber(getBranchNumber());
     }
 
     public int getBranchNumber() {

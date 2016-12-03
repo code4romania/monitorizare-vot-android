@@ -8,41 +8,42 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
-public class Branch extends RealmObject {
+public class BranchQuestionAnswer extends RealmObject {
     @PrimaryKey
-    private String cityBranchId;
+    private String id;
     private String countryCode;
-    private int branch;
+    private int branchNumber;
     private int questionId;
+    private BranchDetails branchDetails;
     private RealmList<ResponseAnswer> raspunsuriIntrebare = new RealmList<>();
 
-    public Branch(){
+    public BranchQuestionAnswer(){
 
     }
 
-    public Branch(String codJudet, int numarSectie) {
+    public BranchQuestionAnswer(String codJudet, int numarSectie) {
         this.countryCode = codJudet;
-        this.branch = numarSectie;
+        this.branchNumber = numarSectie;
     }
 
-    public Branch(Integer questionId){
+    public BranchQuestionAnswer(Integer questionId){
         this(Preferences.getCountyCode(), Preferences.getBranchNumber());
         this.questionId = questionId;
     }
 
-    public Branch(Integer questionId, List<ResponseAnswer> answers) {
+    public BranchQuestionAnswer(Integer questionId, List<ResponseAnswer> answers) {
         this(questionId);
         this.raspunsuriIntrebare.clear();
         this.raspunsuriIntrebare.addAll(answers);
-        this.cityBranchId = countryCode + String.valueOf(branch) + String.valueOf(questionId);
+        this.id = countryCode + String.valueOf(branchNumber) + String.valueOf(questionId);
     }
 
     public String getCountryCode() {
         return countryCode;
     }
 
-    public int getBranch() {
-        return branch;
+    public int getBranchNumber() {
+        return branchNumber;
     }
 
     public List<ResponseAnswer> getRaspunsuriIntrebare() {
@@ -54,20 +55,28 @@ public class Branch extends RealmObject {
         this.raspunsuriIntrebare.addAll(raspunsuriIntrebare);
     }
 
-    public String getCityBranchId() {
-        return cityBranchId;
+    public String getId() {
+        return id;
     }
 
-    public void setCityBranchId(String cityBranchId) {
-        this.cityBranchId = cityBranchId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
 
-    public void setBranch(int branch) {
-        this.branch = branch;
+    public void setBranchNumber(int branchNumber) {
+        this.branchNumber = branchNumber;
+    }
+
+    public BranchDetails getBranchDetails() {
+        return branchDetails;
+    }
+
+    public void setBranchDetails(BranchDetails branchDetails) {
+        this.branchDetails = branchDetails;
     }
 
     public int getQuestionId() {
@@ -80,9 +89,9 @@ public class Branch extends RealmObject {
 
     @Override
     public boolean equals(Object obj) {
-        Branch branch = (Branch) obj;
-        return countryCode.equalsIgnoreCase(branch.getCountryCode())
-                && this.branch == branch.getBranch()
-                && questionId == branch.questionId;
+        BranchQuestionAnswer branchQuestionAnswer = (BranchQuestionAnswer) obj;
+        return countryCode.equalsIgnoreCase(branchQuestionAnswer.getCountryCode())
+                && this.branchNumber == branchQuestionAnswer.getBranchNumber()
+                && questionId == branchQuestionAnswer.questionId;
     }
 }
