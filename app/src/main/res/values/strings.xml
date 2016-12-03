@@ -57,6 +57,7 @@
     <string name="invalid_branch_number_max">Numărul maxim pentru județul %1$s este %2$s</string>
     <string name="invalid_branch_environment">Alege urban sau rural</string>
     <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
+    <string name="invalid_branch_time_in">Alege ora sosirii</string>
 
     <!-- Forms list -->
     <string name="change_branch">Schimbă secția</string>

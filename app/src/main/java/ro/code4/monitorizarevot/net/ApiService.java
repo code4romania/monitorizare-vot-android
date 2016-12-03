@@ -8,6 +8,8 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -31,8 +33,8 @@ public interface ApiService {
     @Multipart
     @POST("/api/v1/note/ataseaza")
     Call<ResponseNote> postNote(@Part MultipartBody.Part file,
-                                @Part("CodJudet") String countyCode,
-                                @Part("NumarSectie") int branchNumber,
-                                @Part("IdIntrebare") int questionId,
-                                @Part("TextNota") String description);
+                                @Part MultipartBody.Part countyCode,
+                                @Part MultipartBody.Part branchNumber,
+                                @Part MultipartBody.Part questionId,
+                                @Part MultipartBody.Part description);
 }

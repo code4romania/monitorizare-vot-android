@@ -116,14 +116,17 @@ public class NetworkService {
     }
 
     public static ResponseNote postNote(Note note) throws IOException {
-        File file = new File(note.getUriPath());
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        MultipartBody.Part body = null;
+        if (note.getUriPath() != null) {
+            File file = new File(note.getUriPath());
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        }
         Response<ResponseNote> response = getApiService().postNote(body,
-                Preferences.getCountyCode(),
-                Preferences.getBranchNumber(),
-                note.getQuestionId() != null ? note.getQuestionId() : -1,
-                note.getDescription()).execute();
+                createMultipart("CodJudet", Preferences.getCountyCode()),
+                createMultipart("NumarSectie", Preferences.getBranchNumber()),
+                createMultipart("IdIntrebare", note.getQuestionId() != null ? note.getQuestionId() : 0),
+                createMultipart("TextNota", note.getDescription())).execute();
         if (response != null) {
             if (response.isSuccessful()) {
                 return response.body();
@@ -133,5 +136,14 @@ public class NetworkService {
         } else {
             throw new IOException();
         }
+    }
+
+    private static MultipartBody.Part createMultipart(String name, int number) {
+        return createMultipart(name, String.valueOf(number));
+    }
+
+    private static MultipartBody.Part createMultipart(String name, String value) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), value);
+        return MultipartBody.Part.createFormData(name, null, requestBody);
     }
 }
