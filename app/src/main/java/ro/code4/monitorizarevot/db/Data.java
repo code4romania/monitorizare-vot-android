@@ -7,7 +7,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
-import ro.code4.monitorizarevot.net.model.CityBranch;
+import ro.code4.monitorizarevot.net.model.Branch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Question;
@@ -96,10 +96,10 @@ public class Data {
         return question;
     }
 
-    public void saveAnswerResponse(CityBranch cityBranch) {
+    public void saveAnswerResponse(Branch branch) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(cityBranch);
+        realm.copyToRealmOrUpdate(branch);
         realm.commitTransaction();
         realm.close();
     }
@@ -159,15 +159,15 @@ public class Data {
         realm.close();
     }
 
-    public CityBranch getCityBranch(Integer quetionId) {
+    public Branch getCityBranch(Integer quetionId) {
         realm = Realm.getDefaultInstance();
-        CityBranch result = realm
-                .where(CityBranch.class)
+        Branch result = realm
+                .where(Branch.class)
                 .equalTo("cityBranchId", getCityBranchId(quetionId))
                 .findFirst();
-        CityBranch cityBranch = result != null ? realm.copyFromRealm(result) : null;
+        Branch branch = result != null ? realm.copyFromRealm(result) : null;
         realm.close();
-        return cityBranch;
+        return branch;
     }
 
     @NonNull
@@ -177,14 +177,14 @@ public class Data {
                 String.valueOf(quetionId);
     }
 
-    public List<CityBranch> getCityBranchPerQuestion(Integer quetionId) {
+    public List<Branch> getCityBranchPerQuestion(Integer quetionId) {
         realm = Realm.getDefaultInstance();
-        RealmResults<CityBranch> result = realm
-                .where(CityBranch.class)
+        RealmResults<Branch> result = realm
+                .where(Branch.class)
                 .equalTo("cityBranchId", getCityBranchId(quetionId))
                 .findAll();
-        List<CityBranch> cityBranches = realm.copyFromRealm(result);
+        List<Branch> branches = realm.copyFromRealm(result);
         realm.close();
-        return cityBranches;
+        return branches;
     }
 }

@@ -23,7 +23,7 @@ public class Question extends RealmObject implements Serializable {
     private Integer idTipIntrebare;
     @Expose
     private RealmList<Answer> raspunsuriDisponibile;
-    private CityBranch cityBranch;
+    private Branch branch;
     private boolean isSynced;
 
     public Integer getId() {
@@ -54,17 +54,17 @@ public class Question extends RealmObject implements Serializable {
         isSynced = synced;
     }
 
-    public CityBranch getCityBranch() {
-        return cityBranch;
+    public Branch getBranch() {
+        return branch;
     }
 
-    public void setCityBranch(CityBranch cityBranch) {
-        this.cityBranch = cityBranch;
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     public List<ResponseAnswer> getRaspunsuriIntrebare() {
-        if(cityBranch != null){
-            return cityBranch.getRaspunsuriIntrebare();
+        if(branch != null){
+            return branch.getRaspunsuriIntrebare();
         }
         return new ArrayList<>();
     }

@@ -8,7 +8,7 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
-public class CityBranch extends RealmObject{
+public class Branch extends RealmObject {
     @PrimaryKey
     private String cityBranchId;
     private String countryCode;
@@ -16,21 +16,21 @@ public class CityBranch extends RealmObject{
     private int questionId;
     private RealmList<ResponseAnswer> raspunsuriIntrebare = new RealmList<>();
 
-    public CityBranch(){
+    public Branch(){
 
     }
 
-    public CityBranch(String codJudet, int numarSectie) {
+    public Branch(String codJudet, int numarSectie) {
         this.countryCode = codJudet;
         this.branch = numarSectie;
     }
 
-    public CityBranch(Integer questionId){
+    public Branch(Integer questionId){
         this(Preferences.getCountyCode(), Preferences.getBranchNumber());
         this.questionId = questionId;
     }
 
-    public CityBranch(Integer questionId, List<ResponseAnswer> answers) {
+    public Branch(Integer questionId, List<ResponseAnswer> answers) {
         this(questionId);
         this.raspunsuriIntrebare.clear();
         this.raspunsuriIntrebare.addAll(answers);
@@ -80,9 +80,9 @@ public class CityBranch extends RealmObject{
 
     @Override
     public boolean equals(Object obj) {
-        CityBranch cityBranch = (CityBranch) obj;
-        return countryCode.equalsIgnoreCase(cityBranch.getCountryCode())
-                && branch == cityBranch.getBranch()
-                && questionId == cityBranch.questionId;
+        Branch branch = (Branch) obj;
+        return countryCode.equalsIgnoreCase(branch.getCountryCode())
+                && this.branch == branch.getBranch()
+                && questionId == branch.questionId;
     }
 }

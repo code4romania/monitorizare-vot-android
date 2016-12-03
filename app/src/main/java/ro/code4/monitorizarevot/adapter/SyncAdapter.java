@@ -18,7 +18,7 @@ import java.util.List;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
-import ro.code4.monitorizarevot.net.model.CityBranch;
+import ro.code4.monitorizarevot.net.model.Branch;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.Question;
@@ -94,8 +94,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             List<Question> questionList = new FormUtils().getAllQuestions(form.getId());
             for (Question question : questionList) {
                 if(!question.isSynced()){
-                    for (CityBranch cityBranch : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
-                        QuestionAnswer questionAnswer = new QuestionAnswer(cityBranch, form.getId());
+                    for (Branch branch : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
+                        QuestionAnswer questionAnswer = new QuestionAnswer(branch, form.getId());
                         questionAnswers.add(questionAnswer);
                     }
                 }
