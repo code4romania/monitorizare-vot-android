@@ -5,6 +5,9 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -23,16 +26,21 @@ import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
+import ro.code4.monitorizarevot.net.model.Section;
+import ro.code4.monitorizarevot.net.model.User;
 import ro.code4.monitorizarevot.net.model.response.Ack;
 import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.net.model.response.question.QuestionResponse;
+import ro.code4.monitorizarevot.observable.ObservableRequest;
+import ro.code4.monitorizarevot.util.AuthUtils;
+import rx.Subscriber;
 
 public class NetworkService {
 
+    private static final String ACCESS_TOKEN = "access_token";
     private static ApiService mApiService;
 
     private static ApiService getApiService() {
@@ -60,7 +68,9 @@ public class NetworkService {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder().addInterceptor(interceptor);
+        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .addInterceptor(new AuthInterceptor());
         OkHttpClient client = clientBuilder.build();
 
         return new Retrofit.Builder()
@@ -161,4 +171,41 @@ public class NetworkService {
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), value);
         return MultipartBody.Part.createFormData(name, null, requestBody);
     }
+
+    public static ObservableRequest<Boolean> login(final User user) {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                try {
+                    Response<Object> response = getApiService().postAuth(user).execute();
+                    if(response.isSuccessful()){
+                        JSONObject body = new JSONObject(response.body().toString());
+                        String token = body.has(ACCESS_TOKEN) ? body.getString(ACCESS_TOKEN) : null;
+                        if(token != null){
+                            AuthUtils.initAccount(user.getPhone(), user.getPin(), token);
+
+                            subscriber.onNext(true);
+                            subscriber.onCompleted();
+                        } else {
+                            subscriber.onError(new IOException("Eroare de server"));
+                        }
+                    } else {
+                        JSONObject jsonErrorMessage = new JSONObject(response.errorBody().string());
+                        String message = jsonErrorMessage.has("error") ?
+                                jsonErrorMessage.getString("error") : response.message();
+                        subscriber.onError(new IOException(message));
+                    }
+                } catch (IOException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                } catch (JSONException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        });
+    }
+
+
+
 }

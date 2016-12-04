@@ -1,7 +1,6 @@
 package ro.code4.monitorizarevot.adapter;
 
 import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.SyncResult;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,8 +28,7 @@ import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.Logify;
 
-import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT;
-import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT_TYPE;
+import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
@@ -153,19 +150,5 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
         return extras;
-    }
-
-    private static Account createSyncAccount(Context context) {
-        Account newAccount = new Account(ACCOUNT, ACCOUNT_TYPE);
-        AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);
-        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
-            return newAccount;
-        }
-        try {
-            return accountManager.getAccountsByType(ACCOUNT_TYPE)[0];
-        } catch (SecurityException e) {
-            Toast.makeText(context, "Eroare permisiune " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-            return null;
-        }
     }
 }
