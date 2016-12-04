@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class LoginActivity extends BaseActivity {
     private EditText username;
@@ -30,6 +31,12 @@ public class LoginActivity extends BaseActivity {
                 login();
             }
         });
+
+        setAppVersion((TextView) findViewById(R.id.app_version));
+    }
+
+    private void setAppVersion(TextView appVersion) {
+        appVersion.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
     }
 
     private void login() {
