@@ -83,5 +83,5 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
         android:text="@string/button_continue"
-        android:theme="@style/buttonEmbedded" />
+        style="@style/buttonEmbedded" />
 </ro.code4.monitorizarevot.widget.ScrollViewWithFixedBottom>

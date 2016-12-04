@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="buttonDark" parent="BaseButton">
+    <style name="buttonDark" parent="buttonDarkCommon">
         <item name="android:background">@color/backgroundDark</item>
-        <item name="android:textColor">@color/textLight</item>
-        <item name="android:textSize">@dimen/button_text</item>
     </style>
-    <style name="buttonLight" parent="BaseButton">
+    <style name="buttonLight" parent="buttonLightCommon">
         <item name="android:background">@color/backgroundLight</item>
-        <item name="android:textColor">@color/textPrimary</item>
-        <item name="android:textSize">@dimen/button_text</item>
     </style>
-    <style name="buttonEmbedded" parent="BaseButton">
+    <style name="buttonEmbedded" parent="buttonEmbeddedCommon">
         <item name="android:background">@color/backgroundDark</item>
-        <item name="android:textColor">@color/textLight</item>
-        <item name="android:textSize">@dimen/button_text_embedded</item>
     </style>
 </resources>

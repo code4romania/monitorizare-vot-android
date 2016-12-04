@@ -29,7 +29,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="BaseButtonCommon">
-
+        <item name="android:textAllCaps">false</item>
     </style>
     <style name="BaseButton" parent="BaseButtonCommon">
         <!-- Can be overriden in values-v16 and values-v21 -->
@@ -37,6 +37,19 @@
 
     <!-- Overridden in values-v21 -->
     <style name="SharedElementLoginBackground" />
+
+    <style name="buttonDarkCommon" parent="BaseButton">
+        <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/button_text</item>
+    </style>
+    <style name="buttonLightCommon" parent="BaseButton">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/button_text</item>
+    </style>
+    <style name="buttonEmbeddedCommon" parent="BaseButton">
+        <item name="android:textColor">@color/textLight</item>
+        <item name="android:textSize">@dimen/button_text_embedded</item>
+    </style>
 
     <style name="menuItem">
         <item name="android:background">@drawable/background_menu_item</item>
