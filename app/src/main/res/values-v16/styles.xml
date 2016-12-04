@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="BaseButton" />
-    <style name="buttonLogin" parent="BaseButton">
-        <item name="android:background">@color/accent</item>
-        <item name="android:textColor">@color/textLight</item>
-        <item name="android:textSize">@dimen/button_text</item>
-    </style>
     <style name="buttonDark" parent="BaseButton">
         <item name="android:background">@color/backgroundDark</item>
         <item name="android:textColor">@color/textLight</item>
