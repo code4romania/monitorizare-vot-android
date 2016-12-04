@@ -13,22 +13,18 @@
         <TextView
             android:id="@+id/question_description"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/title_height"
             android:layout_marginTop="@dimen/header_margin_vertial"
             android:layout_marginBottom="@dimen/header_margin_vertial"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:textSize="@dimen/header_text"
-            android:textColor="@color/textPrimary"
-            android:gravity="center"
+            style="@style/title"
             tools:text="What's your favourite color today? What about tomorrow?"/>
 
         <FrameLayout
             android:id="@+id/question_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/question_description"
-            android:layout_above="@+id/question_buttons"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"

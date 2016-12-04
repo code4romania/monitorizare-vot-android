@@ -47,6 +47,12 @@
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 
+    <style name="title">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">@dimen/header_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="label">
         <item name="android:textSize">@dimen/label_text</item>
         <item name="android:textColor">@color/textPrimary</item>

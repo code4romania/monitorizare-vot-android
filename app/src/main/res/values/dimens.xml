@@ -16,6 +16,7 @@
     <dimen name="label_top_spacing">20dp</dimen>
     <dimen name="label_bottom_spacing">12dp</dimen>
     <dimen name="section_header_height">200dp</dimen>
+    <dimen name="title_height">150dp</dimen>
 
     <!-- Menu drawer -->
     <dimen name="menu_width">300dp</dimen>
