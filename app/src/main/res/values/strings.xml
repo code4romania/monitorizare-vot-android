@@ -16,10 +16,11 @@
     <string name="title_forms_list">Formulare</string>
     <string name="title_form">Formular %1$s</string>
     <string name="title_note">Adaugă notă</string>
+    <string name="title_guide">Ghidul observatorului</string>
 
     <!-- Menu -->
     <string name="menu_forms">Formulare</string>
-    <string name="menu_questions">Lista intrebari</string>
+    <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
 
@@ -67,7 +68,7 @@
     <string name="form_2_letter">B</string>
     <string name="form_3">Formular C</string>
     <string name="form_3_letter">C</string>
-    <string name="form_notes">Vezi/Adaugă note</string>
+    <string name="form_notes">Adaugă notă</string>
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
 
     <!-- Question details -->

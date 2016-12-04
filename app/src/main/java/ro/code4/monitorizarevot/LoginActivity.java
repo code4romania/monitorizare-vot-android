@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class LoginActivity extends BaseActivity {
-
     private EditText username;
     private EditText password;
     private Button loginButton;
@@ -45,6 +44,7 @@ public class LoginActivity extends BaseActivity {
         } else {
             startActivity(intent);
         }
+        finish(); //TODO finish after transition is complete
     }
 }
 

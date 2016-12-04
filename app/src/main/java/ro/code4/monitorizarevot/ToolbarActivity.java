@@ -3,22 +3,27 @@ package ro.code4.monitorizarevot;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.constants.Constants;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
+import ro.code4.monitorizarevot.fragment.FormsListFragment;
+import ro.code4.monitorizarevot.fragment.GuideFragment;
 
 public class ToolbarActivity extends BaseActivity implements Navigator {
+    public static final int BRANCH_SELECTION_BACKSTACK_INDEX = 0;
+
     private DrawerLayout drawerLayout;
     private View menuButton;
     private TextView toolbarTitle;
+    private String currentFragmentClassName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +37,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         initNavigationDrawer();
 
         SyncAdapter.requestSync(this);
-        navigateTo(BranchSelectionFragment.newInstance(), false);
+        navigateTo(BranchSelectionFragment.newInstance());
     }
 
     private void initNavigationDrawer() {
@@ -45,19 +50,19 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         findViewById(R.id.menu_forms).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ToolbarActivity.this, "Forms coming soon", Toast.LENGTH_SHORT).show();
+                navigateTo(FormsListFragment.newInstance());
             }
         });
-        findViewById(R.id.menu_questions).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.menu_change_branch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ToolbarActivity.this, "Questions coming soon", Toast.LENGTH_SHORT).show();
+                navigateBackUntil(BRANCH_SELECTION_BACKSTACK_INDEX);
             }
         });
         findViewById(R.id.menu_guide).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ToolbarActivity.this, "Guide coming soon", Toast.LENGTH_SHORT).show();
+                navigateTo(GuideFragment.newInstance());
             }
         });
         findViewById(R.id.menu_call).setOnClickListener(new View.OnClickListener() {
@@ -81,23 +86,66 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
     @Override
     public void navigateTo(BaseFragment fragment, boolean addToBackStack) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        if (addToBackStack) {
-            transaction.addToBackStack(fragment.getClass().getName());
+        String fragmentClassName = fragment.getClass().getName();
+        if (currentFragmentClassName == null ||
+                !currentFragmentClassName.equals(fragmentClassName)) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.container, fragment);
+            if (addToBackStack) {
+                transaction.addToBackStack(fragmentClassName);
+            }
+            transaction.commit();
+            currentFragmentClassName = fragmentClassName;
         }
-        transaction.commit();
+        closeDrawer();
     }
 
     @Override
     public void navigateBack() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+            onBackPressed();
+        }
+    }
+
+    @Override
+    public void navigateBackUntil(int backstackIndex) {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        while (count > backstackIndex + 1) {
+            onBackPressed();
+            count = getSupportFragmentManager().getBackStackEntryCount();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            super.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                currentFragmentClassName = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
+            }
+        } else {
+            finish();
         }
     }
 
     @Override
     public void setTitle(String title) {
         toolbarTitle.setText(title);
+    }
+
+    @Override
+    public void setMenu(boolean isEnabled) {
+        menuButton.setVisibility(isEnabled ?
+                View.VISIBLE :
+                View.GONE);
+        drawerLayout.setDrawerLockMode(isEnabled ?
+                DrawerLayout.LOCK_MODE_UNLOCKED :
+                DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    private void closeDrawer() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
 }

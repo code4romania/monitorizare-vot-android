@@ -31,7 +31,8 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.Login"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:noHistory="true"/>
         <activity
             android:name=".ToolbarActivity"
             android:theme="@style/AppTheme"

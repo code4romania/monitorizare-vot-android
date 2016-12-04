@@ -84,6 +84,11 @@ public class BranchSelectionFragment extends BaseFragment {
         return getString(R.string.title_branch_selection);
     }
 
+    @Override
+    public boolean withMenu() {
+        return false;
+    }
+
     private void persistSelection() {
         Preferences.saveCountyCode(County.getCountyByIndex(countySpinner.getSelectedItemPosition()).getCode());
         Preferences.saveBranchNumber(getBranchNumber());

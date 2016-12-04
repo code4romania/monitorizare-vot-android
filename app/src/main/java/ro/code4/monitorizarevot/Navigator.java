@@ -10,5 +10,9 @@ public interface Navigator {
 
     void navigateBack();
 
+    void navigateBackUntil(int backstackIndex);
+
     void setTitle(String title);
+
+    void setMenu(boolean isEnabled);
 }

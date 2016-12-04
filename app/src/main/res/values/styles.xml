@@ -10,6 +10,8 @@
         <item name="@attr/customAnswerCheckbox">@style/checkbox</item>
     </style>
 
+    <!-- TODO set activity background color to primary color, so that the user knows it is loading -->
+
     <style name="AppTheme" parent="AppTheme.Common">
         <!-- Can be overriden in values-v16 and values-v21 -->
     </style>
@@ -35,6 +37,15 @@
 
     <!-- Overridden in values-v21 -->
     <style name="SharedElementLoginBackground" />
+
+    <style name="menuItem">
+        <item name="android:background">@drawable/background_menu_item</item>
+        <item name="android:paddingStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
 
     <style name="label">
         <item name="android:textSize">@dimen/label_text</item>

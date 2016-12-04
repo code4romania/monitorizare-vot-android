@@ -1,6 +1,5 @@
 package ro.code4.monitorizarevot;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -36,6 +35,7 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setTitle(getTitle());
+        setMenu(withMenu());
     }
 
     @Override
@@ -60,11 +60,28 @@ public abstract class BaseFragment extends Fragment implements Navigator {
     }
 
     @Override
+    public void navigateBackUntil(int backstackIndex) {
+        navigator.navigateBackUntil(backstackIndex);
+    }
+
+    @Override
     public void setTitle(String title) {
         navigator.setTitle(title);
     }
 
+    @Override
+    public void setMenu(boolean isEnabled) {
+        navigator.setMenu(isEnabled);
+    }
+
     public abstract String getTitle();
+
+    /**
+     * Return false from subclass to hide the hamburger icon
+     */
+    public boolean withMenu() {
+        return true;
+    }
 
     protected boolean hasPermission(String permission) {
         return ContextCompat.checkSelfPermission(getActivity(), permission)

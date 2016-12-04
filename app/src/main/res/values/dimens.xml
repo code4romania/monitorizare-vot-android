@@ -17,6 +17,10 @@
     <dimen name="label_bottom_spacing">12dp</dimen>
     <dimen name="section_header_height">200dp</dimen>
 
+    <!-- Menu drawer -->
+    <dimen name="menu_width">300dp</dimen>
+    <dimen name="menu_item_height">60dp</dimen>
+
     <!-- Change branch bar -->
     <dimen name="branch_bar_padding_vertical">10dp</dimen>
     <dimen name="branch_bar_icon">32dp</dimen>

@@ -25,6 +25,8 @@ import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.util.DateUtils;
 import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
+import static ro.code4.monitorizarevot.ToolbarActivity.BRANCH_SELECTION_BACKSTACK_INDEX;
+
 public class BranchDetailsFragment extends BaseFragment implements View.OnClickListener {
     private RadioGroup environmentRadioGroup, sexRadioGroup;
     private RadioButton urban, rural, male, female;
@@ -88,7 +90,7 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
         barLayout.setChangeBranchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateBack();
+                navigateBackUntil(BRANCH_SELECTION_BACKSTACK_INDEX);
             }
         });
     }
@@ -170,5 +172,10 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
     @Override
     public String getTitle() {
         return getString(R.string.title_branch_details);
+    }
+
+    @Override
+    public boolean withMenu() {
+        return false;
     }
 }

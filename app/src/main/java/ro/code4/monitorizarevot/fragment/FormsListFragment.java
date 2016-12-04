@@ -14,6 +14,8 @@ import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
+import static ro.code4.monitorizarevot.ToolbarActivity.BRANCH_SELECTION_BACKSTACK_INDEX;
+
 public class FormsListFragment extends BaseFragment implements View.OnClickListener {
     public static FormsListFragment newInstance() {
         return new FormsListFragment();
@@ -39,8 +41,7 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
         barLayout.setChangeBranchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigateBack();
-                navigateBack();
+                navigateBackUntil(BRANCH_SELECTION_BACKSTACK_INDEX);
             }
         });
     }
