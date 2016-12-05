@@ -59,19 +59,19 @@ public class LoginActivity extends BaseActivity {
         String userName = username.getText().toString();
         String pass = password.getText().toString();
 
-        showLoading();
-
         if(!TextUtils.isEmpty(userName.trim()) && !TextUtils.isEmpty(pass.trim())){
-            String udid = Settings.Secure.getString(getContentResolver(),
-                    Settings.Secure.ANDROID_ID);
-            User user = new User(userName, pass, udid);
+            showLoading();
+            User user = new User(userName, pass, getUdid());
             mListenerDetacher = NetworkService.login(user).startRequest(new LoginSubscriber());
         } else {
             MediaPickerErrorDialog
                     .newInstance(getString(R.string.empty_credential_message))
                     .show(getSupportFragmentManager(), null);
         }
+    }
 
+    private String getUdid() {
+        return Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
     private class LoginSubscriber extends ObservableListener<Boolean> {
