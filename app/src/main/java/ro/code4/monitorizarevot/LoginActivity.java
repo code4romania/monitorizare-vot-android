@@ -59,6 +59,8 @@ public class LoginActivity extends BaseActivity {
         String userName = username.getText().toString();
         String pass = password.getText().toString();
 
+        showLoading();
+
         if(!TextUtils.isEmpty(userName.trim()) && !TextUtils.isEmpty(pass.trim())){
             String udid = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
@@ -76,6 +78,7 @@ public class LoginActivity extends BaseActivity {
         @Override
         public void onError(Throwable e) {
             super.onError(e);
+            hideLoading();
             MediaPickerErrorDialog
                     .newInstance(e.getMessage())
                     .show(getSupportFragmentManager(), null);
@@ -83,6 +86,7 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onSuccess() {
+            hideLoading();
             Intent intent = new Intent(LoginActivity.this, ToolbarActivity.class);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options;
