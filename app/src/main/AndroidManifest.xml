@@ -23,7 +23,8 @@
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

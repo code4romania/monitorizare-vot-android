@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme.Common" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeCommon" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
@@ -12,7 +12,7 @@
 
     <!-- TODO set activity background color to primary color, so that the user knows it is loading -->
 
-    <style name="AppTheme" parent="AppTheme.Common">
+    <style name="AppTheme" parent="AppThemeCommon">
         <!-- Can be overriden in values-v16 and values-v21 -->
     </style>
 

@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="AppTheme.Common">
+    <style name="AppTheme" parent="AppThemeCommon">
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowEnterTransition">@transition/fade_in</item>
         <item name="android:windowExitTransition">@transition/fade_out</item>
+    </style>
+
+    <style name="AppTheme.Start">
+        <item name="android:windowBackground">@drawable/ic_login_bkg</item>
     </style>
 
     <style name="AppTheme.Login" parent="AppTheme.Login.Common">
