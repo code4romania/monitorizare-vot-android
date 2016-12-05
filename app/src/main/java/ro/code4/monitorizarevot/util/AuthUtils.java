@@ -40,12 +40,17 @@ public class AuthUtils {
     }
 
     public static void removeAccount() {
-        AccountManager accountManager = AccountManager.get(App.getContext());
-        Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);
-        for (Account account : accounts) {
-            if (accounts[0].type.equals(ACCOUNT_TYPE)) {
-                accountManager.removeAccount(account, null, null);
+        Context context = App.getContext();
+        try {
+            AccountManager accountManager = AccountManager.get(context);
+            Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);
+            for (Account account : accounts) {
+                if (accounts[0].type.equals(ACCOUNT_TYPE)) {
+                    accountManager.removeAccount(account, null, null);
+                }
             }
+        } catch (SecurityException e) {
+            Toast.makeText(context, "Eroare permisiune " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

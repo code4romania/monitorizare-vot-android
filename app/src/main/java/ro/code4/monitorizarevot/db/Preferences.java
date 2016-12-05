@@ -45,4 +45,7 @@ public class Preferences {
         return Prefs.getString(PREFS_TOKEN, null);
     }
 
+    public static boolean hasCredentials() {
+        return getUsername() != null && getToken() != null;
+    }
 }
