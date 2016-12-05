@@ -28,7 +28,7 @@ public class AuthInterceptor implements Interceptor {
             return request
                     .newBuilder()
                     .removeHeader(AUTHORIZATION_KEY)
-                    .addHeader(AUTHORIZATION_KEY, token)
+                    .addHeader(AUTHORIZATION_KEY, "Bearer " + token)
                     .build();
         }
         return request;
