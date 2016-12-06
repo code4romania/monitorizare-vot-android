@@ -87,7 +87,6 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         if (currentQuestion < questions.size() - 1) {
             showQuestion(currentQuestion + 1);
         } else {
-            //TODO form is done
             SyncAdapter.requestUploadSync(getActivity());
             navigateBack();
         }

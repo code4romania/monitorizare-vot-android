@@ -37,6 +37,15 @@ public class Data {
 
     }
 
+    public void deleteAnswersAndNotes() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.delete(BranchQuestionAnswer.class);
+        realm.delete(Note.class);
+        realm.commitTransaction();
+        realm.close();
+    }
+
     public BranchDetails getCurrentBranchDetails() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchDetails> results = realm
@@ -87,16 +96,6 @@ public class Data {
         List<Note> notes = realm.copyFromRealm(result);
         realm.close();
         return notes;
-    }
-
-    public List<Question> getUnSyncedQuestions(){
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<Question> questions = realm.where(Question.class)
-                .equalTo("isSynced", false)
-                .findAll();
-        List<Question> unSyncedQuestions = realm.copyFromRealm(questions);
-        realm.close();
-        return unSyncedQuestions;
     }
 
     public Question getQuestion(Integer questionId) {

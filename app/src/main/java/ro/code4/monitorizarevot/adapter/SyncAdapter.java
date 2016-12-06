@@ -123,8 +123,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             VersionResponse versionResponse = NetworkService.doGetFormVersion();
             Version existingVersion = Data.getInstance().getFormVersion();
             if(!versionsEqual(existingVersion, versionResponse.getVersion())) {
+                Data.getInstance().deleteAnswersAndNotes();
                 Data.getInstance().saveFormsVersion(versionResponse.getVersion());
-                // TODO clear any saved question when definition changes
                 getForms();
             }
         } catch (IOException e){

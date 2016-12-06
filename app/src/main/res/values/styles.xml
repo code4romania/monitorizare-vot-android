@@ -10,8 +10,6 @@
         <item name="@attr/customAnswerCheckbox">@style/checkbox</item>
     </style>
 
-    <!-- TODO set activity background color to primary color, so that the user knows it is loading -->
-
     <style name="AppTheme" parent="AppThemeCommon">
         <!-- Can be overriden in values-v16 and values-v21 -->
     </style>
