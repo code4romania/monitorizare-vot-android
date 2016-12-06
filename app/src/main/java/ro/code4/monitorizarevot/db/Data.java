@@ -20,7 +20,6 @@ import ro.code4.monitorizarevot.net.model.Version;
 public class Data {
     private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
     private static Data instance;
-    private Realm realm;
 
     public static Data getInstance() {
         if (instance == null) {
@@ -39,7 +38,7 @@ public class Data {
     }
 
     public BranchDetails getCurrentBranchDetails() {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchDetails> results = realm
                 .where(BranchDetails.class)
                 .equalTo("codJudet", Preferences.getCountyCode())
@@ -63,7 +62,7 @@ public class Data {
     }
 
     public Form getForm(String formId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<Form> results = realm
                 .where(Form.class)
                 .equalTo("id", formId)
@@ -81,7 +80,7 @@ public class Data {
     }
 
     public List<Note> getNotes() {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<Note> result = realm
                 .where(Note.class)
                 .findAll();
@@ -91,7 +90,7 @@ public class Data {
     }
 
     public List<Question> getUnSyncedQuestions(){
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<Question> questions = realm.where(Question.class)
                 .equalTo("isSynced", false)
                 .findAll();
@@ -101,7 +100,7 @@ public class Data {
     }
 
     public Question getQuestion(Integer questionId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         Question result = realm
                 .where(Question.class)
                 .equalTo("idIntrebare", questionId)
@@ -112,7 +111,7 @@ public class Data {
     }
 
     public void saveAnswerResponse(BranchQuestionAnswer branchQuestionAnswer) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(branchQuestionAnswer);
         realm.commitTransaction();
@@ -120,7 +119,7 @@ public class Data {
     }
 
     public void saveBranchDetails(BranchDetails branchDetails) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(branchDetails);
         realm.commitTransaction();
@@ -128,7 +127,7 @@ public class Data {
     }
 
     public void saveFormDefinition(String formId, List<Section> sections) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Form form = new Form();
         form.setId(formId);
@@ -140,7 +139,7 @@ public class Data {
     }
 
     public void saveFormsVersion(Version version) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(version);
         realm.commitTransaction();
@@ -148,7 +147,7 @@ public class Data {
     }
 
     public void saveNote(String uriPath, String description, Integer questionId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Note note = realm.createObject(Note.class, getNextPrimaryKey(realm, Note.class));
         note.setUriPath(uriPath);
@@ -159,7 +158,7 @@ public class Data {
     }
 
     public void updateQuestionStatus(Integer questionId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         Question question = realm
                 .where(Question.class)
                 .equalTo("idIntrebare", questionId)
@@ -174,7 +173,7 @@ public class Data {
     }
 
     public void deleteNote(Note note) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         RealmResults<Note> results = realm.where(Note.class)
                 .equalTo("id", note.getId())
@@ -185,7 +184,7 @@ public class Data {
     }
 
     public BranchQuestionAnswer getCityBranch(Integer quetionId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         BranchQuestionAnswer result = realm
                 .where(BranchQuestionAnswer.class)
                 .equalTo("id", getCityBranchId(quetionId))
@@ -203,7 +202,7 @@ public class Data {
     }
 
     public List<BranchQuestionAnswer> getCityBranchPerQuestion(Integer quetionId) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchQuestionAnswer> result = realm
                 .where(BranchQuestionAnswer.class)
                 .equalTo("id", getCityBranchId(quetionId))
@@ -214,7 +213,7 @@ public class Data {
     }
 
     public <T extends Syncable & RealmModel> List<T> getUnsyncedList(Class<T> objectClass) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         RealmResults<T> results = realm
                 .where(objectClass)
                 .equalTo("isSynced", false)
@@ -233,7 +232,7 @@ public class Data {
     }
 
     private <T extends Syncable & RealmModel> void markSyncable(T object, boolean isSynced) {
-        realm = Realm.getDefaultInstance();
+        Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         object.setSynced(isSynced);
         realm.copyToRealmOrUpdate(object);
