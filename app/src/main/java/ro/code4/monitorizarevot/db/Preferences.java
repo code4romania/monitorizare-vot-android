@@ -2,6 +2,9 @@ package ro.code4.monitorizarevot.db;
 
 import com.pixplicity.easyprefs.library.Prefs;
 
+import ro.code4.monitorizarevot.observable.ObservableRequest;
+import rx.Subscriber;
+
 public class Preferences {
     private static final String PREFS_COUNTY_CODE = "PREFS_COUNTY_CODE";
     private static final String PREFS_BRANCH_NUMBER = "PREFS_BRANCH_NUMBER";
@@ -47,5 +50,15 @@ public class Preferences {
 
     public static boolean hasCredentials() {
         return getUsername() != null && getToken() != null;
+    }
+
+    public static ObservableRequest<Boolean> isAlreadyLoggedIn() {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(Preferences.hasCredentials());
+                subscriber.onCompleted();
+            }
+        });
     }
 }

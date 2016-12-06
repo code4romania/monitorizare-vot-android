@@ -15,7 +15,7 @@ public abstract class ObservableListener<T> implements Observer<T> {
     }
 
     @Override
-    public final void onNext(T t) {
+    public void onNext(T t) {
     }
 
     public abstract void onSuccess();
