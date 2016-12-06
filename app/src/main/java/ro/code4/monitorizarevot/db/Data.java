@@ -130,9 +130,11 @@ public class Data {
     public void saveFormDefinition(String formId, List<Section> sections) {
         realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        Form form = realm.createObject(Form.class, formId);
+        Form form = new Form();
+        form.setId(formId);
         form.setSections(new RealmList<Section>());
         form.getSections().addAll(sections);
+        realm.copyToRealmOrUpdate(form);
         realm.commitTransaction();
         realm.close();
     }
