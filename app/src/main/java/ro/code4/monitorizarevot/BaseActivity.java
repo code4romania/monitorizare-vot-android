@@ -1,12 +1,14 @@
 package ro.code4.monitorizarevot;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.inputmethod.InputMethodManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -15,9 +17,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import ro.code4.monitorizarevot.net.model.LogoutListener;
+import ro.code4.monitorizarevot.util.ActivityOperations;
 import ro.code4.monitorizarevot.util.AuthUtils;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements ActivityOperations {
     private ProgressDialog loadingIndicator;
 
     @Override
@@ -67,5 +70,12 @@ public class BaseActivity extends AppCompatActivity {
         startActivity(intent);
 
         this.finish();
+    }
+
+    public void hideFocusedKeyboard() {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
     }
 }

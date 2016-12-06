@@ -83,6 +83,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
 
     @Override
     public void onNext() {
+        hideFocusedKeyboard();
         if (currentQuestion < questions.size() - 1) {
             showQuestion(currentQuestion + 1);
         } else {
@@ -100,5 +101,4 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
             Data.getInstance().saveAnswerResponse(new BranchQuestionAnswer(question.getId(), answers));
         }
     }
-
 }

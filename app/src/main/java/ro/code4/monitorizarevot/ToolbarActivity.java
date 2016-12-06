@@ -1,14 +1,15 @@
 package ro.code4.monitorizarevot;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
@@ -97,6 +98,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
             transaction.commit();
             currentFragmentClassName = fragmentClassName;
         }
+        hideFocusedKeyboard();
         closeDrawer();
     }
 
@@ -119,6 +121,7 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            hideFocusedKeyboard();
             super.onBackPressed();
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 currentFragmentClassName = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();

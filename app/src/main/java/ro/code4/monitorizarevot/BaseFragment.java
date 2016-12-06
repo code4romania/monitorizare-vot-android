@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
 import io.realm.Realm;
+import ro.code4.monitorizarevot.util.ActivityOperations;
 
-public abstract class BaseFragment extends Fragment implements Navigator {
+public abstract class BaseFragment extends Fragment implements Navigator, ActivityOperations {
     private Navigator navigator;
+    private ActivityOperations operations;
     private Realm realm;
 
     @Override
@@ -22,6 +24,11 @@ public abstract class BaseFragment extends Fragment implements Navigator {
             throw new IllegalStateException("Must be attached to an activity implementing Navigator");
         } else {
             this.navigator = (Navigator) context;
+        }
+        if (!(context instanceof ActivityOperations)) {
+            throw new IllegalStateException("Must be attached to an activity implementing ActivityOperations");
+        } else {
+            this.operations = (ActivityOperations) context;
         }
     }
 
@@ -97,5 +104,10 @@ public abstract class BaseFragment extends Fragment implements Navigator {
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{ permission },
                 requestCode);
+    }
+
+    @Override
+    public void hideFocusedKeyboard() {
+        operations.hideFocusedKeyboard();
     }
 }
