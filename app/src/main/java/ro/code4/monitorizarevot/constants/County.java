@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.constants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum County {
@@ -79,5 +80,14 @@ public enum County {
 
     public static County getCountyByIndex(int index) {
         return County.values()[index];
+    }
+
+    public static int getIndexByCountyCode(String countyCode) {
+        for (County county : values()) {
+            if (county.getCode().equals(countyCode)) {
+                return Arrays.asList(values()).indexOf(county);
+            }
+        }
+        return -1;
     }
 }

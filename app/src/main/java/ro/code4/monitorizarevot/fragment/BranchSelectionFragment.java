@@ -41,6 +41,16 @@ public class BranchSelectionFragment extends BaseFragment {
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (Preferences.hasBranch()) {
+            countySpinner.setSelection(County.getIndexByCountyCode(Preferences.getCountyCode()));
+            branchNumber.setText(String.valueOf(Preferences.getBranchNumber()));
+            branchNumber.setEnabled(true);
+        }
+    }
+
     private void setCountiesDropdown(Spinner dropdown) {
         ArrayAdapter<String> countyAdapter = new ArrayAdapter<>(getActivity(),
                 R.layout.support_simple_spinner_dropdown_item, County.getCountiesNames());

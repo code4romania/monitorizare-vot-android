@@ -52,6 +52,10 @@ public class Preferences {
         return getUsername() != null && getToken() != null;
     }
 
+    public static boolean hasBranch() {
+        return getCountyCode() != null && getBranchNumber() != -1;
+    }
+
     public static ObservableRequest<Boolean> isAlreadyLoggedIn() {
         return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
             @Override
