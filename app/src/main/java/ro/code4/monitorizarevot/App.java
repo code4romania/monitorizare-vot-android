@@ -6,6 +6,8 @@ import android.content.ContextWrapper;
 
 import com.pixplicity.easyprefs.library.Prefs;
 
+import net.hockeyapp.android.CrashManager;
+
 import io.realm.Realm;
 
 public class App extends Application {
@@ -15,6 +17,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        CrashManager.register(this);
 
         Realm.init(this);
         new Prefs.Builder()

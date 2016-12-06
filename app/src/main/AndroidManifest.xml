@@ -74,6 +74,9 @@
             android:name="ro.code4.monitorizarevot.util.StubProvider"
             android:exported="false"
             android:syncable="true"/>
+
+        <meta-data android:name="net.hockeyapp.android.appIdentifier"
+            android:value="91a1da8261874c718ff1caebfceb5fd1" />
     </application>
 
 </manifest>
