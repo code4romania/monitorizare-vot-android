@@ -50,49 +50,57 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         Logify.d("SyncAdapter", "performing sync");
 
-        try {
-            if (extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
-                doUpload();
-            } else {
-                doSync();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (extras.getBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, false)) {
+            doUpload();
+        } else {
+            doSync();
         }
     }
 
-    private void doUpload() throws IOException {
+    private void doUpload(){
         postBranchDetails();
         postQuestionAnswers();
         postNotes();
     }
 
-    private void doSync() throws IOException {
+    private void doSync() {
         doUpload();
         getFormsDefinition();
     }
 
-    private void postBranchDetails() throws IOException {
+    private void postBranchDetails(){
         List<BranchDetails> branchDetailsList = Data.getInstance().getUnsyncedList(BranchDetails.class);
         for (BranchDetails branchDetails : branchDetailsList) {
-            NetworkService.postBranchDetails(branchDetails);
-            Data.getInstance().markSynced(branchDetails);   //TODO move this to success if throws is removed
+            try{
+                NetworkService.postBranchDetails(branchDetails);
+                Data.getInstance().markSynced(branchDetails);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void postQuestionAnswers() throws IOException {
-        List<QuestionAnswer> questionAnswers = new ArrayList<>();
-        getAnswersFromForm(Data.getInstance().getFormA(), questionAnswers);
-        getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
-        getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
-        NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
+    private void postQuestionAnswers() {
+        try{
+            List<QuestionAnswer> questionAnswers = new ArrayList<>();
+            getAnswersFromForm(Data.getInstance().getFormA(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
+            NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
-    private void postNotes() throws IOException {
+    private void postNotes() {
         List<Note> notes = Data.getInstance().getNotes();
         for (Note note : notes) {
-            NetworkService.postNote(note);
-            Data.getInstance().deleteNote(note);    //TODO move this to success if throws is removed
+            try {
+                NetworkService.postNote(note);
+                Data.getInstance().deleteNote(note);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -110,13 +118,17 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private void getFormsDefinition() throws IOException {
-        VersionResponse versionResponse = NetworkService.doGetFormVersion();
-        Version existingVersion = Data.getInstance().getFormVersion();
-        if(!versionsEqual(existingVersion, versionResponse.getVersion())) {
-            Data.getInstance().saveFormsVersion(versionResponse.getVersion());
-            // TODO clear any saved question when definition changes
-            getForms();
+    private void getFormsDefinition() {
+        try {
+            VersionResponse versionResponse = NetworkService.doGetFormVersion();
+            Version existingVersion = Data.getInstance().getFormVersion();
+            if(!versionsEqual(existingVersion, versionResponse.getVersion())) {
+                Data.getInstance().saveFormsVersion(versionResponse.getVersion());
+                // TODO clear any saved question when definition changes
+                getForms();
+            }
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
