@@ -145,16 +145,19 @@ public class Data {
         realm.close();
     }
 
-    public void saveNote(String uriPath, String description, Integer questionId) {
+    public Note saveNote(String uriPath, String description, Integer questionId) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         Note note = realm.createObject(Note.class, getNextPrimaryKey(realm, Note.class));
         note.setUriPath(uriPath);
         note.setDescription(description);
         note.setQuestionId(questionId);
+        Note copyNote = realm.copyFromRealm(note);
         realm.commitTransaction();
         realm.close();
+        return copyNote;
     }
+
 
     public void updateQuestionStatus(Integer questionId) {
         Realm realm = Realm.getDefaultInstance();

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -206,6 +207,37 @@ public class NetworkService {
         });
     }
 
+    public static ObservableRequest<Boolean> syncCurrentQuestion(final QuestionAnswer questionAnswer) {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                try {
+                    ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(Arrays.asList(questionAnswer));
+                    postQuestionAnswer(responseMapper);
+                    subscriber.onNext(true);
+                    subscriber.onCompleted();
+                } catch (IOException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        });
+    }
 
 
+    public static ObservableRequest<Boolean>  syncCurrentNote(final Note note) {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                try {
+                    postNote(note);
+                    subscriber.onNext(true);
+                    subscriber.onCompleted();
+                } catch (IOException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        });
+    }
 }

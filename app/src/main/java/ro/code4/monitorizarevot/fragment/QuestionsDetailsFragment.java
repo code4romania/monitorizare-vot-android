@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -13,12 +12,15 @@ import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Form;
 import ro.code4.monitorizarevot.net.model.Question;
+import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
+import ro.code4.monitorizarevot.observable.GeneralSubscriber;
 import ro.code4.monitorizarevot.presenter.QuestionsDetailsPresenter;
 import ro.code4.monitorizarevot.util.FormUtils;
+import ro.code4.monitorizarevot.util.NetworkUtils;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 
 public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
@@ -45,9 +47,8 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Form form = Data.getInstance().getForm(getArguments().getString(ARGS_FORM_ID));
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
-        this.questions = FormUtils.getAllQuestions(form.getId());
+        this.questions = FormUtils.getAllQuestions(getArguments().getString(ARGS_FORM_ID));
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
@@ -97,7 +98,18 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
         if (answers.size() > 0) {
             Question question = questions.get(currentQuestion);
-            Data.getInstance().saveAnswerResponse(new BranchQuestionAnswer(question.getId(), answers));
+            BranchQuestionAnswer branchQuestionAnswer = new BranchQuestionAnswer(question.getId(), answers);
+            Data.getInstance().saveAnswerResponse(branchQuestionAnswer);
+
+            syncCurrentData(branchQuestionAnswer);
+        }
+    }
+
+    private void syncCurrentData(BranchQuestionAnswer branchQuestionAnswer){
+        if(NetworkUtils.isOnline(getActivity())){
+            QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer,
+                    getArguments().getString(ARGS_FORM_ID));
+            NetworkService.syncCurrentQuestion(questionAnswer).startRequest(new GeneralSubscriber());
         }
     }
 }

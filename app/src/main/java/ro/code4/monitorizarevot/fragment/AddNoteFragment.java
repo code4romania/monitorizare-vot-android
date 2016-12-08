@@ -16,7 +16,10 @@ import java.util.List;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Data;
+import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.Note;
+import ro.code4.monitorizarevot.observable.GeneralSubscriber;
+import ro.code4.monitorizarevot.util.NetworkUtils;
 import ro.code4.monitorizarevot.widget.FileSelectorButton;
 import vn.tungdx.mediapicker.MediaItem;
 import vn.tungdx.mediapicker.MediaOptions;
@@ -128,10 +131,17 @@ public class AddNoteFragment extends BaseFragment {
     }
 
     private void saveNote(MediaItem item) {
-        Data.getInstance().saveNote(
+        Note note = Data.getInstance().saveNote(
                 mediaItem != null ? item.getPathOrigin(getActivity()) : null,
                 description.getText().toString(),
                 questionId);
+        syncCurrentNote(note);
+    }
+
+    private void syncCurrentNote(Note note){
+        if(NetworkUtils.isOnline(getActivity())){
+            NetworkService.syncCurrentNote(note).startRequest(new GeneralSubscriber());
+        }
     }
 
     private String getFileName(MediaItem item) {
