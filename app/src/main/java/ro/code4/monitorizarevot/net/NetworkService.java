@@ -40,7 +40,7 @@ import ro.code4.monitorizarevot.util.AuthUtils;
 import rx.Subscriber;
 
 public class NetworkService {
-
+    private static final int NUMBER_OF_RETRIES = 3;
     private static final String ACCESS_TOKEN = "access_token";
     private static ApiService mApiService;
 
@@ -96,7 +96,22 @@ public class NetworkService {
         } else {
             throw new IOException();
         }
+    }
 
+    public static ObservableRequest<Boolean> doGetForm(final String formId) {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                try {
+                    doGetForm(formId, NUMBER_OF_RETRIES);
+                    subscriber.onNext(true);
+                    subscriber.onCompleted();
+                } catch (IOException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        });
     }
 
     public static VersionResponse doGetFormVersion() throws IOException {

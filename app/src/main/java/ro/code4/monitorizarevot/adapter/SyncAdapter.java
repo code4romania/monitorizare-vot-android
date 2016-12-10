@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ro.code4.monitorizarevot.LoginActivity;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
@@ -25,14 +26,13 @@ import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
 import ro.code4.monitorizarevot.net.model.Version;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
+import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.Logify;
 
 import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
-    private static final int NUMBER_OF_RETRIES = 3;
-
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         init(context);
@@ -125,8 +125,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             Version existingVersion = Data.getInstance().getFormVersion();
             if(!versionsEqual(existingVersion, versionResponse.getVersion())) {
                 Data.getInstance().deleteAnswersAndNotes();
-                Data.getInstance().saveFormsVersion(versionResponse.getVersion());
-                getForms();
+                getForms(versionResponse.getVersion());
             }
         } catch (IOException e){
             e.printStackTrace();
@@ -140,10 +139,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 && before.getC().equals(current.getC());
     }
 
-    private void getForms() throws IOException {
-        NetworkService.doGetForm("A", NUMBER_OF_RETRIES);
-        NetworkService.doGetForm("B", NUMBER_OF_RETRIES);
-        NetworkService.doGetForm("C", NUMBER_OF_RETRIES);
+    private void getForms(Version version) throws IOException {
+        FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(version, 3);
+        NetworkService.doGetForm("A").startRequest(subscriber);
+        NetworkService.doGetForm("B").startRequest(subscriber);
+        NetworkService.doGetForm("C").startRequest(subscriber);
     }
 
     public static void requestSync(Context context) {
@@ -163,5 +163,33 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
         return extras;
+    }
+
+    private class FormDefinitionSubscriber extends ObservableListener<Boolean> {
+        private final Version version;
+        private final int numberOfRequests;
+        private int successCount = 0;
+
+        FormDefinitionSubscriber(Version version, int numberOfRequests) {
+            this.version = version;
+            this.numberOfRequests = numberOfRequests;
+        }
+
+        @Override
+        public void onSuccess() {
+            if (successCount == numberOfRequests) {
+                Data.getInstance().saveFormsVersion(version);
+            }
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(Boolean aBoolean) {
+            successCount++;
+        }
     }
 }
