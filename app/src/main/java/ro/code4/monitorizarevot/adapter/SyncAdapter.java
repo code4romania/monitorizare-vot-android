@@ -31,6 +31,7 @@ import ro.code4.monitorizarevot.util.Logify;
 import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+    private static final int NUMBER_OF_RETRIES = 3;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -140,9 +141,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void getForms() throws IOException {
-        NetworkService.doGetForm("A");
-        NetworkService.doGetForm("B");
-        NetworkService.doGetForm("C");
+        NetworkService.doGetForm("A", NUMBER_OF_RETRIES);
+        NetworkService.doGetForm("B", NUMBER_OF_RETRIES);
+        NetworkService.doGetForm("C", NUMBER_OF_RETRIES);
     }
 
     public static void requestSync(Context context) {

@@ -81,13 +81,17 @@ public class NetworkService {
                 .build();
     }
 
-    public static void doGetForm(String formId) throws IOException {
+    public static void doGetForm(String formId, int retries) throws IOException {
         Response<List<Section>> listResponse = getApiService().getForm(formId).execute();
         if(listResponse != null){
             if (listResponse.isSuccessful()) {
                 Data.getInstance().saveFormDefinition(formId, listResponse.body());
             } else {
-                throw new IOException(listResponse.message() + " " + listResponse.code());
+                if (retries > 0) {
+                    doGetForm(formId, retries - 1);
+                } else {
+                    throw new IOException(listResponse.message() + " " + listResponse.code());
+                }
             }
         } else {
             throw new IOException();
