@@ -6,7 +6,7 @@
         <item name="android:windowExitTransition">@transition/fade_out</item>
     </style>
 
-    <style name="AppTheme.Start">
+    <style name="AppTheme.Start" parent="AppTheme">
         <item name="android:windowBackground">@drawable/ic_login_bkg</item>
     </style>
 

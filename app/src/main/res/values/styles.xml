@@ -26,6 +26,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.Start" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/ic_login_bkg</item>
+    </style>
+
     <style name="BaseButtonCommon">
         <item name="android:textAllCaps">false</item>
     </style>
