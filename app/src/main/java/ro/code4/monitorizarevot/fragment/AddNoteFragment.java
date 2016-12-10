@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ro.code4.monitorizarevot.App;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Data;
@@ -103,8 +104,7 @@ public class AddNoteFragment extends BaseFragment {
                 if (hasGrantedPermission(grantResults)) {
                     openMediaPicker();
                 } else {
-                    navigateBack();
-                    Toast.makeText(getActivity(), "Permisiunea este necesară pentru a putea selecta o resursă", Toast.LENGTH_LONG).show();
+                    Toast.makeText(App.getContext(), "Permisiunea este necesară pentru a putea selecta o resursă", Toast.LENGTH_LONG).show();
                 }
                 break;
             }
