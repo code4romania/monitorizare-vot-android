@@ -3,6 +3,7 @@ package ro.code4.monitorizarevot.util;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import ro.code4.monitorizarevot.App;
 import ro.code4.monitorizarevot.db.Preferences;
 
 import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT_TYPE;
+import static ro.code4.monitorizarevot.constants.Sync.AUTHORITY;
 
 public class AuthUtils {
 
@@ -39,13 +41,14 @@ public class AuthUtils {
         accountManager.setAuthToken(account, ACCOUNT_TYPE, token);
     }
 
-    public static void removeAccount() {
+    public static void removeAccountAndStopSync() {
         Context context = App.getContext();
         try {
             AccountManager accountManager = AccountManager.get(context);
             Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);
             for (Account account : accounts) {
-                if (accounts[0].type.equals(ACCOUNT_TYPE)) {
+                if (account.type.equals(ACCOUNT_TYPE)) {
+                    ContentResolver.setSyncAutomatically(account, AUTHORITY, false);
                     accountManager.removeAccount(account, null, null);
                 }
             }

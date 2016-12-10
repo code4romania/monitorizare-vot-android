@@ -64,7 +64,7 @@ public class BaseActivity extends AppCompatActivity implements ActivityOperation
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(LogoutListener event) {
-        AuthUtils.removeAccount();
+        AuthUtils.removeAccountAndStopSync();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
