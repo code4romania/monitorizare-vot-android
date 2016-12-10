@@ -9,6 +9,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import net.hockeyapp.android.CrashManager;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class App extends Application {
     private static Context mContext;
@@ -20,6 +21,11 @@ public class App extends Application {
         CrashManager.register(this);
 
         Realm.init(this);
+        Realm.setDefaultConfiguration(new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build());
+
         new Prefs.Builder()
                 .setContext(this)
                 .setMode(ContextWrapper.MODE_PRIVATE)
