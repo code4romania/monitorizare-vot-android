@@ -80,6 +80,7 @@ public class QuestionFragment extends BaseFragment {
         rootView.findViewById(R.id.button_question_notes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onNotes();
             }
         });

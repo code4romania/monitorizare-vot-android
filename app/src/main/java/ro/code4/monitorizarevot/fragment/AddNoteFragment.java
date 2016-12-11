@@ -84,6 +84,7 @@ public class AddNoteFragment extends BaseFragment {
                     Toast.makeText(getActivity(), getString(R.string.invalid_note), Toast.LENGTH_SHORT).show();
                 } else {
                     saveNote(mediaItem);
+                    Toast.makeText(getActivity(), getString(R.string.note_saved), Toast.LENGTH_SHORT).show();
                     navigateBack();
                 }
             }
