@@ -8,6 +8,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
+import ro.code4.monitorizarevot.constants.FormType;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Form;
@@ -19,6 +20,14 @@ import ro.code4.monitorizarevot.net.model.Version;
 
 public class Data {
     private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
+    private static final String BRANCH_ID = "id";
+    private static final String BRANCH_NUMBER = "numarSectie";
+    private static final String COUNTY_CODE = "codJudet";
+    private static final String FORM_ID = "id";
+    private static final String IS_SYNCED = "isSynced";
+    private static final String NOTE_ID = "id";
+    private static final String QUESTION_ID = "idIntrebare";
+
     private static Data instance;
 
     public static Data getInstance() {
@@ -50,31 +59,31 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchDetails> results = realm
                 .where(BranchDetails.class)
-                .equalTo("codJudet", Preferences.getCountyCode())
-                .equalTo("numarSectie", Preferences.getBranchNumber())
+                .equalTo(COUNTY_CODE, Preferences.getCountyCode())
+                .equalTo(BRANCH_NUMBER, Preferences.getBranchNumber())
                 .findAll();
         BranchDetails result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
         realm.close();
         return result;
     }
 
-    public Form getFormA() {
-        return getForm("A");
+    public Form getFirstForm() {
+        return getForm(FormType.FIRST);
     }
 
-    public Form getFormB() {
-        return getForm("B");
+    public Form getSecondForm() {
+        return getForm(FormType.SECOND);
     }
 
-    public Form getFormC() {
-        return getForm("C");
+    public Form getThirdForm() {
+        return getForm(FormType.THIRD);
     }
 
     public Form getForm(String formId) {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Form> results = realm
                 .where(Form.class)
-                .equalTo("id", formId)
+                .equalTo(FORM_ID, formId)
                 .findAll();
         Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
         realm.close();
@@ -102,7 +111,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         Question result = realm
                 .where(Question.class)
-                .equalTo("idIntrebare", questionId)
+                .equalTo(QUESTION_ID, questionId)
                 .findFirst();
         Question question = realm.copyFromRealm(result);
         realm.close();
@@ -163,7 +172,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         Question question = realm
                 .where(Question.class)
-                .equalTo("idIntrebare", questionId)
+                .equalTo(QUESTION_ID, questionId)
                 .findFirst();
 
         realm.beginTransaction();
@@ -178,18 +187,18 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         RealmResults<Note> results = realm.where(Note.class)
-                .equalTo("id", note.getId())
+                .equalTo(NOTE_ID, note.getId())
                 .findAll();
         results.deleteAllFromRealm();
         realm.commitTransaction();
         realm.close();
     }
 
-    public BranchQuestionAnswer getCityBranch(Integer quetionId) {
+    public BranchQuestionAnswer getCityBranch(Integer questionId) {
         Realm realm = Realm.getDefaultInstance();
         BranchQuestionAnswer result = realm
                 .where(BranchQuestionAnswer.class)
-                .equalTo("id", getCityBranchId(quetionId))
+                .equalTo(BRANCH_ID, getCityBranchId(questionId))
                 .findFirst();
         BranchQuestionAnswer branchQuestionAnswer = result != null ? realm.copyFromRealm(result) : null;
         realm.close();
@@ -197,17 +206,17 @@ public class Data {
     }
 
     @NonNull
-    private String getCityBranchId(Integer quetionId) {
+    private String getCityBranchId(Integer questionId) {
         return Preferences.getCountyCode() +
                 String.valueOf(Preferences.getBranchNumber()) +
-                String.valueOf(quetionId);
+                String.valueOf(questionId);
     }
 
-    public List<BranchQuestionAnswer> getCityBranchPerQuestion(Integer quetionId) {
+    public List<BranchQuestionAnswer> getCityBranchPerQuestion(Integer questionId) {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchQuestionAnswer> result = realm
                 .where(BranchQuestionAnswer.class)
-                .equalTo("id", getCityBranchId(quetionId))
+                .equalTo(BRANCH_ID, getCityBranchId(questionId))
                 .findAll();
         List<BranchQuestionAnswer> branchQuestionAnswers = realm.copyFromRealm(result);
         realm.close();
@@ -218,7 +227,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<T> results = realm
                 .where(objectClass)
-                .equalTo("isSynced", false)
+                .equalTo(IS_SYNCED, false)
                 .findAll();
         List<T> resultList = realm.copyFromRealm(results);
         realm.close();

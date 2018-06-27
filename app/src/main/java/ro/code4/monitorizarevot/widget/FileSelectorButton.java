@@ -38,8 +38,8 @@ public class FileSelectorButton extends FrameLayout {
     private void init(Context context) {
         inflate(context, R.layout.widget_file_selector, this);
 
-        icon = (ImageView) findViewById(R.id.file_selector_icon);
-        text = (TextView) findViewById(R.id.file_selector_text);
+        icon = findViewById(R.id.file_selector_icon);
+        text = findViewById(R.id.file_selector_text);
 
         showIcon();
     }

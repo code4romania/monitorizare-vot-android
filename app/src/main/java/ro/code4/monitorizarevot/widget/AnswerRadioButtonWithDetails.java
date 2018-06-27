@@ -56,8 +56,8 @@ public class AnswerRadioButtonWithDetails extends LinearLayout implements Answer
                 ViewGroup.LayoutParams.WRAP_CONTENT
         ));
 
-        radioButton = (AnswerRadioButton) findViewById(R.id.answer_radio);
-        details = (EditText) findViewById(R.id.answer_details);
+        radioButton = findViewById(R.id.answer_radio);
+        details = findViewById(R.id.answer_details);
 
         radioButton.setOnCheckedChangeListener(innerCheckedChangeListener);
         updateDetailsVisibility(isChecked());

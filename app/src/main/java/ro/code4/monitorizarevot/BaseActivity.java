@@ -20,14 +20,14 @@ import ro.code4.monitorizarevot.net.model.LogoutListener;
 import ro.code4.monitorizarevot.util.ActivityOperations;
 import ro.code4.monitorizarevot.util.AuthUtils;
 
-public class BaseActivity extends AppCompatActivity implements ActivityOperations {
+public abstract class BaseActivity extends AppCompatActivity implements ActivityOperations {
     private ProgressDialog loadingIndicator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadingIndicator = new ProgressDialog(this);
-        loadingIndicator.setMessage("Vă rugăm așteptaţi...");
+        loadingIndicator.setMessage(getString(R.string.please_wait));
         loadingIndicator.setCancelable(false);
     }
 

@@ -8,14 +8,19 @@ import java.util.List;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class QuestionAnswer implements Serializable {
+
     @Expose
     private Integer idIntrebare;
+
     @Expose
     private String codJudet;
+
     @Expose
     private Integer numarSectie;
+
     @Expose
     private String codFormular;
+
     @Expose
     private List<ResponseAnswer> optiuni;
 

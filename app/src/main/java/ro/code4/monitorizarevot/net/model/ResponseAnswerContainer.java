@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ResponseAnswerContainer implements Serializable {
+
     @SerializedName("raspuns")
     @Expose
     private List<QuestionAnswer> responseMapperList;

@@ -28,7 +28,7 @@ public class FormRenderer {
                 return renderMultipleAnswersQuestion(context, question);
             case UNKNOWN:
             default:
-                Toast.makeText(context, "Eroare in interpretarea sectiunii", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.error_section_type), Toast.LENGTH_SHORT).show();
                 return new View(context);
         }
     }

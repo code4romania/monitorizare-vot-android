@@ -61,9 +61,7 @@ public class AnswerRadioGroup extends LinearLayout implements CompoundButton.OnC
                 if (view instanceof AnswerRadioButton ||
                         view instanceof AnswerRadioButtonWithDetails) {
                     Checkable button = (Checkable) view;
-                    if (button.isChecked()) {
-                        return true;
-                    }
+                    return button.isChecked();
                 }
                 return false;
             }

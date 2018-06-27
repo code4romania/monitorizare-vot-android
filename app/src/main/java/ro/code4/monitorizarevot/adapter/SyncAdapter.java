@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.code4.monitorizarevot.LoginActivity;
+import ro.code4.monitorizarevot.constants.FormType;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
@@ -35,15 +35,15 @@ import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        init(context);
+        init();
     }
 
     public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
 
     }
 
@@ -84,9 +84,9 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void postQuestionAnswers() {
         try{
             List<QuestionAnswer> questionAnswers = new ArrayList<>();
-            getAnswersFromForm(Data.getInstance().getFormA(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getFirstForm(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getSecondForm(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getThirdForm(), questionAnswers);
             NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
         }catch (IOException e){
             e.printStackTrace();
@@ -139,11 +139,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 && before.getC().equals(current.getC());
     }
 
-    private void getForms(Version version) throws IOException {
+    private void getForms(Version version) {
         FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(version, 3);
-        NetworkService.doGetForm("A").startRequest(subscriber);
-        NetworkService.doGetForm("B").startRequest(subscriber);
-        NetworkService.doGetForm("C").startRequest(subscriber);
+        NetworkService.doGetForm(FormType.FIRST).startRequest(subscriber);
+        NetworkService.doGetForm(FormType.SECOND).startRequest(subscriber);
+        NetworkService.doGetForm(FormType.THIRD).startRequest(subscriber);
     }
 
     public static void requestSync(Context context) {
@@ -159,7 +159,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @NonNull
     private static Bundle getBundle(boolean isUpload) {
         Bundle extras = new Bundle();
-        extras.putBoolean( ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
         extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
         return extras;

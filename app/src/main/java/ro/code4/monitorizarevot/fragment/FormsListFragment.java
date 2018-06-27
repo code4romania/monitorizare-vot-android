@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_forms_list, container, false);
 
         rootView.findViewById(R.id.tile_form_1).setOnClickListener(this);
@@ -50,13 +51,13 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tile_form_1:
-                showForm(Data.getInstance().getFormA());
+                showForm(Data.getInstance().getFirstForm());
                 break;
             case R.id.tile_form_2:
-                showForm(Data.getInstance().getFormB());
+                showForm(Data.getInstance().getSecondForm());
                 break;
             case R.id.tile_form_3:
-                showForm(Data.getInstance().getFormC());
+                showForm(Data.getInstance().getThirdForm());
                 break;
             case R.id.tile_form_notes:
                 navigateTo(AddNoteFragment.newInstance());

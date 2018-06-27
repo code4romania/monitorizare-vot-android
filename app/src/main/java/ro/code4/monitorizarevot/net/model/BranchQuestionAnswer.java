@@ -9,8 +9,10 @@ import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class BranchQuestionAnswer extends RealmObject {
+
     @PrimaryKey
     private String id;
+
     private String countryCode;
     private int branchNumber;
     private int questionId;

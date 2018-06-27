@@ -5,10 +5,9 @@ import org.greenrobot.eventbus.EventBus;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import ro.code4.monitorizarevot.constants.Auth;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.LogoutListener;
-
-import static ro.code4.monitorizarevot.constants.Constants.AUTHORIZATION_KEY;
 
 public class AuthInterceptor implements Interceptor {
 
@@ -27,8 +26,8 @@ public class AuthInterceptor implements Interceptor {
         if(token != null){
             return request
                     .newBuilder()
-                    .removeHeader(AUTHORIZATION_KEY)
-                    .addHeader(AUTHORIZATION_KEY, "Bearer " + token)
+                    .removeHeader(Auth.KEY)
+                    .addHeader(Auth.KEY, Auth.BEARER + " " + token)
                     .build();
         }
         return request;

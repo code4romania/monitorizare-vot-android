@@ -12,17 +12,23 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class Question extends RealmObject implements Serializable {
+
     @PrimaryKey
     @Expose
     private Integer idIntrebare;
+
     @Expose
     private String textIntrebare;
+
     @Expose
     private String codIntrebare;
+
     @Expose
     private Integer idTipIntrebare;
+
     @Expose
     private RealmList<Answer> raspunsuriDisponibile;
+
     private BranchQuestionAnswer branchQuestionAnswer;
     private boolean isSynced;
 

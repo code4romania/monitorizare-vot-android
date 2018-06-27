@@ -2,7 +2,6 @@ package ro.code4.monitorizarevot.observable;
 
 import rx.Observer;
 
-
 public abstract class ObservableListener<T> implements Observer<T> {
 
     @Override

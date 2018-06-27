@@ -1,6 +1,5 @@
 package ro.code4.monitorizarevot.util;
 
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
@@ -8,6 +7,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import ro.code4.monitorizarevot.App;
+import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Preferences;
 
 import static ro.code4.monitorizarevot.constants.Sync.ACCOUNT_TYPE;
@@ -25,7 +25,7 @@ public class AuthUtils {
         try {
             return accountManager.getAccountsByType(ACCOUNT_TYPE)[0];
         } catch (SecurityException e) {
-            Toast.makeText(context, "Eroare permisiune " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.error_permission, e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
             return null;
         }
     }
@@ -53,7 +53,7 @@ public class AuthUtils {
                 }
             }
         } catch (SecurityException e) {
-            Toast.makeText(context, "Eroare permisiune " + e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.error_permission, e.getLocalizedMessage()), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import ro.code4.monitorizarevot.net.model.Version;
 
 public class VersionResponse implements Serializable {
+
     @Expose
     private Version versiune;
 

@@ -9,9 +9,11 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Form extends RealmObject {
+
     @PrimaryKey
     @Expose
     private String id;
+
     @Expose
     private RealmList<Section> sectiuni;
 

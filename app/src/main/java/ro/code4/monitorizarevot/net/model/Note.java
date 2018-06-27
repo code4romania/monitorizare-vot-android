@@ -6,12 +6,16 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Note extends RealmObject {
+
     @PrimaryKey
     private int id;
+
     @Expose
     private String uriPath;
+
     @Expose
     private String description;
+
     @Expose
     private Integer idIntrebare;
 

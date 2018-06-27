@@ -9,15 +9,20 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.db.Preferences;
 
 public class ResponseAnswer extends RealmObject implements Serializable {
+
+    //TODO update fields to English names - to check names if influenced by backend
+
     @PrimaryKey
     @Expose
     private Integer idOptiune;
+
     @Expose
     private String value;
+
     private String codJudet;
     private int numarSectie;
 
-    public ResponseAnswer(){
+    public ResponseAnswer() {
         this.codJudet = Preferences.getCountyCode();
         this.numarSectie = Preferences.getBranchNumber();
     }

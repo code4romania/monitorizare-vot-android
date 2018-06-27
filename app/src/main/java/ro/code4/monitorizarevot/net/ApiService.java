@@ -10,6 +10,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import ro.code4.monitorizarevot.constants.Api;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
 import ro.code4.monitorizarevot.net.model.Section;
@@ -20,22 +21,24 @@ import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.net.model.response.question.QuestionResponse;
 
 public interface ApiService {
-    @POST("/api/v1/access/token")
-    Call<Object>postAuth(@Body User user);
-    @GET("/api/v1/formular")
-    Call<List<Section>> getForm(@Query("idformular") String formId);
 
-    @GET("/api/v1/formular/versiune")
+    @POST(Api.AUTH)
+    Call<Object>postAuth(@Body User user);
+
+    @GET(Api.FORM)
+    Call<List<Section>> getForm(@Query(Api.KEY_FORM_ID) String formId);
+
+    @GET(Api.FORM_VERSION)
     Call<VersionResponse> getFormVersion();
 
-    @POST("/api/v1/sectie")
+    @POST(Api.BRANCH)
     Call<Ack> postBranchDetails(@Body BranchDetails branchDetails);
 
-    @POST("/api/v1/raspuns")
+    @POST(Api.QUESTION_ANSWER)
     Call<QuestionResponse> postQuestionAnswer(@Body ResponseAnswerContainer responseAnswer);
 
     @Multipart
-    @POST("/api/v1/note/ataseaza")
+    @POST(Api.NOTE)
     Call<ResponseNote> postNote(@Part MultipartBody.Part file,
                                 @Part MultipartBody.Part countyCode,
                                 @Part MultipartBody.Part branchNumber,

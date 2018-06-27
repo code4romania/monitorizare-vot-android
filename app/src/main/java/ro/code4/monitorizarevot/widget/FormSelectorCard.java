@@ -32,9 +32,9 @@ public class FormSelectorCard extends CardView {
 
         setSelectableForeground(context);
 
-        TextView letter = (TextView) findViewById(R.id.form_card_letter);
-        ImageView icon = (ImageView) findViewById(R.id.form_card_image);
-        TextView text = (TextView) findViewById(R.id.form_card_text);
+        TextView letter = findViewById(R.id.form_card_letter);
+        ImageView icon = findViewById(R.id.form_card_image);
+        TextView text = findViewById(R.id.form_card_text);
 
         if (attrs != null) {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FormSelectorCard, 0, 0);

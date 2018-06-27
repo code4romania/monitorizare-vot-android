@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
     private static final String ARGS_FORM_ID = "FormId";
     private static final String ARGS_START_INDEX = "StartIndex";
+
     private List<Question> questions;
     private int currentQuestion = -1;
 
@@ -54,7 +56,7 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
         showQuestion(currentQuestion);
         return rootView;

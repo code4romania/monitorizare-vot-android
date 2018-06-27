@@ -44,8 +44,8 @@ public class AnswerCheckboxWithDetails extends LinearLayout implements AnswerLay
 
         setOrientation(VERTICAL);
 
-        checkbox = (AnswerCheckbox) findViewById(R.id.answer_checkbox);
-        details = (EditText) findViewById(R.id.answer_details);
+        checkbox = findViewById(R.id.answer_checkbox);
+        details = findViewById(R.id.answer_details);
 
         checkbox.setOnCheckedChangeListener(this);
         updateDetailsVisibility(isChecked());

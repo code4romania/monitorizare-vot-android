@@ -36,12 +36,8 @@
     <dimen name="subheader_text">16sp</dimen>
     <dimen name="header_margin_vertial">10dp</dimen>
     <dimen name="icon_block_size">50dp</dimen>
-    <dimen name="dark_container_offset">22dp</dimen>
 
     <!-- Login -->
-    <dimen name="logo_spacing">50dp</dimen>
-    <dimen name="login_icon_size">36dp</dimen>
-    <dimen name="login_row_height">70dp</dimen>
     <dimen name="login_margin_bottom">43dp</dimen>
     <dimen name="login_text_size">20sp</dimen>
 

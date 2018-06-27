@@ -6,20 +6,28 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class BranchDetails extends RealmObject implements Syncable {
+
     @PrimaryKey
     private String id;
+
     @Expose
     private String codJudet;
+
     @Expose
     private int numarSectie;
+
     @Expose
     private boolean esteZonaUrbana;
+
     @Expose
     private boolean presedinteBesvesteFemeie;
+
     @Expose
     private String oraSosirii;
+
     @Expose
     private String oraPlecarii;
+
     private boolean isSynced;
 
     public BranchDetails() {

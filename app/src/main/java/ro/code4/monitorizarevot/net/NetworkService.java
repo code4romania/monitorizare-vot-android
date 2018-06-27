@@ -23,6 +23,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
+import ro.code4.monitorizarevot.constants.Auth;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
@@ -41,7 +42,14 @@ import rx.Subscriber;
 
 public class NetworkService {
     private static final int NUMBER_OF_RETRIES = 3;
-    private static final String ACCESS_TOKEN = "access_token";
+    private static final String MULTIPART_NAME = "file";
+    private static final String MEDIA_TYPE_MULTIPART = "multipart/form-data";
+    private static final String MULTIPART_COUNTY = "CodJudet";
+    private static final String MULTIPART_BRANCH = "NumarSectie";
+    private static final String MULTIPART_QUESTION = "IdIntrebare";
+    private static final String MULTIPART_NOTE = "TextNota";
+    private static final String API_KEY_ERROR = "error";
+
     private static ApiService mApiService;
 
     private static ApiService getApiService() {
@@ -164,14 +172,14 @@ public class NetworkService {
         MultipartBody.Part body = null;
         if (note.getUriPath() != null) {
             File file = new File(note.getUriPath());
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(MEDIA_TYPE_MULTIPART), file);
+            body = MultipartBody.Part.createFormData(MULTIPART_NAME, file.getName(), requestFile);
         }
         Response<ResponseNote> response = getApiService().postNote(body,
-                createMultipart("CodJudet", Preferences.getCountyCode()),
-                createMultipart("NumarSectie", Preferences.getBranchNumber()),
-                createMultipart("IdIntrebare", note.getQuestionId() != null ? note.getQuestionId() : 0),
-                createMultipart("TextNota", note.getDescription())).execute();
+                createMultipart(MULTIPART_COUNTY, Preferences.getCountyCode()),
+                createMultipart(MULTIPART_BRANCH, Preferences.getBranchNumber()),
+                createMultipart(MULTIPART_QUESTION, note.getQuestionId() != null ? note.getQuestionId() : 0),
+                createMultipart(MULTIPART_NOTE, note.getDescription())).execute();
         if (response != null) {
             if (response.isSuccessful()) {
                 return response.body();
@@ -188,7 +196,7 @@ public class NetworkService {
     }
 
     private static MultipartBody.Part createMultipart(String name, String value) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), value);
+        RequestBody requestBody = RequestBody.create(MediaType.parse(MEDIA_TYPE_MULTIPART), value);
         return MultipartBody.Part.createFormData(name, null, requestBody);
     }
 
@@ -200,19 +208,19 @@ public class NetworkService {
                     Response<Object> response = getApiService().postAuth(user).execute();
                     if(response.isSuccessful()){
                         JSONObject body = new JSONObject(response.body().toString());
-                        String token = body.has(ACCESS_TOKEN) ? body.getString(ACCESS_TOKEN) : null;
+                        String token = body.has(Auth.ACCESS_TOKEN) ? body.getString(Auth.ACCESS_TOKEN) : null;
                         if(token != null){
                             AuthUtils.initAccount(user.getPhone(), user.getPin(), token);
 
                             subscriber.onNext(true);
                             subscriber.onCompleted();
                         } else {
-                            subscriber.onError(new IOException("Eroare de server"));
+                            subscriber.onError(new IOException("Server error"));
                         }
                     } else {
                         JSONObject jsonErrorMessage = new JSONObject(response.errorBody().string());
-                        String message = jsonErrorMessage.has("error") ?
-                                jsonErrorMessage.getString("error") : response.message();
+                        String message = jsonErrorMessage.has(API_KEY_ERROR) ?
+                                jsonErrorMessage.getString(API_KEY_ERROR) : response.message();
                         subscriber.onError(new IOException(message));
                     }
                 } catch (IOException e){

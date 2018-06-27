@@ -21,18 +21,17 @@ import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 public class LoginActivity extends BaseActivity {
     private EditText username;
     private EditText password;
-    private Button loginButton;
     private ObservableListenerDetacher mListenerDetacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = (EditText) findViewById(R.id.phone);
-        password = (EditText) findViewById(R.id.branch);
+        username = findViewById(R.id.phone);
+        password = findViewById(R.id.branch);
         username.getText();
 
-        loginButton = (Button) findViewById(R.id.login_button);
+        Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

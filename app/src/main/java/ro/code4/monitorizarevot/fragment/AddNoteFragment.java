@@ -32,6 +32,7 @@ public class AddNoteFragment extends BaseFragment {
     private static final String ARGS_QUESTION_ID = "QuestionId";
     private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 1001;
     private static final int REQUEST_MEDIA = 100;
+
     private Integer questionId;
     private EditText description;
     private FileSelectorButton fileSelectorButton;
@@ -41,10 +42,10 @@ public class AddNoteFragment extends BaseFragment {
         return new AddNoteFragment();
     }
 
-    public static AddNoteFragment newInstance(Integer idIntrebare) {
+    public static AddNoteFragment newInstance(Integer questionId) {
         AddNoteFragment fragment = new AddNoteFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARGS_QUESTION_ID, idIntrebare);
+        bundle.putInt(ARGS_QUESTION_ID, questionId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -59,11 +60,11 @@ public class AddNoteFragment extends BaseFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_note, container, false);
 
-        description = (EditText) rootView.findViewById(R.id.note_description);
-        fileSelectorButton = (FileSelectorButton) rootView.findViewById(R.id.note_file_selector);
+        description = rootView.findViewById(R.id.note_description);
+        fileSelectorButton = rootView.findViewById(R.id.note_file_selector);
 
         fileSelectorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +106,7 @@ public class AddNoteFragment extends BaseFragment {
                 if (hasGrantedPermission(grantResults)) {
                     openMediaPicker();
                 } else {
-                    Toast.makeText(App.getContext(), "Permisiunea este necesară pentru a putea selecta o resursă", Toast.LENGTH_LONG).show();
+                    Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
                 }
                 break;
             }

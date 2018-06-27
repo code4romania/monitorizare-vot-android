@@ -8,11 +8,14 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Answer extends RealmObject implements Serializable {
+
     @PrimaryKey
     @Expose
     private Integer idOptiune;
+
     @Expose
     private String textOptiune;
+
     @Expose
     private boolean seIntroduceText;
 

@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class DateUtils {
-    private static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
+import ro.code4.monitorizarevot.constants.Constants;
 
+public class DateUtils {
     public static String calendarToString(Calendar calendar) {
         if (calendar == null) {
             return null;
         }
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.US);
+        SimpleDateFormat formatter = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.US);
         return formatter.format(calendar.getTime());
     }
 
@@ -22,7 +22,7 @@ public class DateUtils {
         }
         try {
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.ENGLISH);
+            SimpleDateFormat sdf = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.ENGLISH);
             cal.setTime(sdf.parse(string));
             return cal;
         } catch (ParseException e) {

@@ -10,11 +10,14 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Section extends RealmObject implements Serializable {
+
     @PrimaryKey
     @Expose
     private String codSectiune;
+
     @Expose
     private String descriere;
+
     @Expose
     private RealmList<Question> intrebari;
 
