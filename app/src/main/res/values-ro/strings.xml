@@ -34,7 +34,7 @@
     <string name="content_icon_building">Building icon</string>
 
     <!-- Login -->
-    <string name="login_phone">Phone number</string>
+    <string name="login_phone">Numărul de telefon</string>
     <string name="login_branch">Cod primit</string>
     <string name="login">Login</string>
 
