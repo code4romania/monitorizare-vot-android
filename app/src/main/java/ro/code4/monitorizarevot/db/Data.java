@@ -21,12 +21,12 @@ import ro.code4.monitorizarevot.net.model.Version;
 public class Data {
     private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
     private static final String BRANCH_ID = "id";
-    private static final String BRANCH_NUMBER = "numarSectie";
-    private static final String COUNTY_CODE = "codJudet";
+    private static final String BRANCH_NUMBER = "branchNumber";
+    private static final String COUNTY_CODE = "countyCode";
     private static final String FORM_ID = "id";
     private static final String IS_SYNCED = "isSynced";
     private static final String NOTE_ID = "id";
-    private static final String QUESTION_ID = "idIntrebare";
+    private static final String QUESTION_ID = "questionId";
 
     private static Data instance;
 
