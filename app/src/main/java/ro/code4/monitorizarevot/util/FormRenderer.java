@@ -90,7 +90,7 @@ public class FormRenderer {
 
     private static int getPositionResponseIndex(Integer optionId, List<ResponseAnswer> answers) {
         for(int i=0; i< answers.size(); i++){
-            if(answers.get(i).getIdOptiune().equals(optionId)){
+            if(answers.get(i).getOptionId().equals(optionId)){
                 return i;
             }
         }

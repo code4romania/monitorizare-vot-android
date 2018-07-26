@@ -63,7 +63,7 @@ public class AnswerCheckboxWithDetails extends LinearLayout implements AnswerLay
 
     @Override
     public ResponseAnswer getAnswer() {
-        return new ResponseAnswer(checkbox.getAnswer().getIdOptiune(),
+        return new ResponseAnswer(checkbox.getAnswer().getOptionId(),
                 details.getText().toString());
     }
 
