@@ -17,7 +17,7 @@ public class Note extends RealmObject {
     private String description;
 
     @Expose
-    private Integer idIntrebare;
+    private Integer questionId;
 
     public Note() {
 
@@ -44,10 +44,10 @@ public class Note extends RealmObject {
     }
 
     public Integer getQuestionId() {
-        return idIntrebare;
+        return questionId;
     }
 
     public void setQuestionId(Integer questionId) {
-        this.idIntrebare = questionId;
+        this.questionId = questionId;
     }
 }

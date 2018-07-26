@@ -41,6 +41,7 @@ import ro.code4.monitorizarevot.util.AuthUtils;
 import rx.Subscriber;
 
 public class NetworkService {
+    // TODO multipart names to be translated
     private static final int NUMBER_OF_RETRIES = 3;
     private static final String MULTIPART_NAME = "file";
     private static final String MEDIA_TYPE_MULTIPART = "multipart/form-data";
@@ -149,12 +150,12 @@ public class NetworkService {
     }
 
     public static QuestionResponse postQuestionAnswer(ResponseAnswerContainer responseMapper) throws IOException {
-        if(responseMapper != null && responseMapper.getReponseMapperList().size()>0){
+        if(responseMapper != null && responseMapper.getResponseMapperList().size()>0){
             Response<QuestionResponse> response = getApiService().postQuestionAnswer(responseMapper).execute();
             if(response != null){
                 if(response.isSuccessful()){
-                    for (QuestionAnswer questionAnswer : responseMapper.getReponseMapperList()) {
-                        Data.getInstance().updateQuestionStatus(questionAnswer.getIdIntrebare());
+                    for (QuestionAnswer questionAnswer : responseMapper.getResponseMapperList()) {
+                        Data.getInstance().updateQuestionStatus(questionAnswer.getQuestionId());
                     }
                     return response.body();
                 } else {
