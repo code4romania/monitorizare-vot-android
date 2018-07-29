@@ -20,6 +20,9 @@ The app also has a web version, available for every citizen who wants to report 
 * Android SDK 27
 * Android SDK Build Tools 27
 
+* Java
+* RxJava, Retrofit2
+
 ## Repos and projects
 
 Related projects:
