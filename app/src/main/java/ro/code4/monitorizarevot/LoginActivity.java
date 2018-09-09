@@ -2,6 +2,7 @@ package ro.code4.monitorizarevot;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -17,6 +18,8 @@ import ro.code4.monitorizarevot.net.model.User;
 import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
 import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
+
+import static ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL;
 
 public class LoginActivity extends BaseActivity {
     private EditText username;
@@ -39,6 +42,14 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        View organisationLink = findViewById(R.id.login_organisation_link);
+        organisationLink.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openOrganisationWebpage();
+            }
+        });
+
         setAppVersion((TextView) findViewById(R.id.app_version));
     }
 
@@ -48,6 +59,11 @@ public class LoginActivity extends BaseActivity {
         if(mListenerDetacher != null && !mListenerDetacher.isDetached()){
             mListenerDetacher.detach();
         }
+    }
+
+    private void openOrganisationWebpage() {
+        Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(ORGANISATION_WEB_URL));
+        startActivity(openBrowser);
     }
 
     private void setAppVersion(TextView appVersion) {

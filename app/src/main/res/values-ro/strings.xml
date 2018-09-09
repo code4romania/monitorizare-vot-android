@@ -4,6 +4,7 @@
     <string name="app_version">V%1$S</string>
 
     <!-- General -->
+    <string name="developed_by">aplicație dezvoltată de</string>
     <string name="please_wait">Vă rugăm așteptaţi…</string>
     <string name="button_continue">Continuă</string>
     <string name="button_continue_to_forms">Continuă către formulare</string>

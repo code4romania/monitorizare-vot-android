@@ -4,6 +4,7 @@
     <string name="app_version">V%1$S</string>
 
     <!-- General -->
+    <string name="developed_by">app developed by</string>
     <string name="please_wait">Please wait…</string>
     <string name="button_continue">Continue</string>
     <string name="button_continue_to_forms">Continue to forms</string>
