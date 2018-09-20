@@ -49,8 +49,16 @@ public class DumbApiService implements ApiService {
                         + "], "
                 + " \"branchQuestionAnswer\": null}";
 
+                String q2 = "{\"idIntrebare\":2, \"textIntrebare\":\"To be, to work, to drink\", \"codIntrebare\":\"Q1.2\", \"idTipIntrebare\":0, "
+                        + "\"raspunsuriDisponibile\": ["
+                        + "{\"idOptiune\": 3, \"textOptiune\": \"To be\", \"seIntroduceText\": false}, "
+                        + "{\"idOptiune\": 4, \"textOptiune\": \"To work\", \"seIntroduceText\": false}, "
+                        + "{\"idOptiune\": 5, \"textOptiune\": \"To drink\", \"seIntroduceText\": false} "
+                        + "], "
+                        + " \"branchQuestionAnswer\": null}";
+
                 sections.add(gson.fromJson("{\"codSectiune\": \"unused\", \"descriere\":\"Form description\", \"intrebari\":"
-                        + "[" + q + "]}", Section.class));
+                        + "[" + q + ", " + q2 + "]}", Section.class));
 
                 return Response.success(sections);
             }
