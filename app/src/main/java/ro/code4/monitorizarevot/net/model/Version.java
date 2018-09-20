@@ -12,7 +12,7 @@ public class Version extends RealmObject implements Serializable {
     @Expose
     private int id = 1;
     @Expose
-    private Integer A, B, C;
+    private Integer A, B, C; // TODO what is ABC? More meaningful names please. Maybe major, minor, patch?
 
     public Integer getA() {
         return A;

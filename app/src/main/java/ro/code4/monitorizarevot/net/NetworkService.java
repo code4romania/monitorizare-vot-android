@@ -46,7 +46,12 @@ public class NetworkService {
 
     private static ApiService getApiService() {
         if (mApiService == null) {
-            mApiService = initRetrofitInstanceWithUrl(BuildConfig.WEB_BASE_URL).create(ApiService.class);
+            boolean mockAPIMode = false; // TODO take that from build settings somehow
+            if (mockAPIMode) {
+                mApiService = new DumbApiService();
+            } else {
+                mApiService = initRetrofitInstanceWithUrl(BuildConfig.WEB_BASE_URL).create(ApiService.class);
+            }
         }
         return mApiService;
     }
@@ -127,6 +132,7 @@ public class NetworkService {
         }
     }
 
+    //  TODO Ack is never used, shouldn't it be void?
     public static Ack postBranchDetails(BranchDetails branchDetails) throws IOException {
         Response<Ack> response = getApiService().postBranchDetails(branchDetails).execute();
         if(response != null){
@@ -140,6 +146,7 @@ public class NetworkService {
         }
     }
 
+    // TODO QuestionResponse is never used, shouldn't it respond with void?
     public static QuestionResponse postQuestionAnswer(ResponseAnswerContainer responseMapper) throws IOException {
         if(responseMapper != null && responseMapper.getReponseMapperList().size()>0){
             Response<QuestionResponse> response = getApiService().postQuestionAnswer(responseMapper).execute();
@@ -160,6 +167,7 @@ public class NetworkService {
         }
     }
 
+    // TODO the response is never used, shouldn't it be null/void?
     public static ResponseNote postNote(Note note) throws IOException {
         MultipartBody.Part body = null;
         if (note.getUriPath() != null) {
