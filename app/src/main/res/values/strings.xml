@@ -44,7 +44,7 @@
     <string name="branch_subtitle">you are in</string>
     <string name="branch_county">County/District</string>
     <string name="branch_number">Polling station number</string>
-    <string name="branch_change">Change the polling station</string>
+    <string name="branch_change">Change station</string>
     <string name="branch_question_environment">Choose the area of the station</string>
     <string name="branch_answer_rural">Rural</string>
     <string name="branch_answer_urban">Urban</string>
