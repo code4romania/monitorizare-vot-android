@@ -147,12 +147,16 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     public static void requestSync(Context context) {
-        ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(false));
+        Account account = createSyncAccount(context);
+        ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
+        ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(false));
     }
 
     public static void requestUploadSync(Context context) {
         if (ContentResolver.getMasterSyncAutomatically()) {
-            ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(true));
+            Account account = createSyncAccount(context);
+            ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
+            ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(true));
         }
     }
 
