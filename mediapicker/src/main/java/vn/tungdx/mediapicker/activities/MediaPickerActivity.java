@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.FileObserver;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -344,6 +345,8 @@ public class MediaPickerActivity extends AppCompatActivity implements
                 mPhotoFileCapture = file;
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(file));
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
                 startActivityForResult(takePictureIntent, REQUEST_PHOTO_CAPTURE);
                 mFileObserverTask = new FileObserverTask();
                 mFileObserverTask.execute();
