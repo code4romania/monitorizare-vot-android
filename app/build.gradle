@@ -9,8 +9,8 @@ android {
         applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 12
-        versionName "0.9.8"
+        versionCode 14
+        versionName "0.9.10"
     }
     buildTypes {
         release {
