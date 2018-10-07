@@ -23,6 +23,8 @@ The app also has a web version, available for every citizen who wants to report 
 * Java
 * RxJava, Retrofit2
 
+Swagger docs for the API are available [here](https://mv-mobile-prod.azurewebsites.net/swagger/ui/index.html).
+
 ## Repos and projects
 
 - repo for the API - https://github.com/code4romania/monitorizare-vot
