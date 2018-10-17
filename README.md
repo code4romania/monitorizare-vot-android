@@ -20,8 +20,10 @@ The app also has a web version, available for every citizen who wants to report 
 * Android SDK 27
 * Android SDK Build Tools 27
 
+
 * Java
 * RxJava, Retrofit2
+* Realm database
 
 Swagger docs for the API are available [here](https://mv-mobile-prod.azurewebsites.net/swagger/ui/index.html).
 
