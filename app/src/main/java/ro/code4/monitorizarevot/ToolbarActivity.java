@@ -1,5 +1,6 @@
 package ro.code4.monitorizarevot;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,13 +16,18 @@ import ro.code4.monitorizarevot.constants.Constants;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
 import ro.code4.monitorizarevot.fragment.FormsListFragment;
 import ro.code4.monitorizarevot.fragment.GuideFragment;
+import ro.code4.monitorizarevot.viewmodel.ToolbarViewModel;
 
-public class ToolbarActivity extends BaseActivity implements Navigator {
+public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements Navigator {
+
     public static final int BRANCH_SELECTION_BACKSTACK_INDEX = 0;
 
     private DrawerLayout drawerLayout;
+
     private View menuButton;
+
     private TextView toolbarTitle;
+
     private String currentFragmentClassName;
 
     @Override
@@ -37,6 +43,11 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
 
         SyncAdapter.requestSync(this);
         navigateTo(BranchSelectionFragment.newInstance());
+    }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(ToolbarViewModel.class);
     }
 
     private void initNavigationDrawer() {
@@ -117,19 +128,6 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     }
 
     @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            hideFocusedKeyboard();
-            super.onBackPressed();
-            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                currentFragmentClassName = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
-            }
-        } else {
-            finish();
-        }
-    }
-
-    @Override
     public void setTitle(String title) {
         toolbarTitle.setText(title);
     }
@@ -137,11 +135,25 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
     @Override
     public void setMenu(boolean isEnabled) {
         menuButton.setVisibility(isEnabled ?
-                View.VISIBLE :
-                View.GONE);
+                                 View.VISIBLE :
+                                 View.GONE);
         drawerLayout.setDrawerLockMode(isEnabled ?
-                DrawerLayout.LOCK_MODE_UNLOCKED :
-                DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                                       DrawerLayout.LOCK_MODE_UNLOCKED :
+                                       DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            hideFocusedKeyboard();
+            super.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                currentFragmentClassName = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1)
+                                                                      .getName();
+            }
+        } else {
+            finish();
+        }
     }
 
     private void closeDrawer() {

@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot;
 
 import android.app.ActivityOptions;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -16,12 +17,17 @@ import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.User;
 import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
+import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
 import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity<LoginViewModel> {
+
     private EditText username;
+
     private EditText password;
+
     private Button loginButton;
+
     private ObservableListenerDetacher mListenerDetacher;
 
     @Override
@@ -44,9 +50,14 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(LoginViewModel.class);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mListenerDetacher != null && !mListenerDetacher.isDetached()){
+        if (mListenerDetacher != null && !mListenerDetacher.isDetached()) {
             mListenerDetacher.detach();
         }
     }
@@ -59,7 +70,7 @@ public class LoginActivity extends BaseActivity {
         String userName = username.getText().toString();
         String pass = password.getText().toString();
 
-        if(!TextUtils.isEmpty(userName.trim()) && !TextUtils.isEmpty(pass.trim())){
+        if (!TextUtils.isEmpty(userName.trim()) && !TextUtils.isEmpty(pass.trim())) {
             showLoading();
             User user = new User(userName, pass, getUdid());
             mListenerDetacher = NetworkService.login(user).startRequest(new LoginSubscriber());
@@ -75,6 +86,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private class LoginSubscriber extends ObservableListener<Boolean> {
+
         @Override
         public void onError(Throwable e) {
             super.onError(e);
@@ -90,7 +102,8 @@ public class LoginActivity extends BaseActivity {
             Intent intent = new Intent(LoginActivity.this, ToolbarActivity.class);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options;
-                Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background), getString(R.string.shared_element_login_background));
+                Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background),
+                                                                 getString(R.string.shared_element_login_background));
                 Pair<View, String> sharedLogo = new Pair<>(findViewById(R.id.logo), getString(R.string.shared_element_logo));
                 options = ActivityOptions
                         .makeSceneTransitionAnimation(LoginActivity.this, sharedBackground, sharedLogo);

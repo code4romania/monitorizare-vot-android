@@ -6,7 +6,7 @@ import ro.code4.monitorizarevot.LoginActivity;
 import ro.code4.monitorizarevot.StartActivity;
 import ro.code4.monitorizarevot.ToolbarActivity;
 
-@Module
+@Module(includes = {ViewModelModule.class})
 public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector

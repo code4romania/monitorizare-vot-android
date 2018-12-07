@@ -1,5 +1,6 @@
 package ro.code4.monitorizarevot.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,11 +23,16 @@ import ro.code4.monitorizarevot.presenter.QuestionsDetailsPresenter;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.NetworkUtils;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
+import ro.code4.monitorizarevot.viewmodel.QuestionDetailsViewModel;
 
-public class QuestionsDetailsFragment extends BaseFragment implements QuestionDetailsNavigator {
+public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewModel> implements QuestionDetailsNavigator {
+
     private static final String ARGS_FORM_ID = "FormId";
+
     private static final String ARGS_START_INDEX = "StartIndex";
+
     private List<Question> questions;
+
     private int currentQuestion = -1;
 
     private QuestionsDetailsPresenter mPresenter;
@@ -52,17 +58,22 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
     }
 
+    @Override
+    public String getTitle() {
+        return "";
+    }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(QuestionDetailsViewModel.class);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_details, container, false);
         showQuestion(currentQuestion);
         return rootView;
-    }
-
-    @Override
-    public String getTitle() {
-        return "";
     }
 
     private void showQuestion(int index) {
@@ -105,10 +116,10 @@ public class QuestionsDetailsFragment extends BaseFragment implements QuestionDe
         }
     }
 
-    private void syncCurrentData(BranchQuestionAnswer branchQuestionAnswer){
-        if(NetworkUtils.isOnline(getActivity())){
+    private void syncCurrentData(BranchQuestionAnswer branchQuestionAnswer) {
+        if (NetworkUtils.isOnline(getActivity())) {
             QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer,
-                    getArguments().getString(ARGS_FORM_ID));
+                                                               getArguments().getString(ARGS_FORM_ID));
             NetworkService.syncCurrentQuestion(questionAnswer).startRequest(new GeneralSubscriber());
         }
     }
