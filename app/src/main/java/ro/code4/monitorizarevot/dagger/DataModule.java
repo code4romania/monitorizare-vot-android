@@ -7,7 +7,7 @@ import ro.code4.monitorizarevot.data.datasource.ApiDataSource;
 import ro.code4.monitorizarevot.data.datasource.HttpDataSource;
 import ro.code4.monitorizarevot.data.datasource.LocalDataSource;
 
-@Module
+@Module(includes = WebServiceModule.class)
 public abstract class DataModule {
 
     @Binds
