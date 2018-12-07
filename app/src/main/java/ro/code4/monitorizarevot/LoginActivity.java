@@ -19,7 +19,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
+import butterknife.OnEditorAction;
 import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
 import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 
@@ -36,8 +36,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
     @BindView(R.id.app_version)
     TextView appVersion;
 
-    private ObservableListenerDetacher mListenerDetacher;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,19 +43,12 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
         ButterKnife.bind(this);
 
         appVersion.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+
         viewModel.message().observe(this, new Observer<String>() {
 
             @Override
             public void onChanged(@Nullable String message) {
                 showErrorDialog(message);
-            }
-        });
-
-        View organisationLink = findViewById(R.id.login_organisation_link);
-        organisationLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openOrganisationWebpage();
             }
         });
 
@@ -70,21 +61,6 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
                 }
             }
         });
-
-        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_DONE) {
-                    login();
-                }
-                return false;
-            }
-        });
-    }
-
-    private void openOrganisationWebpage() {
-        Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(ORGANISATION_WEB_URL));
-        startActivity(openBrowser);
     }
 
     @Override
@@ -92,9 +68,27 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
         viewModel = ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
 
+    private void openOrganisationWebpage() {
+        Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(ORGANISATION_WEB_URL));
+        startActivity(openBrowser);
+    }
+
     @OnClick(R.id.login_button)
     void onLoginButtonClick() {
         login();
+    }
+
+    @OnClick(R.id.login_organisation_link)
+    void onOrganisationLinkClick() {
+        openOrganisationWebpage();
+    }
+
+    @OnEditorAction(R.id.branch)
+    boolean onDoneEditPassword(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_DONE) {
+            login();
+        }
+        return false;
     }
 
     private void login() {
