@@ -12,6 +12,9 @@ android {
         versionCode 12
         versionName "0.9.8"
     }
+
+    flavorDimensions "default"
+
     buildTypes {
         release {
             minifyEnabled false
@@ -22,6 +25,23 @@ android {
         debug {
             debuggable true
             buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
+        }
+    }
+
+    productFlavors {
+        dev {
+            applicationIdSuffix '.dev'
+            versionNameSuffix "d"
+            buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
+        }
+
+        prod {
+            buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
+        }
+
+        mock {
+            applicationIdSuffix '.mock'
+            versionNameSuffix "m"
         }
     }
 }
@@ -57,4 +77,20 @@ dependencies {
     implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
     testImplementation 'junit:junit:4.12'
+}
+
+android.variantFilter { variant ->
+
+    String release = 'release'
+    String debug = 'debug'
+
+    boolean shouldBeExcluded = false
+
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'mock'
+    shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
+
+    if (shouldBeExcluded) {
+        variant.setIgnore(true);
+    }
 }
