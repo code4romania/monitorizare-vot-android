@@ -58,6 +58,8 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
             }
         });
 
+
+
         password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {

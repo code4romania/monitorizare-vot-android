@@ -5,6 +5,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import android.app.ProgressDialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ro.code4.monitorizarevot.net.model.LogoutListener;
+import ro.code4.monitorizarevot.presentation.LoadingMessage;
 import ro.code4.monitorizarevot.util.ActivityOperations;
 import ro.code4.monitorizarevot.util.AuthUtils;
 import ro.code4.monitorizarevot.viewmodel.BaseViewModel;
@@ -39,8 +41,15 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatAc
 
         setupViewModel();
 
+        viewModel.contentLoading().observe(this, new Observer<LoadingMessage>() {
+
+            @Override
+            public void onChanged(@Nullable LoadingMessage loadingMessage) {
+                showHideLoading(loadingMessage);
+            }
+        });
+
         loadingIndicator = new ProgressDialog(this);
-        loadingIndicator.setMessage("Vă rugăm așteptaţi...");
         loadingIndicator.setCancelable(false);
     }
 
@@ -54,14 +63,6 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatAc
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
-
-    public void showLoading() {
-        loadingIndicator.show();
-    }
-
-    public void hideLoading() {
-        loadingIndicator.dismiss();
     }
 
     @Override
@@ -89,6 +90,18 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatAc
         if (getCurrentFocus() != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    protected void showHideLoading(LoadingMessage loadingMessage) {
+        if (loadingMessage != null) {
+            if (loadingMessage.isLoading()) {
+                loadingIndicator.setMessage(loadingMessage.getMessage());
+                loadingIndicator.show();
+
+            } else {
+                loadingIndicator.hide();
+            }
         }
     }
 
