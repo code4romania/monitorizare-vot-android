@@ -12,17 +12,40 @@ android {
         versionCode 12
         versionName "0.9.8"
     }
+
+    flavorDimensions "default"
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
         }
 
         debug {
             debuggable true
+        }
+    }
+
+    productFlavors {
+        dev {
+            applicationIdSuffix '.dev'
+            versionNameSuffix "d"
             buildConfigField "String", "WEB_BASE_URL", '"http://10.3.193.203:44379"'
         }
+
+        prod {
+            buildConfigField "String", "WEB_BASE_URL", '"http://viuat.azurewebsites.net/"'
+        }
+
+        mock {
+            applicationIdSuffix '.mock'
+            versionNameSuffix "m"
+            buildConfigField "String", "WEB_BASE_URL", '""'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -40,8 +63,12 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0@aar'
 
@@ -57,4 +84,20 @@ dependencies {
     implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
     testImplementation 'junit:junit:4.12'
+}
+
+android.variantFilter { variant ->
+
+    String release = 'release'
+    String debug = 'debug'
+
+    boolean shouldBeExcluded = false
+
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'mock'
+    shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
+
+    if (shouldBeExcluded) {
+        variant.setIgnore(true);
+    }
 }

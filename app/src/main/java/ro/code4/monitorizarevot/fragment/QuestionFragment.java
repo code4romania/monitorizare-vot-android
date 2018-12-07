@@ -1,5 +1,6 @@
 package ro.code4.monitorizarevot.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,14 +15,22 @@ import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.util.FormRenderer;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
+import ro.code4.monitorizarevot.viewmodel.QuestionViewModel;
 
-public class QuestionFragment extends BaseFragment {
+public class QuestionFragment extends BaseFragment<QuestionViewModel> {
+
     private static final String ARG_QUESTION_ID = "questionId";
+
     private static final String ARG_SIZE = "numberOfQuestions";
+
     private static final String ARG_INDEX = "indexOfQuestion";
+
     private Question question;
+
     private QuestionDetailsNavigator navigator;
+
     private int numberOfQuestions;
+
     private int questionIndex;
 
     public static QuestionFragment newInstance(int questionId, int index, int numberOfQuestions) {
@@ -55,6 +64,11 @@ public class QuestionFragment extends BaseFragment {
     @Override
     public String getTitle() {
         return question.getCode();
+    }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(QuestionViewModel.class);
     }
 
     @Nullable
