@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,10 +23,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.User;
 import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
+import ro.code4.monitorizarevot.util.SmsListener;
+import ro.code4.monitorizarevot.util.SmsReceiver;
 import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 
 public class LoginActivity extends BaseActivity {
@@ -71,6 +77,30 @@ public class LoginActivity extends BaseActivity {
         });
 
         setAppVersion((TextView) findViewById(R.id.app_version));
+
+        SmsReceiver.bindListener(new SmsListener() {
+            @Override
+            public void messageReceived(String messageText) {
+
+                //From the received text string you may do string operations to get the required OTP
+                //It depends on your SMS format
+                Log.e("Message",messageText);
+                Toast.makeText(getBaseContext(),"Message: "+messageText,Toast.LENGTH_LONG).show();
+
+                // If your OTP is six digits number, you may use the below code
+                String OTP_REGEX = "[0-9]{1,6}";
+                Pattern pattern = Pattern.compile(OTP_REGEX);
+                Matcher matcher = pattern.matcher(messageText);
+                String otp = "";
+                while (matcher.find())
+                {
+                    otp = matcher.group();
+                }
+
+                Toast.makeText(LoginActivity.this,"OTP: "+ otp ,Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
 
     @Override
