@@ -69,4 +69,9 @@ public abstract class ViewModelModule {
     @ViewModelKey(QuestionViewModel.class)
     abstract ViewModel bindQuestionViewModel(QuestionViewModel viewModel);
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChatViewModel.class)
+    abstract ViewModel bindChatViewModel(ChatViewModel viewModel);
+
 }
