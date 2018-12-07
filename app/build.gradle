@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 12
         versionName "0.9.8"
     }
@@ -31,11 +31,14 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':mediapicker')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -53,5 +56,5 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
-    implementation project(path: ':mediapicker')
+    testImplementation 'junit:junit:4.12'
 }
