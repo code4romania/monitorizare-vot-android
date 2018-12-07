@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.constants.Constants;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
@@ -18,9 +24,12 @@ import ro.code4.monitorizarevot.fragment.FormsListFragment;
 import ro.code4.monitorizarevot.fragment.GuideFragment;
 import ro.code4.monitorizarevot.viewmodel.ToolbarViewModel;
 
-public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements Navigator {
+public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements Navigator, HasSupportFragmentInjector {
 
     public static final int BRANCH_SELECTION_BACKSTACK_INDEX = 0;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> mDispatchingAndroidInjector;
 
     private DrawerLayout drawerLayout;
 
@@ -160,5 +169,10 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return mDispatchingAndroidInjector;
     }
 }

@@ -53,6 +53,7 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends Fragment im
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setupViewModel();
         setTitle(getTitle());
         setMenu(withMenu());
     }

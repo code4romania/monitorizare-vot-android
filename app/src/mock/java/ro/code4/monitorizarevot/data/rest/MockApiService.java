@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.data.rest;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,7 @@ public class MockApiService implements ApiService {
 
     @Override
     public Observable<Object> postAuth(User user) {
-        return null;
+        return Observable.just((Object) "{\"access_token\": \"12335dssdbddre\"}").delay(1, TimeUnit.SECONDS);
     }
 
     @Override

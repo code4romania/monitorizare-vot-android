@@ -17,6 +17,8 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 import ro.code4.monitorizarevot.data.rest.ApiService;
 import ro.code4.monitorizarevot.db.Preferences;
+import ro.code4.monitorizarevot.domain.exception.MessageType;
+import ro.code4.monitorizarevot.domain.exception.VoteException;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.Note;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
@@ -91,7 +93,7 @@ public class HttpDataSource implements ApiDataSource {
                         return Observable.just(true);
 
                     } else {
-                        return Observable.error(new IOException("Eroare de server"));
+                        return Observable.error(new VoteException(MessageType.SERVER_ERROR));
                     }
                 } catch (JSONException ex) {
                     return Observable.error(ex);
