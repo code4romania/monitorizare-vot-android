@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.LogoutListener;
 import ro.code4.monitorizarevot.presentation.LoadingMessage;
 import ro.code4.monitorizarevot.util.ActivityOperations;
@@ -79,6 +80,7 @@ public abstract class BaseActivity<VM extends BaseViewModel> extends AppCompatAc
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(LogoutListener event) {
         AuthUtils.removeAccountAndStopSync();
+        Preferences.clear();
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
