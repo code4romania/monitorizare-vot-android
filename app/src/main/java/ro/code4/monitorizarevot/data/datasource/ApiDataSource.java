@@ -15,7 +15,7 @@ import rx.Observable;
 
 public interface ApiDataSource {
 
-    Observable<Object> postAuth(User user);
+    Observable<Boolean> login(User user);
 
     Observable<List<Section>> getForm(String formId);
 

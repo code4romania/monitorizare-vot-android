@@ -10,6 +10,7 @@ import dagger.Provides;
 
 @Module(includes = {
         ActivityBindingModule.class,
+        DomainModule.class,
         DataModule.class
 })
 class AppModule {

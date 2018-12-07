@@ -24,7 +24,7 @@ public class LocalDataSource implements ApiDataSource {
     }
 
     @Override
-    public Observable<Object> postAuth(User user) {
+    public Observable<Boolean> login(User user) {
         return null;
     }
 
