@@ -78,6 +78,7 @@
                     android:layout_height="@dimen/input_height"
                     android:hint="@string/login_branch"
                     android:inputType="textPassword"
+                    android:imeOptions="actionDone"
                     style="@style/InputLogin"/>
 
             </android.support.design.widget.TextInputLayout>

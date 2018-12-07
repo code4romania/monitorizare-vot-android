@@ -9,7 +9,9 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -55,6 +57,16 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
                 }
             }
         });
+
+        password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                   login();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -64,10 +76,13 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
 
     @OnClick(R.id.login_button)
     void onLoginButtonClick() {
+        login();
+    }
+
+    private void login(){
         String phoneNumber = username.getText().toString();
         String pin = password.getText().toString();
         String udid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
         viewModel.login(phoneNumber, pin, udid);
     }
 

@@ -12,6 +12,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -22,6 +24,7 @@ import ro.code4.monitorizarevot.constants.Constants;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
 import ro.code4.monitorizarevot.fragment.FormsListFragment;
 import ro.code4.monitorizarevot.fragment.GuideFragment;
+import ro.code4.monitorizarevot.net.model.LogoutListener;
 import ro.code4.monitorizarevot.viewmodel.ToolbarViewModel;
 
 public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements Navigator, HasSupportFragmentInjector {
@@ -88,6 +91,12 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
             @Override
             public void onClick(View v) {
                 callSupportCenter();
+            }
+        });
+        findViewById(R.id.menu_logout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new LogoutListener());
             }
         });
     }

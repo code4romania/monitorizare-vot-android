@@ -24,6 +24,7 @@
     <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
+    <string name="menu_logout">Delogare</string>
 
     <!-- Images -->
     <string name="content_icon_phone">Phone icon</string>
