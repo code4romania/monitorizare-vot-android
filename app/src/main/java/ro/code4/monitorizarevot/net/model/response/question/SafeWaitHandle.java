@@ -1,4 +1,3 @@
-
 package ro.code4.monitorizarevot.net.model.response.question;
 
 import com.google.gson.annotations.Expose;
@@ -9,44 +8,24 @@ public class SafeWaitHandle {
     @SerializedName("isInvalid")
     @Expose
     private Boolean isInvalid;
+
     @SerializedName("isClosed")
     @Expose
     private Boolean isClosed;
 
-    /**
-     * 
-     * @return
-     *     The isInvalid
-     */
-    public Boolean getIsInvalid() {
+    public Boolean getInvalid() {
         return isInvalid;
     }
 
-    /**
-     * 
-     * @param isInvalid
-     *     The isInvalid
-     */
-    public void setIsInvalid(Boolean isInvalid) {
-        this.isInvalid = isInvalid;
+    public void setInvalid(Boolean invalid) {
+        isInvalid = invalid;
     }
 
-    /**
-     * 
-     * @return
-     *     The isClosed
-     */
-    public Boolean getIsClosed() {
+    public Boolean getClosed() {
         return isClosed;
     }
 
-    /**
-     * 
-     * @param isClosed
-     *     The isClosed
-     */
-    public void setIsClosed(Boolean isClosed) {
-        this.isClosed = isClosed;
+    public void setClosed(Boolean closed) {
+        isClosed = closed;
     }
-
 }

@@ -2,6 +2,7 @@ package ro.code4.monitorizarevot.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -50,10 +51,10 @@ public class QuestionsOverviewFragment extends BaseFragment<QuestionOverviewView
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_questions_overview, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.questions_overview_recycler);
+        RecyclerView recyclerView = rootView.findViewById(R.id.questions_overview_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setAdapter(new QuestionsOverviewAdapter(getActivity(), form, this));
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2,

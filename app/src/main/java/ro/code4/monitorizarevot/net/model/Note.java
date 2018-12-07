@@ -6,14 +6,18 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Note extends RealmObject {
+
     @PrimaryKey
     private int id;
+
     @Expose
     private String uriPath;
+
     @Expose
     private String description;
+
     @Expose
-    private Integer idIntrebare;
+    private Integer questionId;
 
     public Note() {
 
@@ -40,10 +44,10 @@ public class Note extends RealmObject {
     }
 
     public Integer getQuestionId() {
-        return idIntrebare;
+        return questionId;
     }
 
     public void setQuestionId(Integer questionId) {
-        this.idIntrebare = questionId;
+        this.questionId = questionId;
     }
 }

@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.net.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -8,23 +9,30 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Answer extends RealmObject implements Serializable {
+
+    // TODO serialized names to be translated when api is updated
     @PrimaryKey
     @Expose
-    private Integer idOptiune;
+    @SerializedName("idOptiune")
+    private Integer id;
+
     @Expose
-    private String textOptiune;
+    @SerializedName("textOptiune")
+    private String text;
+
     @Expose
-    private boolean seIntroduceText;
+    @SerializedName("seIntroduceText")
+    private boolean hasManualInput;
 
     public Integer getId() {
-        return idOptiune;
+        return id;
     }
 
     public String getText() {
-        return textOptiune;
+        return text;
     }
 
     public boolean hasManualInput() {
-        return seIntroduceText;
+        return hasManualInput;
     }
 }

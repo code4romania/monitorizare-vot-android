@@ -28,7 +28,7 @@ public class FormRenderer {
                 return renderMultipleAnswersQuestion(context, question);
             case UNKNOWN:
             default:
-                Toast.makeText(context, "Eroare in interpretarea sectiunii", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.error_section_type), Toast.LENGTH_SHORT).show();
                 return new View(context);
         }
     }
@@ -38,7 +38,7 @@ public class FormRenderer {
         layout.setOrientation(LinearLayout.VERTICAL);
         int marginBottom = context.getResources().getDimensionPixelSize(R.dimen.question_option_margin);
         for (Answer answer : question.getAnswerList()) {
-            int responseIndex = getPositionResponseIndex(answer.getId(), question.getRaspunsuriIntrebare());
+            int responseIndex = getPositionResponseIndex(answer.getId(), question.getAnswers());
             if (answer.hasManualInput()) {
                 AnswerCheckboxWithDetails child = new AnswerCheckboxWithDetails(context);
                 setMargins(child, 0, 0, 0, marginBottom);
@@ -62,7 +62,7 @@ public class FormRenderer {
         AnswerRadioGroup group = new AnswerRadioGroup(context);
         int marginBottom = context.getResources().getDimensionPixelSize(R.dimen.question_option_margin);
         for(Answer answer : question.getAnswerList()) {
-            int responseIndex = getPositionResponseIndex(answer.getId(), question.getRaspunsuriIntrebare());
+            int responseIndex = getPositionResponseIndex(answer.getId(), question.getAnswers());
             if (answer.hasManualInput()) {
                 AnswerRadioButtonWithDetails child = new AnswerRadioButtonWithDetails(context);
                 setMargins(child, 0, 0, 0, marginBottom);
@@ -85,12 +85,12 @@ public class FormRenderer {
     }
 
     private static String getDetailFromAnswer(Question question, int responseIndex) {
-        return responseIndex != -1 ? question.getRaspunsuriIntrebare().get(responseIndex).getValue() : "";
+        return responseIndex != -1 ? question.getAnswers().get(responseIndex).getValue() : "";
     }
 
-    private static int getPositionResponseIndex(Integer idOptiune, List<ResponseAnswer> raspunsuriIntrebare) {
-        for(int i=0; i< raspunsuriIntrebare.size(); i++){
-            if(raspunsuriIntrebare.get(i).getIdOptiune().equals(idOptiune)){
+    private static int getPositionResponseIndex(Integer optionId, List<ResponseAnswer> answers) {
+        for(int i=0; i< answers.size(); i++){
+            if(answers.get(i).getOptionId().equals(optionId)){
                 return i;
             }
         }

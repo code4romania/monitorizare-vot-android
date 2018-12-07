@@ -96,8 +96,7 @@ public class NoDefaultSpinner extends Spinner {
             }
         }
 
-        private View getView(int position, View convertView, ViewGroup parent)
-                throws IllegalAccessException {
+        private View getView(int position, View convertView, ViewGroup parent) {
 
             if (position < 0) {
                 final TextView v =

@@ -3,10 +3,13 @@ package ro.code4.monitorizarevot.net.model;
 import com.google.gson.annotations.Expose;
 
 public class User {
+
     @Expose
     private String phone;
+
     @Expose
     private String pin;
+
     @Expose
     private String udid;
 

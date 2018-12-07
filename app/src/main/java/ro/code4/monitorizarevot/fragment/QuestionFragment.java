@@ -3,6 +3,7 @@ package ro.code4.monitorizarevot.fragment;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,7 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.question = new FormUtils().getQuestion(getArguments().getInt(ARG_QUESTION_ID));
+        this.question = FormUtils.getQuestion(getArguments().getInt(ARG_QUESTION_ID));
         this.questionIndex = getArguments().getInt(ARG_INDEX);
         this.numberOfQuestions = getArguments().getInt(ARG_SIZE);
     }
@@ -73,7 +74,7 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_question, container, false);
 
         setDescription((TextView) rootView.findViewById(R.id.question_description));
@@ -82,7 +83,7 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
             ((TextView) rootView.findViewById(R.id.button_question_next)).setText(R.string.question_finish);
         }
 
-        final ViewGroup questionContainer = (ViewGroup) rootView.findViewById(R.id.question_container);
+        final ViewGroup questionContainer = rootView.findViewById(R.id.question_container);
         questionContainer.addView(FormRenderer.renderQuestion(getActivity(), question));
         rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
             @Override

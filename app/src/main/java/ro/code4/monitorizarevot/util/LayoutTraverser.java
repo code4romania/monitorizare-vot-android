@@ -1,14 +1,14 @@
 package ro.code4.monitorizarevot.util;
 
+import android.view.View;
+import android.view.ViewGroup;
+
 /**
  * http://android-wtf.com/2013/06/how-to-easily-traverse-any-view-hierarchy-in-android/
  *
  * Traverses recursively all nested views of a ViewGroup
  * Returns a single View when process returns true
  */
-
-import android.view.View;
-import android.view.ViewGroup;
 
 public class LayoutTraverser {
     public interface Processor {

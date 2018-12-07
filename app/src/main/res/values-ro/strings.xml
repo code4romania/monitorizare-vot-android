@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
+    <string name="app_name">Monitorizare Vot</string>
+    <string name="app_version">V%1$S</string>
+
+    <!-- General -->
+    <string name="developed_by">aplicație dezvoltată de</string>
+    <string name="please_wait">Vă rugăm așteptaţi…</string>
+    <string name="button_continue">Continuă</string>
+    <string name="button_continue_to_forms">Continuă către formulare</string>
+    <string name="button_send">Trimite</string>
+    <string name="spinner_choose">Alege</string>
+    <string name="hint_time">hh:mm</string>
+    <string name="empty" />
+    <string name="empty_credential_message">Introduceți numărul de telefon şi codul primit.</string>
+
+    <string name="error_permission">Eroare permisiune %1$S</string>
+    <string name="error_section_type">Eroare în interpretarea secțiunii</string>
+
+    <!-- Fragment titles -->
+    <string name="title_branch_details">Detalii secție</string>
+    <string name="title_branch_selection">Alege secția</string>
+    <string name="title_forms_list">Formulare</string>
+    <string name="title_form">Formular %1$s</string>
+    <string name="title_note">Adaugă notă</string>
+    <string name="title_guide">Ghid</string>
+
+    <!-- Menu -->
+    <string name="menu_forms">Formulare</string>
+    <string name="menu_change_branch">Schimbă secţia</string>
+    <string name="menu_guide">Ghidul observatorului</string>
+    <string name="menu_call">Apelează TelVerde</string>
+    <string name="menu_logout">Delogare</string>
+
+    <!-- Images -->
+    <string name="content_icon_building">Building icon</string>
+
+    <!-- Login -->
+    <string name="login_phone">Numărul de telefon</string>
+    <string name="login_branch">Cod primit</string>
+    <string name="login">Login</string>
+
+    <!-- Branch selection -->
+    <string name="branch_title">Alege secția</string>
+    <string name="branch_subtitle">în care te afli</string>
+    <string name="branch_county">Județ</string>
+    <string name="branch_number">Număr secție</string>
+    <string name="branch_change">Schimbă secţia</string>
+    <string name="branch_question_environment">În ce mediu se află secția?</string>
+    <string name="branch_answer_rural">Rural</string>
+    <string name="branch_answer_urban">Urban</string>
+    <string name="branch_question_sex">Preşedintele secţiei este</string>
+    <string name="branch_answer_man">Bărbat</string>
+    <string name="branch_answer_woman">Femeie</string>
+    <string name="branch_question_enter">Ora sosirii în secţie</string>
+    <string name="branch_question_leave">Ora plecării din secţie</string>
+    <string name="branch_choose_time_enter">Alege ora sosirii</string>
+    <string name="branch_choose_time_leave">Alege ora plecării</string>
+    <string name="invalid_branch_county">Alege județul</string>
+    <string name="invalid_branch_number">Introdu numărul secției</string>
+    <string name="invalid_branch_number_minus">Numărul secției trebuie să fie pozitiv</string>
+    <string name="invalid_branch_number_max">Numărul maxim pentru județul %1$s este %2$s</string>
+    <string name="invalid_branch_environment">Alege urban sau rural</string>
+    <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
+    <string name="invalid_branch_time_in">Alege ora sosirii</string>
+
+    <!-- Forms list -->
+    <string name="form_1">Sâmbătă</string>
+    <string name="form_1_letter">S</string>
+    <string name="form_2">Duminică</string>
+    <string name="form_2_letter">D</string>
+    <string name="form_3">Numărare</string>
+    <string name="form_3_letter">N</string>
+    <string name="form_notes">Adaugă notă</string>
+    <string name="error_no_form_data">Nu există date pentru acest formular</string>
+
+    <!-- Question details -->
+    <string name="question_complete">Completat</string>
+    <string name="question_incomplete">Necompletat</string>
+    <string name="question_notes">Note</string>
+    <string name="question_next">Înainte</string>
+    <string name="question_finish">Trimite</string>
+
+    <!-- Notes -->
+    <string name="note_title">Adaugă notă</string>
+    <string name="note_description">Mesajul tău</string>
+    <string name="note_description_hint">Scrie aici</string>
+    <string name="note_photo">Adaugă foto/video</string>
+    <string name="note_saved">Notă salvată</string>
+    <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
+    <string name="error_permission_external_storage">Permisiunea este necesară pentru a putea selecta o resursă</string>
+</resources>

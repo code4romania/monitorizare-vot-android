@@ -13,17 +13,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ro.code4.monitorizarevot.constants.FormType;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Form;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Question;
-import ro.code4.monitorizarevot.net.model.QuestionAnswer;
-import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
-import ro.code4.monitorizarevot.net.model.Version;
+import ro.code4.monitorizarevot.net.model.*;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.util.FormUtils;
@@ -32,17 +26,41 @@ import ro.code4.monitorizarevot.util.Logify;
 import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
-        init(context);
+        init();
     }
 
     public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    public static void requestSync(Context context) {
+        Account account = createSyncAccount(context);
+        ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
+        ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(false));
+    }
+
+    public static void requestUploadSync(Context context) {
+        if (ContentResolver.getMasterSyncAutomatically()) {
+            Account account = createSyncAccount(context);
+            ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
+            ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(true));
+        }
+    }
+
+    @NonNull
+    private static Bundle getBundle(boolean isUpload) {
+        Bundle extras = new Bundle();
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
+        return extras;
+    }
+
+    private void init() {
 
     }
 
@@ -57,7 +75,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
     }
 
-    private void doUpload(){
+    private void doUpload() {
         postBranchDetails();
         postQuestionAnswers();
         postNotes();
@@ -68,10 +86,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         getFormsDefinition();
     }
 
-    private void postBranchDetails(){
+    private void postBranchDetails() {
         List<BranchDetails> branchDetailsList = Data.getInstance().getUnsyncedList(BranchDetails.class);
         for (BranchDetails branchDetails : branchDetailsList) {
-            try{
+            try {
                 NetworkService.postBranchDetails(branchDetails);
                 Data.getInstance().markSynced(branchDetails);
             } catch (IOException e) {
@@ -81,13 +99,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void postQuestionAnswers() {
-        try{
+        try {
             List<QuestionAnswer> questionAnswers = new ArrayList<>();
-            getAnswersFromForm(Data.getInstance().getFormA(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getFormB(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getFormC(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getFirstForm(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getSecondForm(), questionAnswers);
+            getAnswersFromForm(Data.getInstance().getThirdForm(), questionAnswers);
             NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -105,10 +123,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {
-        if(form != null){
+        if (form != null) {
             List<Question> questionList = FormUtils.getAllQuestions(form.getId());
             for (Question question : questionList) {
-                if(!question.isSynced()){
+                if (!question.isSynced()) {
                     for (BranchQuestionAnswer branchQuestionAnswer : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
                         QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer, form.getId());
                         questionAnswers.add(questionAnswer);
@@ -122,11 +140,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         try {
             VersionResponse versionResponse = NetworkService.doGetFormVersion();
             Version existingVersion = Data.getInstance().getFormVersion();
-            if(!versionsEqual(existingVersion, versionResponse.getVersion())) {
+            if (!versionsEqual(existingVersion, versionResponse.getVersion())) {
                 Data.getInstance().deleteAnswersAndNotes();
                 getForms(versionResponse.getVersion());
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -138,35 +156,19 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 && before.getC().equals(current.getC());
     }
 
-    private void getForms(Version version) throws IOException {
+    private void getForms(Version version) {
         FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(version, 3);
-        NetworkService.doGetForm("A").startRequest(subscriber);
-        NetworkService.doGetForm("B").startRequest(subscriber);
-        NetworkService.doGetForm("C").startRequest(subscriber);
-    }
-
-    public static void requestSync(Context context) {
-        ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(false));
-    }
-
-    public static void requestUploadSync(Context context) {
-        if (ContentResolver.getMasterSyncAutomatically()) {
-            ContentResolver.requestSync(createSyncAccount(context), Sync.AUTHORITY, getBundle(true));
-        }
-    }
-
-    @NonNull
-    private static Bundle getBundle(boolean isUpload) {
-        Bundle extras = new Bundle();
-        extras.putBoolean( ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        extras.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        extras.putBoolean(ContentResolver.SYNC_EXTRAS_UPLOAD, isUpload);
-        return extras;
+        NetworkService.doGetForm(FormType.FIRST).startRequest(subscriber);
+        NetworkService.doGetForm(FormType.SECOND).startRequest(subscriber);
+        NetworkService.doGetForm(FormType.THIRD).startRequest(subscriber);
     }
 
     private class FormDefinitionSubscriber extends ObservableListener<Boolean> {
+
         private final Version version;
+
         private final int numberOfRequests;
+
         private int successCount = 0;
 
         FormDefinitionSubscriber(Version version, int numberOfRequests) {

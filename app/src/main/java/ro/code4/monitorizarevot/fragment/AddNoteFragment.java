@@ -50,10 +50,10 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
         return new AddNoteFragment();
     }
 
-    public static AddNoteFragment newInstance(Integer idIntrebare) {
+    public static AddNoteFragment newInstance(Integer questionId) {
         AddNoteFragment fragment = new AddNoteFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARGS_QUESTION_ID, idIntrebare);
+        bundle.putInt(ARGS_QUESTION_ID, questionId);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -111,11 +111,11 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_note, container, false);
 
-        description = (EditText) rootView.findViewById(R.id.note_description);
-        fileSelectorButton = (FileSelectorButton) rootView.findViewById(R.id.note_file_selector);
+        description = rootView.findViewById(R.id.note_description);
+        fileSelectorButton = rootView.findViewById(R.id.note_file_selector);
 
         fileSelectorButton.setOnClickListener(new View.OnClickListener() {
             @Override
