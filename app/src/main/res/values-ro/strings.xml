@@ -80,7 +80,9 @@
     <string name="question_incomplete">Necompletat</string>
     <string name="question_notes">Note</string>
     <string name="question_next">Înainte</string>
+    <string name="question_previous">Înapoi</string>
     <string name="question_finish">Trimite</string>
+    <string name="question_confirmation_message">Mesaj trimis</string>
 
     <!-- Notes -->
     <string name="note_title">Adaugă notă</string>

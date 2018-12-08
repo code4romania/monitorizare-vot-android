@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -108,12 +109,23 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
     @Override
     public void onSaveAnswerIfCompleted(ViewGroup questionContainer) {
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
+        Question question = questions.get(currentQuestion);
         if (answers.size() > 0) {
-            Question question = questions.get(currentQuestion);
             BranchQuestionAnswer branchQuestionAnswer = new BranchQuestionAnswer(question.getId(), answers);
             Data.getInstance().saveAnswerResponse(branchQuestionAnswer);
-
             syncCurrentData(branchQuestionAnswer);
+            Toast.makeText(getContext(),getString(R.string.question_confirmation_message),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onPrevious() {
+        hideFocusedKeyboard();
+        if (currentQuestion > 1) {
+            showQuestion(currentQuestion - 1);
+        } else {
+            SyncAdapter.requestUploadSync(getActivity());
+            navigateBack();
         }
     }
 

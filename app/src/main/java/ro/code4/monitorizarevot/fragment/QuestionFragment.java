@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ro.code4.monitorizarevot.BaseFragment;
@@ -29,6 +30,10 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
     private Question question;
 
     private QuestionDetailsNavigator navigator;
+
+    private Button nextButton;
+
+    private Button previousButton;
 
     private int numberOfQuestions;
 
@@ -88,10 +93,11 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
         rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigator.onSaveAnswerIfCompleted(questionContainer);
-                navigator.onNext();
+
             }
         });
+
+
         rootView.findViewById(R.id.button_question_notes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,10 +105,38 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
                 navigator.onNotes();
             }
         });
+        nextButton = rootView.findViewById(R.id.button_question_next);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onNext();
+
+            }
+        });
+
+        previousButton = rootView.findViewById(R.id.button_question_previous);
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onPrevious();
+                hideButtons();
+            }
+        });
+        hideButtons();
         return rootView;
     }
 
     private void setDescription(TextView description) {
         description.setText(question.getText());
+    }
+
+    private void hideButtons(){
+        if(questionIndex > 1){
+            previousButton.setVisibility(View.VISIBLE);
+        }else{
+            previousButton.setVisibility(View.GONE);
+        }
     }
 }

@@ -6,4 +6,5 @@ public interface QuestionDetailsNavigator {
     void onNotes();
     void onNext();
     void onSaveAnswerIfCompleted(ViewGroup questionContainer);
+    void onPrevious();
 }
