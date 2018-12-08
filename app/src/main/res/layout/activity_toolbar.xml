@@ -57,6 +57,12 @@
             android:text="@string/menu_call"
             style="@style/menuItem"/>
         <TextView
+            android:id="@+id/menu_chat"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item_height"
+            android:text="@string/menu_chat"
+            style="@style/menuItem"/>
+        <TextView
             android:id="@+id/menu_logout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/menu_item_height"

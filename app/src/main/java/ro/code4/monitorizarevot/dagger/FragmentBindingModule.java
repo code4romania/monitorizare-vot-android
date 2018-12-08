@@ -30,4 +30,7 @@ public abstract class FragmentBindingModule {
 
     @ContributesAndroidInjector
     abstract QuestionsOverviewFragment contributeQuestionOverviewFragment();
+
+    @ContributesAndroidInjector
+    abstract ChatFragment contributeChatFragment();
 }

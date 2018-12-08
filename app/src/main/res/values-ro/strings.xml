@@ -23,12 +23,14 @@
     <string name="title_form">Formular %1$s</string>
     <string name="title_note">Adaugă notă</string>
     <string name="title_guide">Ghid</string>
+    <string name="title_chat">Chat</string>
 
     <!-- Menu -->
     <string name="menu_forms">Formulare</string>
     <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
+    <string name="menu_chat">Chat</string>
     <string name="menu_logout">Delogare</string>
 
     <!-- Images -->

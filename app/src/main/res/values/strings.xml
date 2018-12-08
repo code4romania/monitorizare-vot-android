@@ -24,6 +24,7 @@
     <string name="title_form">Form %1$s</string>
     <string name="title_note">Add a message</string>
     <string name="title_guide">Guide</string>
+    <string name="title_chat">Chat</string>
 
     <!-- Menu -->
     <string name="menu_logout">Logout</string>
@@ -31,6 +32,7 @@
     <string name="menu_change_branch">Change the polling station</string>
     <string name="menu_guide">Observer\'s guide</string>
     <string name="menu_call">Call the Hotline</string>
+    <string name="menu_chat">Chat</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
