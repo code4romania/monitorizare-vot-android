@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="Typos">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
@@ -83,7 +82,7 @@
     <string name="question_next">Next</string>
     <string name="question_previous">Previous</string>
     <string name="question_finish">Send</string>
-    <string name="question_confirmation_message">Message send</string>
+    <string name="question_confirmation_message">Response sent</string>
 
     <!-- Notes -->
     <string name="note_title">Add a message</string>
