@@ -33,6 +33,12 @@ public class ChatFragment extends BaseFragment<ChatViewModel> implements Injecta
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLifecycle().addObserver(viewModel);
+    }
+
+    @Override
     public String getTitle() {
         return getString(R.string.title_chat);
     }

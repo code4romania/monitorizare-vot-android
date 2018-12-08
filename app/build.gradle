@@ -32,16 +32,19 @@ android {
             applicationIdSuffix '.dev'
             versionNameSuffix "d"
             buildConfigField "String", "WEB_BASE_URL", '"http://10.3.193.203:44379"'
+            buildConfigField "String", "CHAT_SOCKET_URL", '""'
         }
 
         prod {
             buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
+            buildConfigField "String", "CHAT_SOCKET_URL", '""'
         }
 
         mock {
             applicationIdSuffix '.mock'
             versionNameSuffix "m"
             buildConfigField "String", "WEB_BASE_URL", '""'
+            buildConfigField "String", "CHAT_SOCKET_URL", '""'
         }
     }
 
@@ -86,6 +89,8 @@ dependencies {
 
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
+
+    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
 
     testImplementation 'junit:junit:4.12'
 }

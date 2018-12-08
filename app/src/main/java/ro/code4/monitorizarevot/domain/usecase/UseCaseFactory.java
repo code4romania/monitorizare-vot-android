@@ -19,4 +19,16 @@ public class UseCaseFactory extends AbstractComponentFactory<UseCase> {
     public LoginUC login() {
         return create(LoginUC.class);
     }
+
+    public ChatMessageHistoryUC chatHistory() {
+        return create(ChatMessageHistoryUC.class);
+    }
+
+    public NewChatMessageUC messageReceiver() {
+        return create(NewChatMessageUC.class);
+    }
+
+    public SendChatMessageUC messageSender() {
+        return create(SendChatMessageUC.class);
+    }
 }

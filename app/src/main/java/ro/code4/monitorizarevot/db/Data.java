@@ -9,26 +9,23 @@ import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 import ro.code4.monitorizarevot.constants.FormType;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Form;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Question;
-import ro.code4.monitorizarevot.net.model.Section;
-import ro.code4.monitorizarevot.net.model.Syncable;
-import ro.code4.monitorizarevot.net.model.Version;
+import ro.code4.monitorizarevot.net.model.*;
 
 public class Data {
-    private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
-    private static final String BRANCH_ID = "id";
+
+    private static final String ID = "id";
+
     private static final String BRANCH_NUMBER = "branchNumber";
+
     private static final String COUNTY_CODE = "countyCode";
-    private static final String FORM_ID = "id";
+
     private static final String IS_SYNCED = "isSynced";
-    private static final String NOTE_ID = "id";
-    private static final String QUESTION_ID = "id"; // TODO why not keep all Primary Keys as "id" and delete it from here
 
     private static Data instance;
+
+    private Data() {
+
+    }
 
     public static Data getInstance() {
         if (instance == null) {
@@ -38,12 +35,8 @@ public class Data {
     }
 
     private static int getNextPrimaryKey(Realm realm, Class realmClass) {
-        Number maxPrimaryKeyValue = realm.where(realmClass).max(AUTO_INCREMENT_PRIMARY_KEY);
+        Number maxPrimaryKeyValue = realm.where(realmClass).max(ID);
         return maxPrimaryKeyValue != null ? maxPrimaryKeyValue.intValue() + 1 : 0;
-    }
-
-    private Data() {
-
     }
 
     public void deleteAnswersAndNotes() {
@@ -83,7 +76,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Form> results = realm
                 .where(Form.class)
-                .equalTo(FORM_ID, formId)
+                .equalTo(ID, formId)
                 .findAll();
         Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
         realm.close();
@@ -92,8 +85,8 @@ public class Data {
 
     public Version getFormVersion() {
         RealmResults<Version> queryResult = Realm.getDefaultInstance()
-                .where(Version.class)
-                .findAll();
+                                                 .where(Version.class)
+                                                 .findAll();
         return queryResult.size() > 0 ? queryResult.first() : null;
     }
 
@@ -111,7 +104,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         Question result = realm
                 .where(Question.class)
-                .equalTo(QUESTION_ID, questionId)
+                .equalTo(ID, questionId)
                 .findFirst();
         Question question = realm.copyFromRealm(result);
         realm.close();
@@ -172,7 +165,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         Question question = realm
                 .where(Question.class)
-                .equalTo(QUESTION_ID, questionId)
+                .equalTo(ID, questionId)
                 .findFirst();
 
         realm.beginTransaction();
@@ -187,8 +180,8 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         RealmResults<Note> results = realm.where(Note.class)
-                .equalTo(NOTE_ID, note.getId())
-                .findAll();
+                                          .equalTo(ID, note.getId())
+                                          .findAll();
         results.deleteAllFromRealm();
         realm.commitTransaction();
         realm.close();
@@ -198,7 +191,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         BranchQuestionAnswer result = realm
                 .where(BranchQuestionAnswer.class)
-                .equalTo(BRANCH_ID, getCityBranchId(questionId))
+                .equalTo(ID, getCityBranchId(questionId))
                 .findFirst();
         BranchQuestionAnswer branchQuestionAnswer = result != null ? realm.copyFromRealm(result) : null;
         realm.close();
@@ -216,7 +209,7 @@ public class Data {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchQuestionAnswer> result = realm
                 .where(BranchQuestionAnswer.class)
-                .equalTo(BRANCH_ID, getCityBranchId(questionId))
+                .equalTo(ID, getCityBranchId(questionId))
                 .findAll();
         List<BranchQuestionAnswer> branchQuestionAnswers = realm.copyFromRealm(result);
         realm.close();
