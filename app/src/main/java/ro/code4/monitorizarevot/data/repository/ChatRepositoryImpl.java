@@ -1,9 +1,8 @@
 package ro.code4.monitorizarevot.data.repository;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +43,7 @@ public class ChatRepositoryImpl implements ChatRepository {
 
             @Override
             public List<ChatMessage> call(SocketEvent socketEvent) {
-                return mapHistory(socketEvent.getArguments()[0]);
+                return mapHistory(socketEvent.getArguments());
             }
         });
     }
@@ -56,9 +55,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         chatMessage.setTimestamp(System.currentTimeMillis());
         chatMessage.setType(ChatMessageType.SENT.ordinal());
 
-        mSocketConnector.sendMessage(new Gson().toJson(chatMessage, ChatMessage.class));
-
-        return Observable.just(true);
+        return mSocketConnector.sendMessage(new Gson().toJson(chatMessage, ChatMessage.class));
     }
 
     @Override
@@ -67,16 +64,19 @@ public class ChatRepositoryImpl implements ChatRepository {
     }
 
     private ChatMessage mapMessage(Object data) {
-        ChatMessage chatMessage = new Gson().fromJson(data.toString(), ChatMessage.class);
-        chatMessage.setType(ChatMessageType.RECEIVED.ordinal());
-
         return new Gson().fromJson(data.toString(), ChatMessage.class);
     }
 
-    private List<ChatMessage> mapHistory(Object data) {
-        Type listType = new TypeToken<List<ChatMessage>>() {
-        }.getType();
+    private List<ChatMessage> mapHistory(Object[] args) {
+        List<ChatMessage> list = new ArrayList<>();
 
-        return new Gson().fromJson(data.toString(), listType);
+        if (args != null) {
+            for (Object data : args) {
+                ChatMessage message = mapMessage(data);
+                list.add(message);
+            }
+        }
+
+        return list;
     }
 }

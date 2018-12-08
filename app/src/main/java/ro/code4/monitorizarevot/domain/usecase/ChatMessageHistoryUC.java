@@ -21,13 +21,6 @@ public class ChatMessageHistoryUC extends UseCase<List<ChatMessage>, Void> {
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-
-        mRepoFactory.chat().closeChat();
-    }
-
-    @Override
     protected Observable<List<ChatMessage>> buildObservable(Void aVoid) {
         return mRepoFactory.chat().history();
     }

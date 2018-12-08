@@ -19,13 +19,6 @@ public class NewChatMessageUC extends UseCase<ChatMessage, Void> {
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-
-        mRepoFactory.chat().closeChat();
-    }
-
-    @Override
     protected Observable<ChatMessage> buildObservable(Void aVoid) {
         return mRepoFactory.chat().newMessage();
     }

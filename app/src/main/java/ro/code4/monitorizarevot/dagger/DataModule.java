@@ -3,6 +3,8 @@ package ro.code4.monitorizarevot.dagger;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
+import ro.code4.monitorizarevot.data.chat.socket.DummySocketConnector;
+import ro.code4.monitorizarevot.data.chat.socket.SocketConnector;
 import ro.code4.monitorizarevot.data.datasource.ApiDataSource;
 import ro.code4.monitorizarevot.data.datasource.HttpDataSource;
 import ro.code4.monitorizarevot.data.datasource.LocalDataSource;
@@ -19,4 +21,8 @@ public abstract class DataModule {
     @IntoMap
     @DataSourceKey(HttpDataSource.class)
     abstract ApiDataSource bindHttpDataSource(HttpDataSource dataSource);
+
+    @Binds
+
+    abstract SocketConnector bindSocketConnector(DummySocketConnector socketConnector);
 }
