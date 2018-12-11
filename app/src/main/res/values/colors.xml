@@ -17,4 +17,5 @@
     <color name="hint">#8C8C8C</color>
     <color name="complete">#00C121</color>
     <color name="incomplete">#ACB4BE</color>
+    <color name="ic_launcher_background">#FFCC01</color>
 </resources>

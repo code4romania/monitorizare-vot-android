@@ -1,25 +1,41 @@
 package ro.code4.monitorizarevot.net.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class BranchDetails extends RealmObject implements Syncable {
+
+    // TODO serialized names to be translated when api is updated
     @PrimaryKey
     private String id;
+
     @Expose
-    private String codJudet;
+    @SerializedName("codJudet")
+    private String countyCode;
+
     @Expose
-    private int numarSectie;
+    @SerializedName("numarSectie")
+    private int branchNumber;
+
     @Expose
-    private boolean esteZonaUrbana;
+    @SerializedName("esteZonaUrbana")
+    private boolean isUrban;
+
     @Expose
-    private boolean presedinteBesvesteFemeie;
+    @SerializedName("presedinteBesvesteFemeie")
+    private boolean isFemale;
+
     @Expose
-    private String oraSosirii;
+    @SerializedName("oraSosirii")
+    private String timeEnter;
+
     @Expose
-    private String oraPlecarii;
+    @SerializedName("oraPlecarii")
+    private String timeLeave;
+
     private boolean isSynced;
 
     public BranchDetails() {
@@ -27,18 +43,18 @@ public class BranchDetails extends RealmObject implements Syncable {
     }
 
     public BranchDetails(String countyCode, int branchNumber) {
-        this.codJudet = countyCode;
-        this.numarSectie = branchNumber;
+        this.countyCode = countyCode;
+        this.branchNumber = branchNumber;
         this.id = countyCode + String.valueOf(branchNumber);
         this.isSynced = false;
     }
 
     public BranchDetails(String countyCode, int branchNumber, boolean isUrban, boolean isFemale, String timeEnter, String timeLeave) {
         this(countyCode, branchNumber);
-        this.esteZonaUrbana = isUrban;
-        this.presedinteBesvesteFemeie = isFemale;
-        this.oraSosirii = timeEnter;
-        this.oraPlecarii = timeLeave;
+        this.isUrban = isUrban;
+        this.isFemale = isFemale;
+        this.timeEnter = timeEnter;
+        this.timeLeave = timeLeave;
     }
 
     public String getId() {
@@ -46,27 +62,27 @@ public class BranchDetails extends RealmObject implements Syncable {
     }
 
     public String getCountyCode() {
-        return codJudet;
+        return countyCode;
     }
 
     public int getBranchNumber() {
-        return numarSectie;
+        return branchNumber;
     }
 
     public boolean isUrban() {
-        return esteZonaUrbana;
+        return isUrban;
     }
 
     public boolean isFemale() {
-        return presedinteBesvesteFemeie;
+        return isFemale;
     }
 
     public String getTimeEnter() {
-        return oraSosirii;
+        return timeEnter;
     }
 
     public String getTimeLeave() {
-        return oraPlecarii;
+        return timeLeave;
     }
 
     @Override
@@ -84,14 +100,14 @@ public class BranchDetails extends RealmObject implements Syncable {
         if (obj instanceof BranchDetails) {
             BranchDetails other = (BranchDetails) obj;
             return id.equals(other.getId()) &&
-                    codJudet.equals(other.getCountyCode()) &&
-                    numarSectie == other.getBranchNumber() &&
-                    esteZonaUrbana == other.isUrban() &&
-                    presedinteBesvesteFemeie == other.isFemale() &&
-                    ((oraSosirii == null && other.getTimeLeave() == null) ||
-                        (oraSosirii != null && other.getTimeEnter() != null && oraSosirii.equals(other.getTimeEnter()))) &&
-                    ((oraPlecarii == null && other.getTimeLeave() == null) ||
-                        (oraPlecarii != null && other.getTimeLeave() != null && oraPlecarii.equals(other.getTimeLeave())));
+                    countyCode.equals(other.getCountyCode()) &&
+                    branchNumber == other.getBranchNumber() &&
+                    isUrban == other.isUrban() &&
+                    isFemale == other.isFemale() &&
+                    ((timeEnter == null && other.getTimeLeave() == null) ||
+                        (timeEnter != null && other.getTimeEnter() != null && timeEnter.equals(other.getTimeEnter()))) &&
+                    ((timeLeave == null && other.getTimeLeave() == null) ||
+                        (timeLeave != null && other.getTimeLeave() != null && timeLeave.equals(other.getTimeLeave())));
         }
         return false;
     }

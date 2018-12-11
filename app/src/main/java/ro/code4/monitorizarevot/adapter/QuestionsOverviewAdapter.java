@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -28,18 +29,19 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
         this.questions = FormUtils.getAllQuestions(form.getId());
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_holder_question_overview, parent, false);
         return new QuestionsOverviewViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder vh, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder vh, int position) {
         final QuestionsOverviewViewHolder holder = (QuestionsOverviewViewHolder) vh;
         Question question = questions.get(position);
-        boolean hasAnswer = question.getRaspunsuriIntrebare().size() > 0;
+        boolean hasAnswer = question.getAnswers().size() > 0;
         holder.header.setText(question.getCode());
         holder.description.setText(question.getText());
         holder.status.setText(hasAnswer ?
@@ -67,10 +69,10 @@ public class QuestionsOverviewAdapter extends RecyclerView.Adapter {
 
         QuestionsOverviewViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.card_view);
-            header = (TextView) itemView.findViewById(R.id.header);
-            description = (TextView) itemView.findViewById(R.id.description);
-            status = (TextView) itemView.findViewById(R.id.status);
+            cardView = itemView.findViewById(R.id.card_view);
+            header = itemView.findViewById(R.id.header);
+            description = itemView.findViewById(R.id.description);
+            status = itemView.findViewById(R.id.status);
         }
     }
 }

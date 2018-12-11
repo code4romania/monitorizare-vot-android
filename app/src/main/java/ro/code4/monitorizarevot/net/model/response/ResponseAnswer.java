@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.net.model.response;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -9,22 +10,32 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.db.Preferences;
 
 public class ResponseAnswer extends RealmObject implements Serializable {
+
+    //TODO update fields to English names - to check names if influenced by backend
+
     @PrimaryKey
     @Expose
-    private Integer idOptiune;
-    @Expose
-    private String value;
-    private String codJudet;
-    private int numarSectie;
+    @SerializedName("idOptiune")
+    private Integer optionId;
 
-    public ResponseAnswer(){
-        this.codJudet = Preferences.getCountyCode();
-        this.numarSectie = Preferences.getBranchNumber();
+    @Expose
+    @SerializedName("value")
+    private String value;
+
+    @SerializedName("codJudet")
+    private String countyCode;
+
+    @SerializedName("numarSectie")
+    private int branchNumber;
+
+    public ResponseAnswer() {
+        this.countyCode = Preferences.getCountyCode();
+        this.branchNumber = Preferences.getBranchNumber();
     }
 
-    public ResponseAnswer(Integer idOptiune) {
+    public ResponseAnswer(Integer optionId) {
         this();
-        this.idOptiune = idOptiune;
+        this.optionId = optionId;
     }
 
     public ResponseAnswer(Integer idOptiune, String textRaspuns) {
@@ -32,12 +43,12 @@ public class ResponseAnswer extends RealmObject implements Serializable {
         this.value = textRaspuns;
     }
 
-    public Integer getIdOptiune() {
-        return idOptiune;
+    public Integer getOptionId() {
+        return optionId;
     }
 
-    public void setIdOptiune(Integer idOptiune) {
-        this.idOptiune = idOptiune;
+    public void setOptionId(Integer optionId) {
+        this.optionId = optionId;
     }
 
     public String getValue() {
@@ -48,19 +59,19 @@ public class ResponseAnswer extends RealmObject implements Serializable {
         this.value = value;
     }
 
-    public String getCodJudet() {
-        return codJudet;
+    public String getCountyCode() {
+        return countyCode;
     }
 
-    public void setCodJudet(String codJudet) {
-        this.codJudet = codJudet;
+    public void setCountyCode(String countyCode) {
+        this.countyCode = countyCode;
     }
 
-    public int getNumarSectie() {
-        return numarSectie;
+    public int getBranchNumber() {
+        return branchNumber;
     }
 
-    public void setNumarSectie(int numarSectie) {
-        this.numarSectie = numarSectie;
+    public void setBranchNumber(int branchNumber) {
+        this.branchNumber = branchNumber;
     }
 }

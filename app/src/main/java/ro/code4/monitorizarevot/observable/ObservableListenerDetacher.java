@@ -6,7 +6,7 @@ import rx.Subscription;
  * A wrapper for the Subscription interface.
  */
 public class ObservableListenerDetacher {
-    Subscription mSubscription;
+    private Subscription mSubscription;
 
     public ObservableListenerDetacher(Subscription subscription) {
         mSubscription = subscription;

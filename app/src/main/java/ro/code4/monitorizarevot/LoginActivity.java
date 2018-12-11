@@ -2,6 +2,7 @@ package ro.code4.monitorizarevot;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -18,25 +19,34 @@ import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
 import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 
+import static ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL;
+
 public class LoginActivity extends BaseActivity {
     private EditText username;
     private EditText password;
-    private Button loginButton;
     private ObservableListenerDetacher mListenerDetacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = (EditText) findViewById(R.id.phone);
-        password = (EditText) findViewById(R.id.branch);
+        username = findViewById(R.id.phone);
+        password = findViewById(R.id.branch);
         username.getText();
 
-        loginButton = (Button) findViewById(R.id.login_button);
+        Button loginButton = findViewById(R.id.login_button);
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 login();
+            }
+        });
+
+        View organisationLink = findViewById(R.id.login_organisation_link);
+        organisationLink.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openOrganisationWebpage();
             }
         });
 
@@ -49,6 +59,11 @@ public class LoginActivity extends BaseActivity {
         if(mListenerDetacher != null && !mListenerDetacher.isDetached()){
             mListenerDetacher.detach();
         }
+    }
+
+    private void openOrganisationWebpage() {
+        Intent openBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(ORGANISATION_WEB_URL));
+        startActivity(openBrowser);
     }
 
     private void setAppVersion(TextView appVersion) {

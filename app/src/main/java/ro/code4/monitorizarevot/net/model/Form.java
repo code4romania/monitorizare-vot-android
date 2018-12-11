@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.net.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -9,11 +10,15 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class Form extends RealmObject {
+
+    // TODO serialized names to be translated when api is updated
     @PrimaryKey
     @Expose
     private String id;
+
     @Expose
-    private RealmList<Section> sectiuni;
+    @SerializedName("sectiuni")
+    private RealmList<Section> sections;
 
     public String getId() {
         return id;
@@ -24,10 +29,10 @@ public class Form extends RealmObject {
     }
 
     public List<Section> getSections() {
-        return sectiuni;
+        return sections;
     }
 
-    public void setSections(RealmList<Section> sectiuni) {
-        this.sectiuni = sectiuni;
+    public void setSections(RealmList<Section> sections) {
+        this.sections = sections;
     }
 }

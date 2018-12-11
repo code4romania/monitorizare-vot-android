@@ -5,17 +5,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="ro.code4.monitorizarevot.LoginActivity">
 
-    <View
+    <FrameLayout
         android:id="@+id/purple_background"
         style="@style/SharedElementLoginBackground"
         android:background="@drawable/ic_login_bkg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/login_organisation_link"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:gravity="bottom|end"
+            android:background="@color/backgroundLight">
+            <TextView
+                style="text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/developed_by"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_code4"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="36dp">
 
         <RelativeLayout
             android:orientation="horizontal"
@@ -37,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_login"
+                app:srcCompat="@drawable/logo_new"
                 android:id="@+id/logo"
                 tools:ignore="ContentDescription" />
         </RelativeLayout>

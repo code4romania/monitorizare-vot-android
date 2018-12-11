@@ -1,96 +1,91 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
     <!-- General -->
-    <string name="button_continue">Continuă</string>
-    <string name="button_continue_to_forms">Continuă către formulare</string>
-    <string name="button_send">Trimite</string>
-    <string name="spinner_choose">Alege</string>
-    <string name="hint_input">Scrie aici</string>
+    <string name="developed_by">app developed by</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_continue_to_forms">Continue to forms</string>
+    <string name="button_send">Send</string>
+    <string name="spinner_choose">Choose</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
+    <string name="empty_credential_message">Fill in your phone number and the code you received.</string>
+
+    <string name="error_permission">Permission error %1$S</string>
+    <string name="error_section_type">Error in interpreting the section</string>
 
     <!-- Fragment titles -->
-    <string name="title_branch_details">Detalii secție</string>
-    <string name="title_branch_selection">Alege secția</string>
-    <string name="title_forms_list">Formulare</string>
-    <string name="title_form">Formular %1$s</string>
-    <string name="title_note">Adaugă notă</string>
-    <string name="title_guide">Ghid</string>
+    <string name="title_branch_details">Polling station details</string>
+    <string name="title_branch_selection">Choose your polling station</string>
+    <string name="title_forms_list">Forms</string>
+    <string name="title_form">Form %1$s</string>
+    <string name="title_note">Add a message</string>
+    <string name="title_guide">Guide</string>
 
     <!-- Menu -->
-    <string name="menu_forms">Formulare</string>
-    <string name="menu_change_branch">Schimbă secţia</string>
-    <string name="menu_guide">Ghidul observatorului</string>
-    <string name="menu_call">Apelează TelVerde</string>
+    <string name="menu_forms">Forms</string>
+    <string name="menu_change_branch">Change the polling station</string>
+    <string name="menu_guide">Observer\'s guide</string>
+    <string name="menu_call">Call the Hotline</string>
 
     <!-- Images -->
-    <string name="content_icon_phone">Phone icon</string>
-    <string name="content_icon_lock">Lock icon</string>
     <string name="content_icon_building">Building icon</string>
 
     <!-- Login -->
-    <string name="logo_vote">Vote</string>
-    <string name="logo_hack">Hack</string>
-    <string name="login_phone">Numărul de telefon</string>
-    <string name="login_branch">Cod primit</string>
+    <string name="login_phone">Phone number</string>
+    <string name="login_branch">Code</string>
     <string name="login">Login</string>
 
     <!-- Branch selection -->
-    <string name="branch_title">Alege secția</string>
-    <string name="branch_subtitle">în care te afli</string>
-    <string name="branch_county">Județ</string>
-    <string name="branch_number">Număr secție</string>
-    <string name="branch_change">Schimbă secţia</string>
-    <string name="branch_question_environment">În ce mediu se află secția?</string>
+    <string name="branch_title">Choose the polling station</string>
+    <string name="branch_subtitle">you are in</string>
+    <string name="branch_county">County/District</string>
+    <string name="branch_number">Polling station number</string>
+    <string name="branch_change">Change station</string>
+    <string name="branch_question_environment">Choose the area of the station</string>
     <string name="branch_answer_rural">Rural</string>
     <string name="branch_answer_urban">Urban</string>
-    <string name="branch_question_sex">Preşedintele secţiei este</string>
-    <string name="branch_answer_man">Bărbat</string>
-    <string name="branch_answer_woman">Femeie</string>
-    <string name="branch_question_enter">Ora sosirii în secţie</string>
-    <string name="branch_question_leave">Ora plecării din secţie</string>
-    <string name="branch_choose_time_enter">Alege ora sosirii</string>
-    <string name="branch_choose_time_leave">Alege ora plecării</string>
-    <string name="invalid_branch_county">Alege județul</string>
-    <string name="invalid_branch_number">Introdu numărul secției</string>
-    <string name="invalid_branch_number_minus">Numărul secției trebuie să fie pozitiv</string>
-    <string name="invalid_branch_number_max">Numărul maxim pentru județul %1$s este %2$s</string>
-    <string name="invalid_branch_environment">Alege urban sau rural</string>
-    <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
-    <string name="invalid_branch_time_in">Alege ora sosirii</string>
+    <string name="branch_question_sex">The president of the polling station is:</string>
+    <string name="branch_answer_man">Man</string>
+    <string name="branch_answer_woman">Woman</string>
+    <string name="branch_question_enter">Arrival time</string>
+    <string name="branch_question_leave">Departure time</string>
+    <string name="branch_choose_time_enter">Choose the time of your arrival</string>
+    <string name="branch_choose_time_leave">Choose the time of your departure</string>
+    <string name="invalid_branch_county">Choose the county/district</string>
+    <string name="invalid_branch_number">Fill in the polling station number</string>
+    <string name="invalid_branch_number_minus">The number of the station must be positive</string>
+    <string name="invalid_branch_number_max">The maximum number for %1$s county is %2$s</string>
+    <string name="invalid_branch_environment">Choose urban of rural</string>
+    <string name="invalid_branch_sex">Choose man or woman</string>
+    <string name="invalid_branch_time_in">Select the time of arrival</string>
 
     <!-- Forms list -->
-    <string name="change_branch">Schimbă secția</string>
-    <string name="form_1">Formular A</string>
-    <string name="form_1_letter">A</string>
-    <string name="form_2">Formular B</string>
-    <string name="form_2_letter">B</string>
-    <string name="form_3">Formular C</string>
+    <string name="form_1">Saturday Form</string>
+    <string name="form_1_letter">SA</string>
+    <string name="form_2">Sunday Form</string>
+    <string name="form_2_letter">SU</string>
+    <string name="form_3">Counting Form</string>
     <string name="form_3_letter">C</string>
-    <string name="form_notes">Adaugă notă</string>
-    <string name="error_no_form_data">Nu există date pentru acest formular</string>
+    <string name="form_notes">Add a message</string>
+    <string name="error_no_form_data">There is no data for this form.</string>
 
     <!-- Question details -->
-    <string name="question_complete">Completat</string>
-    <string name="question_incomplete">Necompletat</string>
-    <string name="question_notes">Note</string>
-    <string name="question_next">Înainte</string>
-    <string name="question_finish">Trimite</string>
+    <string name="question_complete">Completed</string>
+    <string name="question_incomplete">Incomplete</string>
+    <string name="question_notes">Messages</string>
+    <string name="question_next">Next</string>
+    <string name="question_finish">Send</string>
 
     <!-- Notes -->
-    <string name="note_title">Adaugă notă</string>
-    <string name="note_description">Mesajul tău</string>
-    <string name="note_description_hint">Scrie aici</string>
-    <string name="note_photo">Adaugă foto/video</string>
-    <string name="note_saved">Notă salvată</string>
-    <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
-
-    <!-- Guide -->
-    <string name="guide_title">Ghidul observatorului</string>
-    <string name="guide_text">Aici vine un text lung\nPe mai multe linii\n\nEventual cu spatii sau alte formatari. Si apoi un lorem ipsum dolor sit amet cat mai lung lorem ipsum dolor sit amet lorem lorem ipsum</string>
-
-    <string name="dummy_form_json">[{\"codSectiune\":\"A\",\"descriere\":\"Descrierea primei sectiuni\",\"intrebari\":[{\"idIntrebare\":1,\"textIntrebare\":\"Ce tipuri de bere iti plac? (se pot alege optiuni multiple)\",\"idTipIntrebare\":0,\"raspunsuriDisponibile\":[{\"idOptiune\":27,\"textOptiune\":\"Dark Island\",\"seIntroduceText\":false},{\"idOptiune\":28,\"textOptiune\":\"London Pride\",\"seIntroduceText\":false},{\"idOptiune\":29,\"textOptiune\":\"Zaganu\",\"seIntroduceText\":false}]},{\"idIntrebare\":2,\"textIntrebare\":\"Iti place berea? (se alege o singura optiune selectabila)\",\"idTipIntrebare\":1,\"raspunsuriDisponibile\":[{\"idOptiune\":24,\"textOptiune\":\"DA\",\"seIntroduceText\":false},{\"idOptiune\":25,\"textOptiune\":\"NU\",\"seIntroduceText\":false},{\"idOptiune\":26,\"textOptiune\":\"Nu stiu\",\"seIntroduceText\":false}]}]},{\"codSectiune\":\"B\",\"descriere\":\"Descrierea celei de-a doua sectiuni\",\"intrebari\":[{\"idIntrebare\":3,\"textIntrebare\":\"Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)\",\"idTipIntrebare\":2,\"raspunsuriDisponibile\":[{\"idOptiune\":31,\"textOptiune\":\"Transmisia manual\u00E3\",\"seIntroduceText\":false},{\"idOptiune\":32,\"textOptiune\":\"Transmisia automat\u00E3\",\"seIntroduceText\":false},{\"idOptiune\":33,\"textOptiune\":\"Transmisia non-sincron\",\"seIntroduceText\":false},{\"idOptiune\":34,\"textOptiune\":\"Altele (specifica\u0163i)\",\"seIntroduceText\":true}]},{\"idIntrebare\":4,\"textIntrebare\":\"Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni)\",\"idTipIntrebare\":3,\"raspunsuriDisponibile\":[{\"idOptiune\":27,\"textOptiune\":\"Metrou\",\"seIntroduceText\":false},{\"idOptiune\":28,\"textOptiune\":\"Tramvai\",\"seIntroduceText\":false},{\"idOptiune\":29,\"textOptiune\":\"Autobuz\",\"seIntroduceText\":false},{\"idOptiune\":30,\"textOptiune\":\"Altele (specifica\u0163i)\",\"seIntroduceText\":true}]},{\"idIntrebare\":5,\"textIntrebare\":\"Ce tip de transmisie are masina ta? (se poate alege O singura optiune selectabila + text pe O singura optiune)\",\"idTipIntrebare\":2,\"raspunsuriDisponibile\":[{\"idOptiune\":35,\"textOptiune\":\"Transmisia manual\u00E3\",\"seIntroduceText\":false},{\"idOptiune\":36,\"textOptiune\":\"Transmisia automat\u00E3\",\"seIntroduceText\":false},{\"idOptiune\":37,\"textOptiune\":\"Transmisia non-sincron\",\"seIntroduceText\":false},{\"idOptiune\":38,\"textOptiune\":\"Altele (specifica\u0163i)\",\"seIntroduceText\":true}]},{\"idIntrebare\":6,\"textIntrebare\":\"Ce mijloace de transport folosesti sa ajungi la birou? (se pot alege mai multe optiuni)\",\"idTipIntrebare\":3,\"raspunsuriDisponibile\":[{\"idOptiune\":39,\"textOptiune\":\"Metrou\",\"seIntroduceText\":false},{\"idOptiune\":40,\"textOptiune\":\"Tramvai\",\"seIntroduceText\":false},{\"idOptiune\":41,\"textOptiune\":\"Autobuz\",\"seIntroduceText\":false},{\"idOptiune\":42,\"textOptiune\":\"Altele (specifica\u0163i)\",\"seIntroduceText\":true}]}]}]</string>
-    <string name="empty_credential_message">Introduceți numărul de telefon şi codul primit. </string>
+    <string name="note_title">Add a message</string>
+    <string name="note_description">Your message</string>
+    <string name="note_description_hint">Type here</string>
+    <string name="note_photo">Add photo/video</string>
+    <string name="note_saved">Saved message</string>
+    <string name="invalid_note">Add a description or choose a file</string>
+    <string name="error_permission_external_storage">We need your permission to select a resource</string>
 </resources>

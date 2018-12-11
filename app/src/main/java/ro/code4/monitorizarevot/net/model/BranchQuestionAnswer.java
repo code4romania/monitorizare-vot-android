@@ -9,21 +9,23 @@ import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class BranchQuestionAnswer extends RealmObject {
+
     @PrimaryKey
     private String id;
+
     private String countryCode;
     private int branchNumber;
     private int questionId;
     private BranchDetails branchDetails;
-    private RealmList<ResponseAnswer> raspunsuriIntrebare = new RealmList<>();
+    private RealmList<ResponseAnswer> answers = new RealmList<>();
 
     public BranchQuestionAnswer(){
 
     }
 
-    public BranchQuestionAnswer(String codJudet, int numarSectie) {
-        this.countryCode = codJudet;
-        this.branchNumber = numarSectie;
+    public BranchQuestionAnswer(String countryCode, int branchNumber) {
+        this.countryCode = countryCode;
+        this.branchNumber = branchNumber;
     }
 
     public BranchQuestionAnswer(Integer questionId){
@@ -33,8 +35,8 @@ public class BranchQuestionAnswer extends RealmObject {
 
     public BranchQuestionAnswer(Integer questionId, List<ResponseAnswer> answers) {
         this(questionId);
-        this.raspunsuriIntrebare.clear();
-        this.raspunsuriIntrebare.addAll(answers);
+        this.answers.clear();
+        this.answers.addAll(answers);
         this.id = countryCode + String.valueOf(branchNumber) + String.valueOf(questionId);
     }
 
@@ -46,13 +48,13 @@ public class BranchQuestionAnswer extends RealmObject {
         return branchNumber;
     }
 
-    public List<ResponseAnswer> getRaspunsuriIntrebare() {
-        return raspunsuriIntrebare;
+    public List<ResponseAnswer> getAnswers() {
+        return answers;
     }
 
-    public void setRaspunsuriIntrebare(List<ResponseAnswer> raspunsuriIntrebare) {
-        this.raspunsuriIntrebare.clear();
-        this.raspunsuriIntrebare.addAll(raspunsuriIntrebare);
+    public void setAnswers(List<ResponseAnswer> answers) {
+        this.answers.clear();
+        this.answers.addAll(answers);
     }
 
     public String getId() {

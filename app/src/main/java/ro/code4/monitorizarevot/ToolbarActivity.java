@@ -29,9 +29,9 @@ public class ToolbarActivity extends BaseActivity implements Navigator {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_toolbar);
 
-        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         menuButton = findViewById(R.id.toolbar_menu);
-        drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer);
+        drawerLayout = findViewById(R.id.navigation_drawer);
 
         initNavigationDrawer();
 

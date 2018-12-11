@@ -11,7 +11,6 @@ public class Preferences {
     private static final String PREFS_USERNAME = "PREFS_USERNAME";
     private static final String PREFS_TOKEN = "PREFS_TOKEN";
 
-
     public static void clear() {
         Prefs.clear();
     }

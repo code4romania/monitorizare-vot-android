@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ResponseAnswerContainer implements Serializable {
+
+    // TODO serialized names to be translated when api is updated
     @SerializedName("raspuns")
     @Expose
     private List<QuestionAnswer> responseMapperList;
@@ -15,11 +17,11 @@ public class ResponseAnswerContainer implements Serializable {
         this.responseMapperList = responseMapperList;
     }
 
-    public List<QuestionAnswer> getReponseMapperList() {
+    public List<QuestionAnswer> getResponseMapperList() {
         return responseMapperList;
     }
 
-    public void setReponseMapperList(List<QuestionAnswer> reponseMapperList) {
-        this.responseMapperList = reponseMapperList;
+    public void setResponseMapperList(List<QuestionAnswer> responseMapperList) {
+        this.responseMapperList = responseMapperList;
     }
 }

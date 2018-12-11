@@ -5,12 +5,10 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ro.code4.monitorizarevot.R;
-import ro.code4.monitorizarevot.db.Preferences;
 
 public class ChangeBranchBarLayout extends LinearLayout {
     public ChangeBranchBarLayout(Context context) {

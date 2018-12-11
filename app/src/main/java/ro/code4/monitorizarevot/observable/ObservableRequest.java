@@ -7,9 +7,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- *
- */
 public class ObservableRequest<T> {
     private Observable<T> mObservable;
     private Scheduler mWorkerThread = Schedulers.io();

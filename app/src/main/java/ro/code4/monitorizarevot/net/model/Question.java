@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.net.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,38 +13,50 @@ import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
 public class Question extends RealmObject implements Serializable {
+
+    // TODO serialized names to be translated when api is updated
     @PrimaryKey
     @Expose
-    private Integer idIntrebare;
+    @SerializedName("idIntrebare")
+    private Integer id;
+
     @Expose
-    private String textIntrebare;
+    @SerializedName("textIntrebare")
+    private String text;
+
     @Expose
-    private String codIntrebare;
+    @SerializedName("codIntrebare")
+    private String code;
+
     @Expose
-    private Integer idTipIntrebare;
+    @SerializedName("idTipIntrebare")
+    private Integer typeId;
+
     @Expose
-    private RealmList<Answer> raspunsuriDisponibile;
+    @SerializedName("raspunsuriDisponibile")
+    private RealmList<Answer> answerList;
+
     private BranchQuestionAnswer branchQuestionAnswer;
     private boolean isSynced;
 
     public Integer getId() {
-        return idIntrebare;
+        return id;
     }
 
     public String getText() {
-        return textIntrebare;
+        return text;
     }
 
     public String getCode() {
-        return codIntrebare;
+        return code;
     }
 
     public Integer getTypeId() {
-        return idTipIntrebare;
+        return typeId;
     }
 
     public List<Answer> getAnswerList() {
-        return raspunsuriDisponibile;
+        return answerList;
     }
 
     public boolean isSynced() {
@@ -62,9 +75,9 @@ public class Question extends RealmObject implements Serializable {
         this.branchQuestionAnswer = branchQuestionAnswer;
     }
 
-    public List<ResponseAnswer> getRaspunsuriIntrebare() {
+    public List<ResponseAnswer> getAnswers() {
         if(branchQuestionAnswer != null){
-            return branchQuestionAnswer.getRaspunsuriIntrebare();
+            return branchQuestionAnswer.getAnswers();
         }
         return new ArrayList<>();
     }
