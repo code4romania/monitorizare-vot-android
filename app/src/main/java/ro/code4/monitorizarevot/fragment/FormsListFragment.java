@@ -1,5 +1,6 @@
 package ro.code4.monitorizarevot.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +14,13 @@ import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.Form;
+import ro.code4.monitorizarevot.viewmodel.FormsListViewModel;
 import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
 import static ro.code4.monitorizarevot.ToolbarActivity.BRANCH_SELECTION_BACKSTACK_INDEX;
 
-public class FormsListFragment extends BaseFragment implements View.OnClickListener {
+public class FormsListFragment extends BaseFragment<FormsListViewModel> implements View.OnClickListener {
+
     public static FormsListFragment newInstance() {
         return new FormsListFragment();
     }
@@ -47,6 +50,24 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
         });
     }
 
+    private void showForm(Form form) {
+        if (form != null && form.getSections() != null && form.getSections().size() > 0) {
+            navigateTo(QuestionsOverviewFragment.newInstance(form.getId()));
+        } else {
+            Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public String getTitle() {
+        return getString(R.string.title_forms_list);
+    }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(FormsListViewModel.class);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -63,18 +84,5 @@ public class FormsListFragment extends BaseFragment implements View.OnClickListe
                 navigateTo(AddNoteFragment.newInstance());
                 break;
         }
-    }
-
-    private void showForm(Form form) {
-        if (form != null && form.getSections() != null && form.getSections().size() > 0) {
-            navigateTo(QuestionsOverviewFragment.newInstance(form.getId()));
-        } else {
-            Toast.makeText(getActivity(), getString(R.string.error_no_form_data), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public String getTitle() {
-        return getString(R.string.title_forms_list);
     }
 }

@@ -1,18 +1,14 @@
 package ro.code4.monitorizarevot.fragment;
 
 import android.app.TimePickerDialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,15 +21,21 @@ import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.util.DateUtils;
+import ro.code4.monitorizarevot.viewmodel.BranchDetailsViewModel;
 import ro.code4.monitorizarevot.widget.ChangeBranchBarLayout;
 
 import static ro.code4.monitorizarevot.ToolbarActivity.BRANCH_SELECTION_BACKSTACK_INDEX;
 
-public class BranchDetailsFragment extends BaseFragment implements View.OnClickListener {
+public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> implements View.OnClickListener {
+
     private RadioGroup environmentRadioGroup, sexRadioGroup;
+
     private RadioButton urban, rural, male, female;
+
     private TextView timeEnterText, timeLeaveText;
+
     private Calendar timeEnter, timeLeave;
+
     private BranchDetails existingBranchDetails;
 
     public static BranchDetailsFragment newInstance() {
@@ -115,7 +117,13 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
         });
     }
 
-    @Override
+    private void showTimePicker(int titleId, TimePickerDialog.OnTimeSetListener listener) {
+        Calendar now = Calendar.getInstance();
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+                                                                 listener, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
+        timePickerDialog.setTitle(titleId);
+        timePickerDialog.show();
+    }    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.branch_time_enter:
@@ -139,14 +147,6 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
                 });
                 break;
         }
-    }
-
-    private void showTimePicker(int titleId, TimePickerDialog.OnTimeSetListener listener) {
-        Calendar now = Calendar.getInstance();
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                listener, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
-        timePickerDialog.setTitle(titleId);
-        timePickerDialog.show();
     }
 
     private void updateCalendar(Calendar calendar, int hourOfDay, int minute) {
@@ -180,4 +180,11 @@ public class BranchDetailsFragment extends BaseFragment implements View.OnClickL
     public boolean withMenu() {
         return false;
     }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(BranchDetailsViewModel.class);
+    }
+
+
 }

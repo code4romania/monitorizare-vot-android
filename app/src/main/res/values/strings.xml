@@ -26,6 +26,7 @@
     <string name="title_guide">Guide</string>
 
     <!-- Menu -->
+    <string name="menu_logout">Logout</string>
     <string name="menu_forms">Forms</string>
     <string name="menu_change_branch">Change the polling station</string>
     <string name="menu_guide">Observer\'s guide</string>
@@ -78,7 +79,9 @@
     <string name="question_incomplete">Incomplete</string>
     <string name="question_notes">Messages</string>
     <string name="question_next">Next</string>
+    <string name="question_previous">Previous</string>
     <string name="question_finish">Send</string>
+    <string name="question_confirmation_message">Message send</string>
 
     <!-- Notes -->
     <string name="note_title">Add a message</string>

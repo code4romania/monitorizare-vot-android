@@ -3,26 +3,50 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
         targetSdkVersion 28
+
         versionCode 16
         versionName "0.9.11"
     }
+
+    flavorDimensions "default"
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
         }
 
         debug {
             debuggable true
+        }
+    }
+
+    productFlavors {
+        dev {
+            applicationIdSuffix '.dev'
+            versionNameSuffix "d"
             buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
         }
+
+        prod {
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
+        }
+
+        mock {
+            applicationIdSuffix '.mock'
+            versionNameSuffix "m"
+            buildConfigField "String", "WEB_BASE_URL", '""'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -31,22 +55,53 @@ repositories {
 }
 
 dependencies {
+    implementation project(path: ':mediapicker')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    testImplementation 'junit:junit:4.12'
+
     implementation 'com.pixplicity.easyprefs:library:1.9.0@aar'
 
+    implementation 'com.google.dagger:dagger:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+
     implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'io.reactivex:rxjava:1.2.4'
 
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
-    implementation project(path: ':mediapicker')
+    testImplementation 'junit:junit:4.12'
+}
+
+android.variantFilter { variant ->
+
+    String release = 'release'
+    String debug = 'debug'
+
+    boolean shouldBeExcluded = false
+
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
+    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'mock'
+    shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
+
+    if (shouldBeExcluded) {
+        variant.setIgnore(true);
+    }
 }

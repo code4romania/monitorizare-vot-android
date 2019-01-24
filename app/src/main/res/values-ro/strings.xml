@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="Typos">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
@@ -30,6 +29,7 @@
     <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
+    <string name="menu_logout">Delogare</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -78,7 +78,9 @@
     <string name="question_incomplete">Necompletat</string>
     <string name="question_notes">Note</string>
     <string name="question_next">Înainte</string>
+    <string name="question_previous">Înapoi</string>
     <string name="question_finish">Trimite</string>
+    <string name="question_confirmation_message">Mesaj trimis</string>
 
     <!-- Notes -->
     <string name="note_title">Adaugă notă</string>
