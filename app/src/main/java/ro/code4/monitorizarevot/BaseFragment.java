@@ -1,5 +1,6 @@
 package ro.code4.monitorizarevot;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,12 +10,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
+import javax.inject.Inject;
+
 import io.realm.Realm;
 import ro.code4.monitorizarevot.util.ActivityOperations;
+import ro.code4.monitorizarevot.viewmodel.BaseViewModel;
 
-public abstract class BaseFragment extends Fragment implements Navigator, ActivityOperations {
+public abstract class BaseFragment<VM extends BaseViewModel> extends Fragment implements Navigator, ActivityOperations, Injectable {
+
+    protected VM viewModel;
+
+    @Inject
+    protected ViewModelProvider.Factory factory;
+
     private Navigator navigator;
+
     private ActivityOperations operations;
+
     private Realm realm;
 
     @Override
@@ -41,6 +53,7 @@ public abstract class BaseFragment extends Fragment implements Navigator, Activi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setupViewModel();
         setTitle(getTitle());
         setMenu(withMenu());
     }
@@ -71,6 +84,8 @@ public abstract class BaseFragment extends Fragment implements Navigator, Activi
         navigator.navigateBackUntil(backstackIndex);
     }
 
+    public abstract String getTitle();
+
     @Override
     public void setTitle(String title) {
         navigator.setTitle(title);
@@ -80,8 +95,6 @@ public abstract class BaseFragment extends Fragment implements Navigator, Activi
     public void setMenu(boolean isEnabled) {
         navigator.setMenu(isEnabled);
     }
-
-    public abstract String getTitle();
 
     /**
      * Return false from subclass to hide the hamburger icon
@@ -102,12 +115,14 @@ public abstract class BaseFragment extends Fragment implements Navigator, Activi
 
     protected void requestPermission(String permission, int requestCode) {
         ActivityCompat.requestPermissions(getActivity(),
-                new String[]{ permission },
-                requestCode);
+                                          new String[]{permission},
+                                          requestCode);
     }
 
     @Override
     public void hideFocusedKeyboard() {
         operations.hideFocusedKeyboard();
     }
+
+    protected abstract void setupViewModel();
 }

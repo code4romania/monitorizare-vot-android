@@ -38,6 +38,13 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
         <Button
+            android:id="@+id/button_question_previous"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/button_height"
+            android:text="@string/question_previous"
+            style="@style/buttonEmbedded"/>
+        <Button
             android:id="@+id/button_question_notes"
             android:layout_width="0dp"
             android:layout_weight="1"

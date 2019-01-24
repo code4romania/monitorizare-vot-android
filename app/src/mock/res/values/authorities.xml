@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="provider_authority">ro.code4.monitorizarevot.mock</string>
+    <string name="sync_adapter_authority">ro.code4.monitorizarevot.mock</string>
+    <string name="account_type">mock.code4.ro</string>
+</resources>
