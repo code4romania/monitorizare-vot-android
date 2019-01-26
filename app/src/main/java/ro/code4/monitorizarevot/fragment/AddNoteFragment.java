@@ -43,16 +43,34 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
 
+    /**
+     * Holds info about a pick-type item
+     */
+    private static class ImagePickType {
+        final int requestCode;
+        final int menuResource;
+        final String permission;
+
+        MenuItem mItem; // accessible anyway from this file, not bothering encapsulating
+
+        ImagePickType(int requestCode, int menuResource, String permission) {
+            this.requestCode = requestCode;
+            this.menuResource = menuResource;
+            this.permission = permission;
+        }
+    }
+
+    private static final int REQUEST_CODE_RECORD_VIDEO = 1001;
+    private static final int REQUEST_CODE_TAKE_PHOTO = 1002;
+    private static final int REQUEST_CODE_GALLERY = 1003;
+
+    private static final ImagePickType[] PICK_TYPES = new ImagePickType[] {
+            new ImagePickType(REQUEST_CODE_GALLERY, R.string.note_gallery, Manifest.permission.READ_EXTERNAL_STORAGE),
+            new ImagePickType(REQUEST_CODE_TAKE_PHOTO, R.string.note_take_photo, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            new ImagePickType(REQUEST_CODE_RECORD_VIDEO, R.string.note_record_video, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    };
+
     private static final String ARGS_QUESTION_ID = "QuestionId";
-
-    private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE_VIDEO = 1001;
-    private static final int PERMISSIONS_WRITE_EXTERNAL_STORAGE_PHOTO = 1002;
-    private static final int PERMISSIONS_READ_EXTERNAL_STORAGE = 1003;
-
-    /** From the Polish version */
-    private static final int TAKE_PHOTO = 100;
-    private static final int RECORD_MOVIE = 101;
-    private static final int PICK_MEDIA = 102;
 
     private static final String TAG = "AddNoteFragment";
 
@@ -104,14 +122,14 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
         if (Build.VERSION.SDK_INT < 19) {
             intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/* video/*");
-            startActivityForResult(intent, PICK_MEDIA);
+            startActivityForResult(intent, REQUEST_CODE_GALLERY);
             return;
         }
         intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
-        startActivityForResult(intent, PICK_MEDIA);
+        startActivityForResult(intent, REQUEST_CODE_GALLERY);
     }
 
     /**
@@ -134,19 +152,7 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
     }
 
     /**
-     * Tries to pick media, given permission
-     */
-    private void tryPickMedia() {
-        if (hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            pickMedia();
-        } else {
-            requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE,
-                    PERMISSIONS_READ_EXTERNAL_STORAGE);
-        }
-    }
-
-    /**
-     * Take photo
+     * Take photo and prepares the file
      */
     private void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -163,22 +169,13 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
             }
             mFile = file;
-            startActivityForResult(takePictureIntent, TAKE_PHOTO);
+            startActivityForResult(takePictureIntent, REQUEST_CODE_TAKE_PHOTO);
         }
     }
 
     /**
-     * Tries to take photo
+     * Records video and prepares the file
      */
-    private void tryTakePhoto() {
-        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            takePhoto();
-        } else {
-            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    PERMISSIONS_WRITE_EXTERNAL_STORAGE_PHOTO);
-        }
-    }
-
     private void recordVideo() {
         Intent recordIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (getContext() != null && recordIntent.resolveActivity(getContext().getPackageManager()) != null) {
@@ -194,19 +191,35 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
             }
             recordIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
             mFile = file;
-            startActivityForResult(recordIntent, RECORD_MOVIE);
+            startActivityForResult(recordIntent, REQUEST_CODE_RECORD_VIDEO);
         }
     }
 
     /**
-     * Tries to record video
+     * When it should actually do the action
      */
-    private void tryRecordVideo() {
-        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            recordVideo();
+    private void doImageAction(int code) {
+        switch (code) {
+            case REQUEST_CODE_GALLERY:
+                pickMedia();
+                break;
+            case REQUEST_CODE_TAKE_PHOTO:
+                takePhoto();
+                break;
+            case REQUEST_CODE_RECORD_VIDEO:
+                recordVideo();
+                break;
+        }
+    }
+
+    /**
+     * Checks permission and if possible does the action.
+     */
+    private void tryImageAction(ImagePickType type) {
+        if (hasPermission(type.permission)) {
+            doImageAction(type.requestCode);
         } else {
-            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    PERMISSIONS_WRITE_EXTERNAL_STORAGE_VIDEO);
+            requestPermission(type.permission, type.requestCode);
         }
     }
 
@@ -222,21 +235,18 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
         }
         mPickImageMenu = new PopupMenu(getContext(), fileSelectorButton);
         Menu menu = mPickImageMenu.getMenu();
-        menu.add(R.string.note_gallery);
-        final MenuItem galleryItem = menu.getItem(0);
-        menu.add(R.string.note_take_photo);
-        final MenuItem takePhotoItem = menu.getItem(1);
-        menu.add(R.string.note_record_video);
-        final MenuItem recordVideoItem = menu.getItem(2);
+        int count = 0;
+        for(ImagePickType type : PICK_TYPES) {
+            menu.add(type.menuResource);
+            type.mItem = menu.getItem(count++); // need to set it now
+        }
         mPickImageMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(item == galleryItem) {
-                    tryPickMedia();
-                } else if (item == takePhotoItem) {
-                    tryTakePhoto();
-                } else if (item == recordVideoItem) {
-                    tryRecordVideo();
+                for(ImagePickType type : PICK_TYPES) {
+                    if (type.mItem == item) {
+                        tryImageAction(type);
+                    }
                 }
                 return true;
             }
@@ -259,6 +269,25 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
     }
 
     /**
+     * When image is obtained from gallery, load it, making sure it's OK by path.
+     * @param uri The URI of the image.
+     */
+    private void useImageFromGallery(Uri uri) {
+        if (uri == null) {
+            Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
+        }
+
+        String filePath = FileUtils.getPath(getContext(), uri);
+        if (filePath != null) {
+            File file = new File(filePath);
+            fileSelectorButton.setText(file.getName());
+            mFile = file;
+        } else {
+            Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
      * When ANY of the image-getter activities is returned.
      */
     @Override
@@ -267,55 +296,35 @@ public class AddNoteFragment extends BaseFragment<AddNoteViewModel> {
         if(resultCode != RESULT_OK) {
             return;
         }
-        if(requestCode == PICK_MEDIA) {
-            Uri imagePath = data.getData();
-            if (imagePath != null) {
-                String filePath = FileUtils.getPath(getContext(), imagePath);
-                if (filePath != null) {
-                    File file = new File(filePath);
-                    fileSelectorButton.setText(file.getName());
-                    mFile = file;
-                } else {
-                    Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
-                }
+        for(ImagePickType type : PICK_TYPES) {
+            if (requestCode != type.requestCode) {
+                continue;
             }
-        } else if(requestCode == TAKE_PHOTO) {
+            if (type.requestCode == REQUEST_CODE_GALLERY) {
+                useImageFromGallery(data.getData());
+                break;
+            }
+            // live photo or video (not gallery)
             if (mFile != null) {
                 fileSelectorButton.setText(mFile.getName());
                 galleryAddMedia();
             }
-        } else if(requestCode == RECORD_MOVIE) {
-            if(mFile != null) {
-                fileSelectorButton.setText(mFile.getName());
-                galleryAddMedia();
-            }
+            break;
         }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_READ_EXTERNAL_STORAGE:
-                if (hasGrantedPermission(grantResults)) {
-                    pickMedia();
-                } else {
-                    Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
-                }
-                break;
-            case PERMISSIONS_WRITE_EXTERNAL_STORAGE_PHOTO:
-                if (hasGrantedPermission(grantResults)) {
-                    takePhoto();
-                } else {
-                    Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
-                }
-                break;
-            case PERMISSIONS_WRITE_EXTERNAL_STORAGE_VIDEO:
-                if (hasGrantedPermission(grantResults)) {
-                    recordVideo();
-                } else {
-                    Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
-                }
-                break;
+        for(ImagePickType type : PICK_TYPES) {
+            if (type.requestCode != requestCode) {
+                continue;
+            }
+            if (hasGrantedPermission(grantResults)) {
+                doImageAction(type.requestCode);
+            } else {
+                Toast.makeText(App.getContext(), R.string.error_permission_external_storage, Toast.LENGTH_LONG).show();
+            }
+            break;
         }
     }
 
