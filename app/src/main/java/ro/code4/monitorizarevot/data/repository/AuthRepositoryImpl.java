@@ -1,6 +1,6 @@
 package ro.code4.monitorizarevot.data.repository;
 
-import android.text.TextUtils;
+import static android.text.TextUtils.isEmpty;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,7 +26,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 
     @Override
     public Observable<Boolean> login(LoginDataParams params) {
-        if(TextUtils.isEmpty(params.getPhoneNumber()) || TextUtils.isEmpty(params.getPinNumber())) {
+        if(params == null || isEmpty(params.getPhoneNumber()) || isEmpty(params.getPinNumber())) {
             return Observable.error(new VoteException(MessageType.EMPTY_CREDENTIALS));
         }
 
