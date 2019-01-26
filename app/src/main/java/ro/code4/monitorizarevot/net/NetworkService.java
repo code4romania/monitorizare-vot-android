@@ -174,7 +174,7 @@ public class NetworkService {
         MultipartBody.Part body = null;
         if (note.getUriPath() != null) {
             File file = new File(note.getUriPath());
-            RequestBody requestFile = RequestBody.create(MediaType.parse("/*"), file);//MEDIA_TYPE_MULTIPART
+            RequestBody requestFile = RequestBody.create(MediaType.parse(MEDIA_TYPE_MULTIPART), file);
             body = MultipartBody.Part.createFormData(MULTIPART_NAME, file.getName(), requestFile);
         }
         Response<ResponseNote> response = getApiService().postNote(body,
