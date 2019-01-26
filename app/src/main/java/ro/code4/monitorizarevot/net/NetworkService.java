@@ -79,7 +79,8 @@ public class NetworkService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
+                // Adding http log interceptor causes Out Of Memory on files upload
+                //.addInterceptor(interceptor)
                 .addInterceptor(new AuthInterceptor());
         OkHttpClient client = clientBuilder.build();
 
@@ -173,7 +174,7 @@ public class NetworkService {
         MultipartBody.Part body = null;
         if (note.getUriPath() != null) {
             File file = new File(note.getUriPath());
-            RequestBody requestFile = RequestBody.create(MediaType.parse(MEDIA_TYPE_MULTIPART), file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("/*"), file);//MEDIA_TYPE_MULTIPART
             body = MultipartBody.Part.createFormData(MULTIPART_NAME, file.getName(), requestFile);
         }
         Response<ResponseNote> response = getApiService().postNote(body,
