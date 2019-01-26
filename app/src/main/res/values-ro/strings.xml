@@ -88,6 +88,10 @@
     <string name="note_description_hint">Scrie aici</string>
     <string name="note_photo">Adaugă foto/video</string>
     <string name="note_saved">Notă salvată</string>
+    <string name="note_gallery">Încarcă din galerie</string>
+    <string name="note_take_photo">📷 Fotografiază</string>
+    <string name="note_record_video">🔴 Înregistrează video</string>
+
     <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
     <string name="error_permission_external_storage">Permisiunea este necesară pentru a putea selecta o resursă</string>
 </resources>
