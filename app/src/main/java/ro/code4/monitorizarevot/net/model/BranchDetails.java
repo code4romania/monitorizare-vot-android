@@ -86,11 +86,6 @@ public class BranchDetails extends RealmObject implements Syncable {
     }
 
     @Override
-    public boolean isSynced() {
-        return isSynced;
-    }
-
-    @Override
     public void setSynced(boolean synced) {
         isSynced = synced;
     }
