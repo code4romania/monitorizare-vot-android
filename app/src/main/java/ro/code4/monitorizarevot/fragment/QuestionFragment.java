@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ro.code4.monitorizarevot.BaseFragment;
@@ -16,6 +18,7 @@ import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.util.FormRenderer;
 import ro.code4.monitorizarevot.util.FormUtils;
+import ro.code4.monitorizarevot.util.OnSwipeTouchListener;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 import ro.code4.monitorizarevot.viewmodel.QuestionViewModel;
 
@@ -90,13 +93,6 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
 
         final ViewGroup questionContainer = rootView.findViewById(R.id.question_container);
         questionContainer.addView(FormRenderer.renderQuestion(getActivity(), question));
-        rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
 
         rootView.findViewById(R.id.button_question_notes).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +107,6 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
             public void onClick(View view) {
                 navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onNext();
-
             }
         });
 
@@ -119,6 +114,21 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onPrevious();
+                hideButtons();
+            }
+        });
+
+        rootView.findViewById(R.id.question_wrapper).setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+            @Override
+            public void onSwipeLeft() {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onNext();
+            }
+
+            @Override
+            public void onSwipeRight() {
                 navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onPrevious();
                 hideButtons();
