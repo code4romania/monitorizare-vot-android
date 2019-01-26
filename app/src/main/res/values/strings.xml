@@ -91,4 +91,6 @@
     <string name="note_saved">Saved message</string>
     <string name="invalid_note">Add a description or choose a file</string>
     <string name="error_permission_external_storage">We need your permission to select a resource</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 </resources>
