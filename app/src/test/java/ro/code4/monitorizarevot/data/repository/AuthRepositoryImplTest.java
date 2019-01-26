@@ -31,9 +31,6 @@ public class AuthRepositoryImplTest {
     @Mock
     private ApiDataSource mockApiDataSource;
 
-    @Mock
-    private User mockUser;
-
     private static final String PHONE_NO = "0744123789";
 
     private static final String PIN = "1234";
