@@ -18,4 +18,5 @@
     <color name="complete">#00C121</color>
     <color name="incomplete">#ACB4BE</color>
     <color name="ic_launcher_background">#FFCC01</color>
+    <color name="grey">#EEEEEE</color>
 </resources>

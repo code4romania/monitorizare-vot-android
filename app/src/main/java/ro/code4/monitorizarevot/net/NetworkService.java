@@ -79,7 +79,8 @@ public class NetworkService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
+                // Adding http log interceptor causes Out Of Memory on files upload
+                //.addInterceptor(interceptor)
                 .addInterceptor(new AuthInterceptor());
         OkHttpClient client = clientBuilder.build();
 

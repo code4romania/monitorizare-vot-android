@@ -45,6 +45,7 @@ public class ScrollViewWithFixedBottom extends LinearLayout {
         setOrientation(VERTICAL);
 
         scrollView = new ScrollView(context);
+        scrollView.setFillViewport(true);
         LayoutParams scrollLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
 
         scrollView.setLayoutParams(scrollLayoutParams);

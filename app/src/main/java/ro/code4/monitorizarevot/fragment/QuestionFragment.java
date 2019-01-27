@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import ro.code4.monitorizarevot.BaseFragment;
@@ -16,6 +18,7 @@ import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.util.FormRenderer;
 import ro.code4.monitorizarevot.util.FormUtils;
+import ro.code4.monitorizarevot.util.OnSwipeTouchListener;
 import ro.code4.monitorizarevot.util.QuestionDetailsNavigator;
 import ro.code4.monitorizarevot.viewmodel.QuestionViewModel;
 
@@ -118,6 +121,21 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
                 navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onPrevious();
                 hideButtons();
+            }
+        });
+
+        rootView.findViewById(R.id.question_wrapper).setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+            @Override
+            public void onSwipeLeft() {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onPrevious();
+                hideButtons();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                navigator.onSaveAnswerIfCompleted(questionContainer);
+                navigator.onNext();
             }
         });
         hideButtons();
