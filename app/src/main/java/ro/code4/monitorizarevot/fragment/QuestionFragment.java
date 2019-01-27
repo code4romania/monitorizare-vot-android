@@ -31,13 +31,15 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
 
     private QuestionDetailsNavigator navigator;
 
-    private Button nextButton;
-
     private Button previousButton;
 
     private int numberOfQuestions;
 
     private int questionIndex;
+
+    private ViewGroup questionContainer;
+
+    private boolean isSaving = false;
 
     public static QuestionFragment newInstance(int questionId, int index, int numberOfQuestions) {
         Bundle args = new Bundle();
@@ -88,30 +90,24 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
             ((TextView) rootView.findViewById(R.id.button_question_next)).setText(R.string.question_finish);
         }
 
-        final ViewGroup questionContainer = rootView.findViewById(R.id.question_container);
+        questionContainer = rootView.findViewById(R.id.question_container);
         questionContainer.addView(FormRenderer.renderQuestion(getActivity(), question));
-        rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
 
         rootView.findViewById(R.id.button_question_notes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isSaving = true;
                 navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onNotes();
             }
         });
-        nextButton = rootView.findViewById(R.id.button_question_next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
+
+        rootView.findViewById(R.id.button_question_next).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isSaving = true;
                 navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onNext();
-
             }
         });
 
@@ -132,10 +128,18 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
         description.setText(question.getText());
     }
 
-    private void hideButtons(){
-        if(questionIndex > 1){
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (questionContainer != null && !isSaving) {
+            navigator.onSaveAnswerIfCompleted(questionContainer);
+        }
+    }
+
+    private void hideButtons() {
+        if (questionIndex > 1) {
             previousButton.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             previousButton.setVisibility(View.GONE);
         }
     }
