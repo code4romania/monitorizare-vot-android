@@ -124,14 +124,14 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
             @Override
             public void onSwipeLeft() {
                 navigator.onSaveAnswerIfCompleted(questionContainer);
-                navigator.onNext();
+                navigator.onPrevious();
+                hideButtons();
             }
 
             @Override
             public void onSwipeRight() {
                 navigator.onSaveAnswerIfCompleted(questionContainer);
-                navigator.onPrevious();
-                hideButtons();
+                navigator.onNext();
             }
         });
         hideButtons();
