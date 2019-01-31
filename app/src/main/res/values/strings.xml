@@ -31,6 +31,8 @@
     <string name="menu_change_branch">Change the polling station</string>
     <string name="menu_guide">Observer\'s guide</string>
     <string name="menu_call">Call the Hotline</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -94,4 +96,5 @@
     <string name="note_gallery">Load from gallery</string>
     <string name="note_take_photo">📷 Take photo</string>
     <string name="note_record_video">🔴 Record video</string>
+
 </resources>
