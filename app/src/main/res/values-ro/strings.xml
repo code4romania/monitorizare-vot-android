@@ -11,7 +11,10 @@
     <string name="spinner_choose">Alege</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
-    <string name="empty_credential_message">Introduceți numărul de telefon şi codul primit.</string>
+    <string name="error_empty_credentials">Introduceți numărul de telefon şi codul primit.</string>
+    <string name="error_no_connection">Nu există conexiune la internet. Vă rugăm să vă conectați și să încercați din nou</string>
+    <string name="error_server">Eroare de server</string>
+    <string name="error_unknown">Eroare necunoscută</string>
 
     <string name="error_permission">Eroare permisiune %1$S</string>
     <string name="error_section_type">Eroare în interpretarea secțiunii</string>

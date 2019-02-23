@@ -15,9 +15,6 @@ import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
@@ -25,7 +22,6 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.constants.Constants;
-import ro.code4.monitorizarevot.fragment.AddNoteFragment;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
 import ro.code4.monitorizarevot.fragment.FormsListFragment;
 import ro.code4.monitorizarevot.fragment.GuideFragment;

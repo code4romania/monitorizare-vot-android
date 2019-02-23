@@ -19,33 +19,45 @@ public class MessageFactory {
         mContext = context;
     }
 
-    public Message getMessage(MessageType type) {
+    private Message getMessage(VoteException exc) {
+        return exc.hasCustomMessage()
+                ? buildMessage(exc.getType(), exc.getCustomMessage())
+                : getMessage(exc.getType());
+    }
+
+    private Message getMessage(MessageType type) {
         String message;
 
         switch (type) {
             case EMPTY_CREDENTIALS:
-                message = mContext.getString(R.string.empty_credential_message);
+                message = mContext.getString(R.string.error_empty_credentials);
+                break;
+
+            case NO_INTERNET_CONNECTION:
+                message = mContext.getString(R.string.error_no_connection);
                 break;
 
             case SERVER_ERROR:
-                message = "Eroare de server";
+                message = mContext.getString(R.string.error_server);
                 break;
 
             default:
-                message = "unknown error";
+                message = mContext.getString(R.string.error_unknown);
                 break;
         }
 
-        return new Message(type, message);
+        return buildMessage(type, message);
     }
 
     public Message getErrorMessage(Throwable throwable) {
-        if (throwable == null || !(throwable instanceof VoteException)) {
-            return new Message(UNKNOWN, "unknown error");
+        if (throwable instanceof VoteException) {
+            return getMessage((VoteException) throwable);
+        } else {
+            return getMessage(UNKNOWN);
         }
+    }
 
-        VoteException exc = (VoteException) throwable;
-
-        return getMessage(exc.getType());
+    private Message buildMessage(MessageType type, String message) {
+        return new Message(type, message);
     }
 }

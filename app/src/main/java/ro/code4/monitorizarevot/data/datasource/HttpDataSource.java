@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,8 +14,8 @@ import javax.inject.Singleton;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.HttpException;
 import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 import ro.code4.monitorizarevot.data.rest.ApiService;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.domain.exception.MessageType;
@@ -62,15 +63,18 @@ public class HttpDataSource implements ApiDataSource {
 
             @Override
             public Observable<Object> call(Throwable throwable) {
-                if (throwable instanceof HttpException) {
+                if (throwable instanceof UnknownHostException) {
+                    return Observable.error(new VoteException(MessageType.NO_INTERNET_CONNECTION));
+                } else if (throwable instanceof HttpException) {
                     try {
                         Response<Object> response = (Response<Object>) ((HttpException) throwable).response();
 
-                        JSONObject jsonErrorMessage = new JSONObject(response.errorBody().string());
+                        JSONObject jsonErrorMessage = new JSONObject(response.errorBody() != null
+                                ? response.errorBody().string() : "{}");
                         String message = jsonErrorMessage.has("error") ?
                                          jsonErrorMessage.getString("error") : response.message();
 
-                        return Observable.error(new IOException(message));
+                        return Observable.error(new VoteException(MessageType.CUSTOM_ERROR, message));
 
                     } catch (JSONException | IOException e) {
                         return Observable.error(throwable);
