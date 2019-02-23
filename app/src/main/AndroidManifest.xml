@@ -38,12 +38,13 @@
             android:name=".LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login" />
+            android:theme="@style/AppTheme.Login"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ToolbarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <receiver android:name=".net.NetworkChangeReceiver">
             <intent-filter>
