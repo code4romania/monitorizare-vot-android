@@ -20,7 +20,6 @@ import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.adapter.SyncAdapter;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
-import ro.code4.monitorizarevot.net.model.Answer;
 import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
@@ -167,7 +166,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
             if (currentBranchQuestionAnswer == null) {
                 continue;
             }
-
+            Data.getInstance().saveAnswerResponse(currentBranchQuestionAnswer);
             branchQuestionAnswerList.add(currentBranchQuestionAnswer);
         }
 
@@ -180,6 +179,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
                 .toArray(new BranchQuestionAnswer[branchQuestionAnswerList.size()]));
         Toast.makeText(getContext(),getString(R.string.question_confirmation_message),
                 Toast.LENGTH_SHORT).show();
+        Log.d(QuestionsDetailsFragment.class.getName(), "Sending new answers");
     }
 
     private BranchQuestionAnswer buildBranchQuestionAnswer(Question question,
@@ -188,9 +188,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
             return null;
         }
 
-        BranchQuestionAnswer branchQuestionAnswer = new BranchQuestionAnswer(question.getId(), answers);
-        Data.getInstance().saveAnswerResponse(branchQuestionAnswer);
-        return branchQuestionAnswer;
+        return new BranchQuestionAnswer(question.getId(), answers);
     }
 
 
