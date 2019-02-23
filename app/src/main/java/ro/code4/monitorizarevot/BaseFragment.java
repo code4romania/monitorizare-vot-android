@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import javax.inject.Inject;
 
@@ -51,8 +52,8 @@ public abstract class BaseFragment<VM extends BaseViewModel> extends Fragment im
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setupViewModel();
         setTitle(getTitle());
         setMenu(withMenu());
