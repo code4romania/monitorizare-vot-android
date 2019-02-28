@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
@@ -42,6 +43,9 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
 
     private String currentFragmentClassName;
 
+    private TextView previousSelectedItem;
+    private TextView formsMenuItem;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,7 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
         toolbarTitle = findViewById(R.id.toolbar_title);
         menuButton = findViewById(R.id.toolbar_menu);
         drawerLayout = findViewById(R.id.navigation_drawer);
+        formsMenuItem = findViewById(R.id.menu_forms);
 
         initNavigationDrawer();
 
@@ -62,6 +67,15 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
         viewModel = ViewModelProviders.of(this, factory).get(ToolbarViewModel.class);
     }
 
+    private void setSelectedMenuItem(View v) {
+        if(previousSelectedItem != null) {
+            previousSelectedItem.setTextColor(ContextCompat.getColor(ToolbarActivity.this,R.color.textPrimary));
+            previousSelectedItem.setBackground(ContextCompat.getDrawable(ToolbarActivity.this,R.drawable.background_menu_item));
+        }
+        previousSelectedItem = (TextView) v;
+        previousSelectedItem.setTextColor(ContextCompat.getColor(ToolbarActivity.this,R.color.primaryDark));
+        previousSelectedItem.setBackgroundColor(ContextCompat.getColor(ToolbarActivity.this,R.color.grey));
+    }
     private void initNavigationDrawer() {
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,21 +83,26 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        findViewById(R.id.menu_forms).setOnClickListener(new View.OnClickListener() {
+        setSelectedMenuItem(formsMenuItem);
+        formsMenuItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSelectedMenuItem(v);
                 navigateTo(FormsListFragment.newInstance());
             }
         });
         findViewById(R.id.menu_change_branch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // In Branch Selection Fragment we don't have a menu and this Fragment leads the user to Forms page so we set it directly to Forms
+                setSelectedMenuItem(formsMenuItem);
                 navigateBackUntil(BRANCH_SELECTION_BACKSTACK_INDEX);
             }
         });
         findViewById(R.id.menu_guide).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setSelectedMenuItem(v);
                 navigateTo(GuideFragment.newInstance());
             }
         });
@@ -99,6 +118,7 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
                 EventBus.getDefault().post(new LogoutListener());
             }
         });
+
     }
 
     private void callSupportCenter() {

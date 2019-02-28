@@ -12,7 +12,10 @@
     <string name="spinner_choose">Choose</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
-    <string name="empty_credential_message">Fill in your phone number and the code you received.</string>
+    <string name="error_empty_credentials">Fill in your phone number and the code you received.</string>
+    <string name="error_no_connection">No internet connection. Please connect and try again</string>
+    <string name="error_server">A server error has occurred</string>
+    <string name="error_unknown">An unknown error has occurred</string>
 
     <string name="error_permission">Permission error %1$S</string>
     <string name="error_section_type">Error in interpreting the section</string>
@@ -31,6 +34,8 @@
     <string name="menu_change_branch">Change the polling station</string>
     <string name="menu_guide">Observer\'s guide</string>
     <string name="menu_call">Call the Hotline</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -91,4 +96,8 @@
     <string name="note_saved">Saved message</string>
     <string name="invalid_note">Add a description or choose a file</string>
     <string name="error_permission_external_storage">We need your permission to select a resource</string>
+    <string name="note_gallery">Load from gallery</string>
+    <string name="note_take_photo">📷 Take photo</string>
+    <string name="note_record_video">🔴 Record video</string>
+
 </resources>

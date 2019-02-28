@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.viewmodel.GuideViewModel;
@@ -21,6 +22,9 @@ public class GuideFragment extends BaseFragment<GuideViewModel> {
         return new GuideFragment();
     }
 
+    @BindView(R.id.guide_web_view)
+    WebView webView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,10 +34,8 @@ public class GuideFragment extends BaseFragment<GuideViewModel> {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WebView guideView = (WebView) view.findViewById(R.id.web_view_guide);
-        WebSettings webSettings = guideView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        guideView.loadUrl(Constants.GUIDE_URL);
+        ButterKnife.bind(this, view);
+        webView.loadUrl(Constants.GUIDE_URL);
     }
 
     @Override

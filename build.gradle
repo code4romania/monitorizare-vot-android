@@ -19,6 +19,10 @@ buildscript {
     }
 }
 
+plugins {
+    id 'com.adarshr.test-logger' version '1.6.0'
+}
+
 allprojects {
     repositories {
         jcenter()
@@ -31,4 +35,9 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    junitVersion = "4.12"
+    mockitoVersion = "1.10.19"
 }

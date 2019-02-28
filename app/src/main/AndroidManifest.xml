@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -37,16 +38,13 @@
             android:name=".LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Login" />
+            android:theme="@style/AppTheme.Login"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ToolbarActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="vn.tungdx.mediapicker.activities.MediaPickerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MediaPickerTheme" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <receiver android:name=".net.NetworkChangeReceiver">
             <intent-filter>
@@ -85,6 +83,17 @@
         <meta-data
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="91a1da8261874c718ff1caebfceb5fd1" />
+
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

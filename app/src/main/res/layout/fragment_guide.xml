@@ -7,7 +7,7 @@
     android:paddingEnd="@dimen/activity_horizontal_margin">
 
     <WebView
+        android:id="@+id/guide_web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/web_view_guide" />
+        android:layout_height="match_parent" />
 </LinearLayout>

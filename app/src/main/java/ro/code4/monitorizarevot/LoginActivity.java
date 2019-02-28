@@ -15,13 +15,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
-import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
 
 import static ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL;
 
@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
 
     private void showErrorDialog(String message) {
         if (!TextUtils.isEmpty(message)) {
-            MediaPickerErrorDialog.newInstance(message).show(getSupportFragmentManager(), null);
+            Toast.makeText(App.getContext(), message, Toast.LENGTH_LONG).show();
         }
     }
 
