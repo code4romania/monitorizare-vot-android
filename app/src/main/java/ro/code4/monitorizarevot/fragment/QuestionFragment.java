@@ -145,8 +145,8 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         if (questionContainer != null && !isSaving) {
             navigator.onSaveAnswerIfCompleted(questionContainer);
         }

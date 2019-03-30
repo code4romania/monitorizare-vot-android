@@ -1,6 +1,7 @@
 package ro.code4.monitorizarevot.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,7 @@ import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
-import ro.code4.monitorizarevot.observable.GeneralSubscriber;
+import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.presenter.QuestionsDetailsPresenter;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.NetworkUtils;
@@ -42,8 +42,6 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
     private int currentQuestion = -1;
 
     private QuestionsDetailsPresenter mPresenter;
-
-    private Map<Question, List<ResponseAnswer>> questionsToAnswers;
 
     public static QuestionsDetailsFragment newInstance(String sectionCode) {
         return newInstance(sectionCode, 0);
@@ -64,7 +62,6 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
         this.currentQuestion = getArguments().getInt(ARGS_START_INDEX, 0);
         this.questions = FormUtils.getAllQuestions(getArguments().getString(ARGS_FORM_ID));
         this.mPresenter = new QuestionsDetailsPresenter(getActivity());
-        this.questionsToAnswers = new HashMap<>();
     }
 
     @Override
@@ -124,7 +121,15 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
             return ;
         }
 
-        questionsToAnswers.put(question, answers);
+        BranchQuestionAnswer currentBranchQuestionAnswer =
+                buildBranchQuestionAnswer(question, answers);
+        if (currentBranchQuestionAnswer == null) {
+            return ;
+        }
+
+        Data.getInstance().markUnsynced(question);
+        question.setBranchQuestionAnswer(currentBranchQuestionAnswer);
+        Data.getInstance().saveAnswerResponse(currentBranchQuestionAnswer);
     }
 
     @Override
@@ -138,48 +143,35 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
         }
     }
 
-    private void syncCurrentData(BranchQuestionAnswer... branchQuestionAnswers) {
+    private void syncCurrentData() {
         if (!NetworkUtils.isOnline(getActivity())) {
             return ;
         }
-
-        List<QuestionAnswer> questionAnswerList = new ArrayList<>();
-        for (BranchQuestionAnswer branchQuestionAnswer : branchQuestionAnswers) {
-            QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer,
-                    getArguments().getString(ARGS_FORM_ID));
-            questionAnswerList.add(questionAnswer);
-        }
-
-        NetworkService.syncQuestions(questionAnswerList).startRequest(new GeneralSubscriber());
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        List<BranchQuestionAnswer> branchQuestionAnswerList = new ArrayList<>();
-        for (Map.Entry<Question, List<ResponseAnswer>> entry : questionsToAnswers.entrySet()) {
-            BranchQuestionAnswer currentBranchQuestionAnswer =
-                    buildBranchQuestionAnswer(entry.getKey(), entry.getValue());
-            // if there is no answer we skip this entry
-            if (currentBranchQuestionAnswer == null) {
-                continue;
-            }
-            Data.getInstance().saveAnswerResponse(currentBranchQuestionAnswer);
-            branchQuestionAnswerList.add(currentBranchQuestionAnswer);
-        }
+        List<QuestionAnswer> questionAnswerList = Data.getInstance()
+                .getUnsyncedQuestionAnswersFromForm(getArguments().getString(ARGS_FORM_ID));
 
         // Nothing to sync
-        if (branchQuestionAnswerList.isEmpty()) {
+        if (questionAnswerList.isEmpty()) {
             return ;
         }
 
-        syncCurrentData(branchQuestionAnswerList
-                .toArray(new BranchQuestionAnswer[branchQuestionAnswerList.size()]));
-        Toast.makeText(getContext(),getString(R.string.question_confirmation_message),
-                Toast.LENGTH_SHORT).show();
-        Log.d(QuestionsDetailsFragment.class.getName(), "Sending new answers");
+        final Context context = getActivity().getApplicationContext();
+        NetworkService.syncQuestions(questionAnswerList)
+                .startRequest(new ObservableListener<Boolean>() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(context,
+                                context.getString(R.string.question_confirmation_message),
+                                Toast.LENGTH_SHORT).show();
+                        Log.d(QuestionsDetailsFragment.class.getName(), "Sending new answers");
+                    }
+                });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        syncCurrentData();
     }
 
     private BranchQuestionAnswer buildBranchQuestionAnswer(Question question,

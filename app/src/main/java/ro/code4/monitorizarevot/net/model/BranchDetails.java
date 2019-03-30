@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class BranchDetails extends RealmObject implements Syncable {
+public class BranchDetails extends RealmObject implements Syncable{
 
     // TODO serialized names to be translated when api is updated
     @PrimaryKey
@@ -46,7 +46,6 @@ public class BranchDetails extends RealmObject implements Syncable {
         this.countyCode = countyCode;
         this.branchNumber = branchNumber;
         this.id = countyCode + String.valueOf(branchNumber);
-        this.isSynced = false;
     }
 
     public BranchDetails(String countyCode, int branchNumber, boolean isUrban, boolean isFemale, String timeEnter, String timeLeave) {
@@ -86,11 +85,6 @@ public class BranchDetails extends RealmObject implements Syncable {
     }
 
     @Override
-    public void setSynced(boolean synced) {
-        isSynced = synced;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj instanceof BranchDetails) {
             BranchDetails other = (BranchDetails) obj;
@@ -105,5 +99,15 @@ public class BranchDetails extends RealmObject implements Syncable {
                         (timeLeave != null && other.getTimeLeave() != null && timeLeave.equals(other.getTimeLeave())));
         }
         return false;
+    }
+
+    @Override
+    public void setSynced(boolean synced) {
+        this.isSynced = synced;
+    }
+
+    @Override
+    public boolean isSynced() {
+        return isSynced;
     }
 }
