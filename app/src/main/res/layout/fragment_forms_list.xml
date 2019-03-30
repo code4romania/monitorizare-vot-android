@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,67 +11,20 @@
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:layout_alignParentTop="true"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
+    <android.support.v7.widget.GridLayout
+        android:id="@+id/cardsContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-        <LinearLayout
-            android:id="@+id/form_list_first_row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:clipToPadding="false">
-            <ro.code4.monitorizarevot.widget.FormSelectorCard
-                android:id="@+id/tile_form_1"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/form_card_height"
-                android:layout_weight="1"
-                app:letter="@string/form_1_letter"
-                app:text="@string/form_1"/>
-            <Space
-                android:layout_width="@dimen/activity_horizontal_margin"
-                android:layout_height="match_parent" />
-            <ro.code4.monitorizarevot.widget.FormSelectorCard
-                android:id="@+id/tile_form_2"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/form_card_height"
-                android:layout_weight="1"
-                app:letter="@string/form_2_letter"
-                app:text="@string/form_2"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:clipToPadding="false">
-            <ro.code4.monitorizarevot.widget.FormSelectorCard
-                android:id="@+id/tile_form_3"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/form_card_height"
-                android:layout_weight="1"
-                app:letter="@string/form_3_letter"
-                app:text="@string/form_3"/>
-            <Space
-                android:layout_width="@dimen/activity_horizontal_margin"
-                android:layout_height="match_parent" />
-            <ro.code4.monitorizarevot.widget.FormSelectorCard
-                android:id="@+id/tile_form_notes"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/form_card_height"
-                android:layout_weight="1"
-                app:src="@drawable/ic_notes"
-                app:text="@string/form_notes"/>
-        </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/change_branch_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:columnCount="2"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        app:useDefaultMargins="true" />
+</android.support.constraint.ConstraintLayout>

@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ro.code4.monitorizarevot.constants.FormType;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
@@ -101,9 +100,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void postQuestionAnswers() {
         try {
             List<QuestionAnswer> questionAnswers = new ArrayList<>();
-            getAnswersFromForm(Data.getInstance().getFirstForm(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getSecondForm(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getThirdForm(), questionAnswers);
+            List<Version> existingVersions = Data.getInstance().getFormVersions();
+
+            for (Version version: existingVersions) {
+                getAnswersFromForm(Data.getInstance().getForm(version.getKey()), questionAnswers);
+            }
+
             NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,47 +141,41 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void getFormsDefinition() {
         try {
             VersionResponse versionResponse = NetworkService.doGetFormVersion();
-            Version existingVersion = Data.getInstance().getFormVersion();
-            if (!versionsEqual(existingVersion, versionResponse.getVersion())) {
+            List<Version> existingVersions = Data.getInstance().getFormVersions();
+            if (existingVersions == null || !existingVersions.equals(versionResponse.getVersions())) {
                 Data.getInstance().deleteAnswersAndNotes();
-                getForms(versionResponse.getVersion());
+                getForms(versionResponse.getVersions());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private boolean versionsEqual(Version before, Version current) {
-        return (before != null)
-                && before.getA().equals(current.getA())
-                && before.getB().equals(current.getB())
-                && before.getC().equals(current.getC());
-    }
+    private void getForms(List<Version> versions) {
+        FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(versions, versions.size());
 
-    private void getForms(Version version) {
-        FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(version, 3);
-        NetworkService.doGetForm(FormType.FIRST).startRequest(subscriber);
-        NetworkService.doGetForm(FormType.SECOND).startRequest(subscriber);
-        NetworkService.doGetForm(FormType.THIRD).startRequest(subscriber);
+        for (Version versionEntry: versions){
+            NetworkService.doGetForm(versionEntry.getKey()).startRequest(subscriber);
+        }
     }
 
     private class FormDefinitionSubscriber extends ObservableListener<Boolean> {
 
-        private final Version version;
+        private final List<Version> versions;
 
         private final int numberOfRequests;
 
         private int successCount = 0;
 
-        FormDefinitionSubscriber(Version version, int numberOfRequests) {
-            this.version = version;
+        FormDefinitionSubscriber(List<Version> versions, int numberOfRequests) {
+            this.versions = versions;
             this.numberOfRequests = numberOfRequests;
         }
 
         @Override
         public void onSuccess() {
             if (successCount == numberOfRequests) {
-                Data.getInstance().saveFormsVersion(version);
+                Data.getInstance().saveFormsVersion(versions);
             }
         }
 

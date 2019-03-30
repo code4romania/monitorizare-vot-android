@@ -123,7 +123,9 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
                                                                  listener, now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), true);
         timePickerDialog.setTitle(titleId);
         timePickerDialog.show();
-    }    @Override
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.branch_time_enter:
