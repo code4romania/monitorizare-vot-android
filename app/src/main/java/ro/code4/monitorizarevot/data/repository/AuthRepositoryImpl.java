@@ -31,7 +31,7 @@ public class AuthRepositoryImpl implements AuthRepository {
         }
 
         ApiDataSource apiDataSource = mDataSourceFactory.dataSource(params.isLocal());
-        User user = new User(params.getPhoneNumber(), params.getPinNumber(), params.getUdid());
+        User user = new User(params.getPhoneNumber().replaceAll("[^+\\d.]", ""), params.getPinNumber(), params.getUdid());
 
         return apiDataSource.login(user);
     }
