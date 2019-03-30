@@ -12,6 +12,7 @@
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
     <string name="error_empty_credentials">Introduceți numărul de telefon şi codul primit.</string>
+    <string name="error_invalid_phone_number">Numarul de telefon nu este valid.</string>
     <string name="error_no_connection">Nu există conexiune la internet. Vă rugăm să vă conectați și să încercați din nou</string>
     <string name="error_server">Eroare de server</string>
     <string name="error_unknown">Eroare necunoscută</string>
