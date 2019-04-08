@@ -240,7 +240,7 @@ public class Data {
         return branchQuestionAnswers;
     }
 
-    public List<QuestionAnswer> getUnsyncedQuestionAnswersFromForm() {
+    public List<QuestionAnswer> getUnsyncedQuestionAnswersFromAllForms() {
         List<QuestionAnswer> result = new ArrayList<>();
         for (Form form: getAllForms()) {
             result.addAll(getUnsyncedQuestionAnswersFromForm(form));

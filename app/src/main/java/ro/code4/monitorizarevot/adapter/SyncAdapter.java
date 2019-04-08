@@ -98,7 +98,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void postQuestionAnswers() {
         try {
-            List<QuestionAnswer> questionAnswers = Data.getInstance().getUnsyncedQuestionAnswersFromForm();
+            List<QuestionAnswer> questionAnswers = Data.getInstance().getUnsyncedQuestionAnswersFromAllForms();
             NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
         } catch (IOException e) {
             e.printStackTrace();

@@ -237,12 +237,6 @@ public class NetworkService {
         });
     }
 
-    public static ObservableRequest<Boolean> syncCurrentQuestion(final QuestionAnswer questionAnswer) {
-        ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(
-                Collections.singletonList(questionAnswer));
-        return syncResponses(responseMapper);
-    }
-
     public static ObservableRequest<Boolean> syncQuestions(List<QuestionAnswer> questionAnswers) {
         ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(questionAnswers);
         return syncResponses(responseMapper);
