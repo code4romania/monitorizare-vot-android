@@ -127,14 +127,12 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
         rootView.findViewById(R.id.question_wrapper).setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             @Override
             public void onSwipeLeft() {
-                navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onPrevious();
                 hideButtons();
             }
 
             @Override
             public void onSwipeRight() {
-                navigator.onSaveAnswerIfCompleted(questionContainer);
                 navigator.onNext();
             }
         });
@@ -147,8 +145,8 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         if (questionContainer != null && !isSaving) {
             navigator.onSaveAnswerIfCompleted(questionContainer);
         }

@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -236,13 +237,17 @@ public class NetworkService {
         });
     }
 
-    public static ObservableRequest<Boolean> syncCurrentQuestion(final QuestionAnswer questionAnswer) {
+    public static ObservableRequest<Boolean> syncQuestions(List<QuestionAnswer> questionAnswers) {
+        ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(questionAnswers);
+        return syncResponses(responseMapper);
+    }
+
+    private static ObservableRequest<Boolean> syncResponses(final ResponseAnswerContainer container) {
         return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
             @Override
             public void onRequest(Subscriber<? super Boolean> subscriber) {
                 try {
-                    ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(Arrays.asList(questionAnswer));
-                    postQuestionAnswer(responseMapper);
+                    postQuestionAnswer(container);
                     subscriber.onNext(true);
                     subscriber.onCompleted();
                 } catch (IOException e){

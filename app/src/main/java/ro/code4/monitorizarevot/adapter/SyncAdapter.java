@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ro.code4.monitorizarevot.constants.FormType;
@@ -20,7 +19,6 @@ import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.*;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
 import ro.code4.monitorizarevot.observable.ObservableListener;
-import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.Logify;
 
 import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
@@ -100,10 +98,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void postQuestionAnswers() {
         try {
-            List<QuestionAnswer> questionAnswers = new ArrayList<>();
-            getAnswersFromForm(Data.getInstance().getFirstForm(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getSecondForm(), questionAnswers);
-            getAnswersFromForm(Data.getInstance().getThirdForm(), questionAnswers);
+            List<QuestionAnswer> questionAnswers = Data.getInstance().getUnsyncedQuestionAnswersFromAllForms();
             NetworkService.postQuestionAnswer(new ResponseAnswerContainer(questionAnswers));
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,20 +113,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 Data.getInstance().deleteNote(note);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    private void getAnswersFromForm(Form form, List<QuestionAnswer> questionAnswers) {
-        if (form != null) {
-            List<Question> questionList = FormUtils.getAllQuestions(form.getId());
-            for (Question question : questionList) {
-                if (!question.isSynced()) {
-                    for (BranchQuestionAnswer branchQuestionAnswer : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
-                        QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer, form.getId());
-                        questionAnswers.add(questionAnswer);
-                    }
-                }
             }
         }
     }
