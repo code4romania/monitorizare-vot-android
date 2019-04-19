@@ -1,30 +1,44 @@
 package ro.code4.monitorizarevot.net.model;
 
-import com.google.gson.annotations.Expose;
-
-import java.io.Serializable;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
+
 public class Version extends RealmObject implements Serializable {
-
     @PrimaryKey
-    @Expose
-    private int id = 1;
+    private String key;
+    private Integer value;
 
-    @Expose
-    private Integer A, B, C;
-
-    public Integer getA() {
-        return A;
+    public String getKey() {
+        return key;
     }
 
-    public Integer getB() {
-        return B;
+    public void setKey(String key) {
+        this.key = key;
     }
 
-    public Integer getC() {
-        return C;
+    public Integer getValue() {
+        return value;
+    }
+
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Version)) return false;
+        Version version = (Version) o;
+        return getKey().equals(version.getKey()) &&
+                getValue().equals(version.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(new Object[] { getKey(), getValue() });
     }
 }

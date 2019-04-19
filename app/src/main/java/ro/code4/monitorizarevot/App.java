@@ -50,9 +50,10 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
 
         Realm.init(this);
         Realm.setDefaultConfiguration(new RealmConfiguration
-                .Builder()
-                                              .deleteRealmIfMigrationNeeded()
-                                              .build());
+            .Builder()
+            .deleteRealmIfMigrationNeeded()
+            .build()
+        );
 
         new Prefs.Builder()
                 .setContext(this)

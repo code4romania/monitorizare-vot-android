@@ -5,6 +5,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,14 +26,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
 import ro.code4.monitorizarevot.constants.Auth;
+import ro.code4.monitorizarevot.data.rest.gson.VersionSerializer;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.QuestionAnswer;
-import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
-import ro.code4.monitorizarevot.net.model.Section;
-import ro.code4.monitorizarevot.net.model.User;
+import ro.code4.monitorizarevot.net.model.*;
 import ro.code4.monitorizarevot.net.model.response.Ack;
 import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
@@ -74,6 +71,7 @@ public class NetworkService {
                         return false;
                     }
                 })
+                .registerTypeAdapter(new TypeToken<List<Version>>() {}.getType(), new VersionSerializer())
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 

@@ -10,16 +10,7 @@ import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
-import ro.code4.monitorizarevot.constants.FormType;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Form;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Question;
-import ro.code4.monitorizarevot.net.model.QuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Section;
-import ro.code4.monitorizarevot.net.model.Syncable;
-import ro.code4.monitorizarevot.net.model.Version;
+import ro.code4.monitorizarevot.net.model.*;
 import ro.code4.monitorizarevot.util.FormUtils;
 
 public class Data {
@@ -66,21 +57,9 @@ public class Data {
                 .equalTo(COUNTY_CODE, Preferences.getCountyCode())
                 .equalTo(BRANCH_NUMBER, Preferences.getBranchNumber())
                 .findAll();
-        BranchDetails result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
+        BranchDetails result = !results.isEmpty() ? realm.copyFromRealm(results.first()) : null;
         realm.close();
         return result;
-    }
-
-    public Form getFirstForm() {
-        return getForm(FormType.FIRST);
-    }
-
-    public Form getSecondForm() {
-        return getForm(FormType.SECOND);
-    }
-
-    public Form getThirdForm() {
-        return getForm(FormType.THIRD);
     }
 
     private List<Form> getAllForms() {
@@ -99,16 +78,15 @@ public class Data {
                 .where(Form.class)
                 .equalTo(FORM_ID, formId)
                 .findAll();
-        Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
+        Form result = !results.isEmpty() ? realm.copyFromRealm(results.first()) : null;
         realm.close();
         return result;
     }
 
-    public Version getFormVersion() {
-        RealmResults<Version> queryResult = Realm.getDefaultInstance()
+    public List<Version> getFormVersions() {
+        return Realm.getDefaultInstance()
                 .where(Version.class)
                 .findAll();
-        return queryResult.size() > 0 ? queryResult.first() : null;
     }
 
     public List<Note> getNotes() {
@@ -163,10 +141,10 @@ public class Data {
         realm.close();
     }
 
-    public void saveFormsVersion(Version version) {
+    public void saveFormsVersion(List<Version> versions) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(version);
+        realm.copyToRealmOrUpdate(versions);
         realm.commitTransaction();
         realm.close();
     }
