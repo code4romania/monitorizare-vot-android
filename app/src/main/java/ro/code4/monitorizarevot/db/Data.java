@@ -11,7 +11,6 @@ import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 import ro.code4.monitorizarevot.net.model.*;
-import ro.code4.monitorizarevot.constants.FormType;
 import ro.code4.monitorizarevot.util.FormUtils;
 
 public class Data {
