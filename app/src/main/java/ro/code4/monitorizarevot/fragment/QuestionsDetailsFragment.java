@@ -1,15 +1,19 @@
 package ro.code4.monitorizarevot.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
@@ -20,7 +24,7 @@ import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
 import ro.code4.monitorizarevot.net.model.Question;
 import ro.code4.monitorizarevot.net.model.QuestionAnswer;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
-import ro.code4.monitorizarevot.observable.GeneralSubscriber;
+import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.presenter.QuestionsDetailsPresenter;
 import ro.code4.monitorizarevot.util.FormUtils;
 import ro.code4.monitorizarevot.util.NetworkUtils;
@@ -110,12 +114,22 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
     public void onSaveAnswerIfCompleted(ViewGroup questionContainer) {
         List<ResponseAnswer> answers = mPresenter.getAnswerIfCompleted(questionContainer);
         Question question = questions.get(currentQuestion);
-        if (answers.size() > 0) {
-            BranchQuestionAnswer branchQuestionAnswer = new BranchQuestionAnswer(question.getId(), answers);
-            Data.getInstance().saveAnswerResponse(branchQuestionAnswer);
-            syncCurrentData(branchQuestionAnswer);
-            Toast.makeText(getContext(),getString(R.string.question_confirmation_message),Toast.LENGTH_SHORT).show();
+        List<ResponseAnswer> oldAnswers = question.getAnswers();
+
+        // If the answer didn't change we don't register a new response
+        if(answers.containsAll(oldAnswers) && oldAnswers.containsAll(answers)) {
+            return ;
         }
+
+        BranchQuestionAnswer currentBranchQuestionAnswer =
+                buildBranchQuestionAnswer(question, answers);
+        if (currentBranchQuestionAnswer == null) {
+            return ;
+        }
+
+        Data.getInstance().markUnsynced(question);
+        question.setBranchQuestionAnswer(currentBranchQuestionAnswer);
+        Data.getInstance().saveAnswerResponse(currentBranchQuestionAnswer);
     }
 
     @Override
@@ -129,11 +143,45 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
         }
     }
 
-    private void syncCurrentData(BranchQuestionAnswer branchQuestionAnswer) {
-        if (NetworkUtils.isOnline(getActivity())) {
-            QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer,
-                                                               getArguments().getString(ARGS_FORM_ID));
-            NetworkService.syncCurrentQuestion(questionAnswer).startRequest(new GeneralSubscriber());
+    private void syncCurrentData() {
+        if (!NetworkUtils.isOnline(getActivity())) {
+            return ;
         }
+        List<QuestionAnswer> questionAnswerList = Data.getInstance()
+                .getUnsyncedQuestionAnswersFromForm(getArguments().getString(ARGS_FORM_ID));
+
+        // Nothing to sync
+        if (questionAnswerList.isEmpty()) {
+            return ;
+        }
+
+        final Context context = getActivity().getApplicationContext();
+        NetworkService.syncQuestions(questionAnswerList)
+                .startRequest(new ObservableListener<Boolean>() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(context,
+                                context.getString(R.string.question_confirmation_message),
+                                Toast.LENGTH_SHORT).show();
+                        Log.d(QuestionsDetailsFragment.class.getName(), "Sending new answers");
+                    }
+                });
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        syncCurrentData();
+    }
+
+    private BranchQuestionAnswer buildBranchQuestionAnswer(Question question,
+                                                           List<ResponseAnswer> answers) {
+        if (answers.isEmpty()) {
+            return null;
+        }
+
+        return new BranchQuestionAnswer(question.getId(), answers);
+    }
+
+
 }

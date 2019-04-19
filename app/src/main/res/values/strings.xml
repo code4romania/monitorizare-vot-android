@@ -86,7 +86,7 @@
     <string name="question_next">Next</string>
     <string name="question_previous">Previous</string>
     <string name="question_finish">Send</string>
-    <string name="question_confirmation_message">Message send</string>
+    <string name="question_confirmation_message">Message sent</string>
 
     <!-- Notes -->
     <string name="note_title">Add a message</string>

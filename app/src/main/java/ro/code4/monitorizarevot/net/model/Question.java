@@ -12,7 +12,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import ro.code4.monitorizarevot.net.model.response.ResponseAnswer;
 
-public class Question extends RealmObject implements Serializable {
+public class Question extends RealmObject implements Serializable, Syncable {
 
     // TODO serialized names to be translated when api is updated
     @PrimaryKey
@@ -59,14 +59,6 @@ public class Question extends RealmObject implements Serializable {
         return answerList;
     }
 
-    public boolean isSynced() {
-        return isSynced;
-    }
-
-    public void setSynced(boolean synced) {
-        isSynced = synced;
-    }
-
     public BranchQuestionAnswer getBranchQuestionAnswer() {
         return branchQuestionAnswer;
     }
@@ -80,5 +72,15 @@ public class Question extends RealmObject implements Serializable {
             return branchQuestionAnswer.getAnswers();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public void setSynced(boolean synced) {
+        this.isSynced = synced;
+    }
+
+    @Override
+    public boolean isSynced() {
+        return isSynced;
     }
 }
