@@ -68,6 +68,8 @@
     <string name="invalid_branch_environment">Choose urban of rural</string>
     <string name="invalid_branch_sex">Choose man or woman</string>
     <string name="invalid_branch_time_in">Select the time of arrival</string>
+    <string name="invalid_branch_time_out" translatable="false">Select the time of departure</string>
+    <string name="invalid_time_input" translatable="false">Arrival needs to be before departure</string>
 
     <!-- Forms list -->
     <string name="form_1">Saturday Form</string>
