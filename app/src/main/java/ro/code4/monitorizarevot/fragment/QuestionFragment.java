@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import ro.code4.monitorizarevot.App;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
 import ro.code4.monitorizarevot.net.model.Question;
