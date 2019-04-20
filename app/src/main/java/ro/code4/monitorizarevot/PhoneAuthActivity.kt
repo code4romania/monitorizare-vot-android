@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_phone_auth.*
 import ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL
 import ro.code4.monitorizarevot.presentation.LoadingMessage
 import ro.code4.monitorizarevot.viewmodel.PhoneAuthViewModel
+import ro.code4.monitorizarevot.R
 import java.util.concurrent.TimeUnit
 
 

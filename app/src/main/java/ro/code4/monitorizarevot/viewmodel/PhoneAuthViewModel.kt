@@ -12,6 +12,7 @@ import ro.code4.monitorizarevot.presentation.Message
 import ro.code4.monitorizarevot.presentation.MessageFactory
 import ro.code4.monitorizarevot.presentation.livedata.SingleLiveEvent
 import ro.code4.monitorizarevot.presentation.rx.DefaultObserver
+import ro.code4.monitorizarevot.R
 import javax.inject.Inject
 
 class PhoneAuthViewModel @Inject
