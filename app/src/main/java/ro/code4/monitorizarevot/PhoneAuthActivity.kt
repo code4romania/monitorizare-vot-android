@@ -7,7 +7,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
+import android.support.annotation.StringRes
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -23,6 +23,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import kotlinx.android.synthetic.main.activity_phone_auth.*
 import ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL
+import ro.code4.monitorizarevot.presentation.LoadingMessage
 import ro.code4.monitorizarevot.viewmodel.PhoneAuthViewModel
 import java.util.concurrent.TimeUnit
 
@@ -43,7 +44,8 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
                         Log.d(TAG, "signInWithCredential:success")
 
                         val user = task.result?.user
-
+                        showErrorDialog("Firebase: Successfully signed in!")
+                        viewModel.notifyUserSignedIn(user)
                         // ...
                     } else {
                         // Sign in failed, display a message and update the UI
@@ -53,6 +55,7 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
                             showErrorDialog(task.exception?.localizedMessage)
                         }
                     }
+                    showHideLoading(LoadingMessage(false))
                 }
     }
 
@@ -66,13 +69,13 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
         setContentView(R.layout.activity_phone_auth)
         ButterKnife.bind(this)
 
-
         auth = FirebaseAuth.getInstance()
         auth.useAppLanguage()
 
         app_version.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
 
         viewModel.message().observe(this, Observer { message -> showErrorDialog(message) })
+        viewModel.messageId().observe(this, Observer { showErrorDialog(it) })
 
         viewModel.loginStatus().observe(this, Observer { status ->
             if (status!!) {
@@ -91,21 +94,32 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
             }
         })
 
+        viewModel.validatePhone().observe(this, Observer { phone ->
+            phone?.let {
+                validatePhoneNumber(it)
+            }
+        })
+
         phone.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) = Unit
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 loginBtn.isEnabled = s.isNotEmpty()
+                if (s.isEmpty()) {
+                    loginBtn.text = getString(R.string.login_send_code)
+                    codeLayout.visibility = View.INVISIBLE
+                    viewModel.resetCode()
+                }
             }
 
         })
 
         loginBtn.setOnClickListener {
-
             handleLoginClick()
         }
-        login_organisation_link.setOnClickListener {
+
+        loginOrganisationLink.setOnClickListener {
             openOrganisationWebpage()
         }
 
@@ -119,15 +133,12 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
     }
 
     private fun handleLoginClick() {
-        val phoneText = phone.text.toString()
-        val codeText = code.text.toString()
-        if (codeText.isNotEmpty()) {
-            login(phoneText, codeText)
-        } else {
-            if (phoneText.isNotEmpty()) {
-                validatePhoneNumber(phoneText)
-            }
-        }
+        viewModel.handleLoginClick(phone.text.toString(), code.text.toString())
+
+    }
+
+    private fun showErrorDialog(@StringRes resId: Int?) {
+        showErrorDialog(getString(resId ?: -1))
     }
 
     private fun showErrorDialog(message: String?) {
@@ -138,15 +149,13 @@ class PhoneAuthActivity : BaseActivity<PhoneAuthViewModel>() {
 
 
     private fun validatePhoneNumber(phoneText: String) {
-        //TODO remove hardcoded country code
         PhoneAuthProvider.getInstance()
-                .verifyPhoneNumber("+4$phoneText", 60, TimeUnit.SECONDS, this, viewModel.callbacks)
+                .verifyPhoneNumber(phoneText, 60, TimeUnit.SECONDS, this, viewModel.callbacks)
     }
 
     @SuppressLint("HardwareIds")
-    private fun login(phoneNumber: String, code: String) {
-        val uuid = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-        viewModel.login(phoneNumber, code, uuid)
+    private fun login(code: String) {
+        viewModel.login(code)
     }
 
 

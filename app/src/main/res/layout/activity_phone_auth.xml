@@ -13,7 +13,7 @@
         android:background="@drawable/ic_login_bkg">
 
         <LinearLayout
-            android:id="@+id/login_organisation_link"
+            android:id="@+id/loginOrganisationLink"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:background="@color/backgroundLight"

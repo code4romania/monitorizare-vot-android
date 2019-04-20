@@ -19,6 +19,8 @@
     <string name="error_permission">Eroare permisiune %1$S</string>
     <string name="error_section_type">Eroare în interpretarea secțiunii</string>
 
+    <string name="error_empty_code">Introduceți codul de verificare.</string>
+
     <!-- Fragment titles -->
     <string name="title_branch_details">Detalii secție</string>
     <string name="title_branch_selection">Alege secția</string>
