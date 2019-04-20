@@ -58,8 +58,24 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
 
         initNavigationDrawer();
 
-        SyncAdapter.requestSync(this);
+        requestSync(false);
         navigateTo(BranchSelectionFragment.newInstance());
+    }
+
+    public void requestSync(final boolean shouldUpdateFormsFragment) {
+        SyncAdapter.requestSync(this, new SyncDataCallback() {
+            @Override
+            public void onSyncedForms() {
+                // notify FormsListFragment if sync request came from it
+                if (shouldUpdateFormsFragment) {
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+
+                    if (fragment != null && fragment instanceof FormsListFragment) {
+                        ((FormsListFragment) fragment).onSyncedForms();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -203,5 +219,9 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return mDispatchingAndroidInjector;
+    }
+
+    public interface SyncDataCallback {
+        void onSyncedForms();
     }
 }

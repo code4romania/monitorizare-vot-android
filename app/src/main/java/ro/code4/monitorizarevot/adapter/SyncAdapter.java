@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 import java.util.List;
 
+import ro.code4.monitorizarevot.ToolbarActivity;
 import ro.code4.monitorizarevot.constants.Sync;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.net.NetworkService;
@@ -23,6 +24,7 @@ import ro.code4.monitorizarevot.util.Logify;
 import static ro.code4.monitorizarevot.util.AuthUtils.createSyncAccount;
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
+    private static ToolbarActivity.SyncDataCallback callback;
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -35,6 +37,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     public static void requestSync(Context context) {
+        Account account = createSyncAccount(context);
+        ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
+        ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(false));
+    }
+
+    public static void requestSync(Context context, ToolbarActivity.SyncDataCallback callback) {
+        SyncAdapter.callback = callback;
+
         Account account = createSyncAccount(context);
         ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
         ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(false));
@@ -154,6 +164,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         public void onSuccess() {
             if (successCount == numberOfRequests) {
                 Data.getInstance().saveFormsVersion(versions);
+
+                if (callback != null) {
+                    callback.onSyncedForms();
+                }
             }
         }
 
