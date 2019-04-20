@@ -86,15 +86,15 @@
     <string name="question_next">Next</string>
     <string name="question_previous">Previous</string>
     <string name="question_finish">Send</string>
-    <string name="question_confirmation_message">Raspuns salvat</string>
-    <string name="questions_synced" translatable="false">Raspunsuri sincronizate cu serverul</string>
+    <string name="question_confirmation_message">Răspuns salvat</string>
+    <string name="questions_synced" translatable="false">Răspunsuri sincronizate cu serverul</string>
 
     <!-- Notes -->
     <string name="note_title">Add a message</string>
     <string name="note_description">Your message</string>
     <string name="note_description_hint">Type here</string>
     <string name="note_photo">Add photo/video</string>
-    <string name="note_saved">Nota salvata</string>
+    <string name="note_saved">Notă salvată</string>
     <string name="invalid_note">Add a description or choose a file</string>
     <string name="error_permission_external_storage">We need your permission to select a resource</string>
     <string name="note_gallery">Load from gallery</string>

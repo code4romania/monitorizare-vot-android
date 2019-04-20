@@ -83,7 +83,8 @@
     <string name="question_next">Înainte</string>
     <string name="question_previous">Înapoi</string>
     <string name="question_finish">Trimite</string>
-    <string name="question_confirmation_message">Mesaj trimis</string>
+    <string name="question_confirmation_message">Răspuns salvat</string>
+    <string name="questions_synced" translatable="false">Răspunsuri sincronizate cu serverul</string>
 
     <!-- Notes -->
     <string name="note_title">Adaugă notă</string>
