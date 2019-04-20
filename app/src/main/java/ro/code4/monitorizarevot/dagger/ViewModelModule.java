@@ -6,7 +6,19 @@ import android.arch.lifecycle.ViewModelProvider;
 import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
-import ro.code4.monitorizarevot.viewmodel.*;
+import ro.code4.monitorizarevot.viewmodel.AddNoteViewModel;
+import ro.code4.monitorizarevot.viewmodel.BranchDetailsViewModel;
+import ro.code4.monitorizarevot.viewmodel.BranchSelectionViewModel;
+import ro.code4.monitorizarevot.viewmodel.FormsListViewModel;
+import ro.code4.monitorizarevot.viewmodel.GuideViewModel;
+import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
+import ro.code4.monitorizarevot.viewmodel.PhoneAuthViewModel;
+import ro.code4.monitorizarevot.viewmodel.QuestionDetailsViewModel;
+import ro.code4.monitorizarevot.viewmodel.QuestionOverviewViewModel;
+import ro.code4.monitorizarevot.viewmodel.QuestionViewModel;
+import ro.code4.monitorizarevot.viewmodel.StartViewModel;
+import ro.code4.monitorizarevot.viewmodel.ToolbarViewModel;
+import ro.code4.monitorizarevot.viewmodel.ViewModelFactory;
 
 @Module
 public abstract class ViewModelModule {
@@ -23,6 +35,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PhoneAuthViewModel.class)
+    abstract ViewModel bindPhoneAuthViewModel(PhoneAuthViewModel viewModel);
 
     @Binds
     @IntoMap

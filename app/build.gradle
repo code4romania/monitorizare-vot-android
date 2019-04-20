@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
+
 
 android {
     compileSdkVersion 28
@@ -65,7 +69,7 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
 
     implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -76,8 +80,8 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.17'
     implementation 'com.google.dagger:dagger-android-support:2.17'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+    kapt 'com.google.dagger:dagger-compiler:2.17'
+    kapt 'com.google.dagger:dagger-android-processor:2.17'
 
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'io.reactivex:rxjava:1.2.4'
@@ -87,6 +91,11 @@ dependencies {
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
     testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
+
 }
 
 android.variantFilter { variant ->
@@ -111,3 +120,5 @@ tasks.withType(Test) {
         events "started", "passed", "skipped", "failed"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

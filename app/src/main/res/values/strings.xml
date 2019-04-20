@@ -20,6 +20,8 @@
     <string name="error_permission">Permission error %1$S</string>
     <string name="error_section_type">Error in interpreting the section</string>
 
+    <string name="error_empty_code">Fill in the verification code.</string>
+
     <!-- Fragment titles -->
     <string name="title_branch_details">Polling station details</string>
     <string name="title_branch_selection">Choose your polling station</string>
@@ -44,6 +46,7 @@
     <string name="login_phone">Phone number</string>
     <string name="login_branch">Code</string>
     <string name="login">Login</string>
+    <string name="login_send_code">Send code</string>
 
     <!-- Branch selection -->
     <string name="branch_title">Choose the polling station</string>

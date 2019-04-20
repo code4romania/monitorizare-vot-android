@@ -3,6 +3,7 @@ package ro.code4.monitorizarevot.dagger;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import ro.code4.monitorizarevot.LoginActivity;
+import ro.code4.monitorizarevot.PhoneAuthActivity;
 import ro.code4.monitorizarevot.StartActivity;
 import ro.code4.monitorizarevot.ToolbarActivity;
 
@@ -14,6 +15,9 @@ public abstract class ActivityBindingModule {
 
     @ContributesAndroidInjector
     abstract LoginActivity loginActivity();
+
+    @ContributesAndroidInjector
+    abstract PhoneAuthActivity phoneAuthActivity();
 
     @ContributesAndroidInjector(modules = {FragmentBindingModule.class})
     abstract ToolbarActivity toolbarActivity();
