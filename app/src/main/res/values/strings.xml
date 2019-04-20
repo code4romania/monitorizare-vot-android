@@ -44,6 +44,7 @@
     <string name="login_phone">Phone number</string>
     <string name="login_branch">Code</string>
     <string name="login">Login</string>
+    <string name="login_send_code">Send code</string>
 
     <!-- Branch selection -->
     <string name="branch_title">Choose the polling station</string>

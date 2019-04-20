@@ -92,6 +92,10 @@ dependencies {
     testImplementation 'junit:junit:' + rootProject.junitVersion
     testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
+
 }
 
 android.variantFilter { variant ->
@@ -116,3 +120,5 @@ tasks.withType(Test) {
         events "started", "passed", "skipped", "failed"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

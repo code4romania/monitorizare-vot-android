@@ -33,6 +33,8 @@
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
     <string name="menu_logout">Delogare</string>
+    <string name="section">Secțiune</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -41,6 +43,7 @@
     <string name="login_phone">Numărul de telefon</string>
     <string name="login_branch">Cod primit</string>
     <string name="login">Login</string>
+    <string name="login_send_code">Trimite cod</string>
 
     <!-- Branch selection -->
     <string name="branch_title">Alege secția</string>
