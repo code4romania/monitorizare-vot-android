@@ -40,6 +40,17 @@
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Pick your voting station</string>
+    <string name="onboarding_description_1">The first step is to mention the voting station you are in, choosing the county and its number. In the next step we will need some details (urban/ rural area, details about the section president, your arrival time). Don\'t worry, you can edit the information later</string>
+    <string name="onboarding_title_2">Fill in the forms</string>
+    <string name="onboarding_description_2">In order to help you detect problems, we provide some forms with the standard rules for a voting station. On each form you can mark whether certain procedures have been followed or not</string>
+    <string name="onboarding_title_3">Add notes</string>
+    <string name="onboarding_description_3">Did you notice any problem that does not appear in a form? Use the "Add note" button, write a message and/ or attach a picture</string>
+    <string name="onboarding_previous">Back</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_continue">Continue</string>
+
     <!-- Login -->
     <string name="login_phone">Phone number</string>
     <string name="login_branch">Code</string>

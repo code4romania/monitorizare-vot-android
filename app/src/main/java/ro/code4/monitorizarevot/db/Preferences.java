@@ -10,6 +10,7 @@ public class Preferences {
     private static final String PREFS_BRANCH_NUMBER = "PREFS_BRANCH_NUMBER";
     private static final String PREFS_USERNAME = "PREFS_USERNAME";
     private static final String PREFS_TOKEN = "PREFS_TOKEN";
+    private static final String PREFS_ONBOARDING = "PREFS_ONBOARDING";
 
     public static void clear() {
         Prefs.clear();
@@ -55,11 +56,25 @@ public class Preferences {
         return getCountyCode() != null && getBranchNumber() != -1;
     }
 
+    public static void saveSeenOnboarding(boolean hasSeenOnboarding) {
+        Prefs.putBoolean(PREFS_ONBOARDING, hasSeenOnboarding);
+    }
+
     public static ObservableRequest<Boolean> isAlreadyLoggedIn() {
         return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
             @Override
             public void onRequest(Subscriber<? super Boolean> subscriber) {
                 subscriber.onNext(Preferences.hasCredentials());
+                subscriber.onCompleted();
+            }
+        });
+    }
+
+    public static ObservableRequest<Boolean> hasSeenOnboarding() {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(Prefs.getBoolean(PREFS_ONBOARDING, false));
                 subscriber.onCompleted();
             }
         });

@@ -29,7 +29,7 @@ public class StartActivity extends BaseActivity<StartViewModel> {
         public void onNext(Boolean hasCredentials) {
             super.onNext(hasCredentials);
             startActivity(new Intent(StartActivity.this,
-                                     hasCredentials ? ToolbarActivity.class : LoginActivity.class));
+                                     hasCredentials ? ToolbarActivity.class : OnboardingActivity.class));
         }
 
         @Override
