@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+static def getKey(String env, String key) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File(env.concat('.properties'))))
+    return props[key]
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -15,10 +21,19 @@ android {
     }
 
     flavorDimensions "default"
+    signingConfigs {
+        fastlane {
+            storeFile file(getKey("keystore", "storeFile"))
+            keyAlias getKey("keystore", "keyAlias")
+            keyPassword getKey("keystore", "keyPassword")
+            storePassword getKey("keystore", "storePassword")
+        }
 
+    }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.fastlane
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
