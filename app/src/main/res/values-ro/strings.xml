@@ -65,6 +65,7 @@
     <string name="invalid_branch_environment">Alege urban sau rural</string>
     <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
     <string name="invalid_branch_time_in">Alege ora sosirii</string>
+    <string name="invalid_time_input">Ora plecării nu poate fi mai mică decât ora sosirii</string>
 
     <!-- Forms list -->
     <string name="form_1">Sâmbătă</string>
@@ -84,7 +85,7 @@
     <string name="question_previous">Înapoi</string>
     <string name="question_finish">Trimite</string>
     <string name="question_confirmation_message">Răspuns salvat</string>
-    <string name="questions_synced" translatable="false">Răspunsuri sincronizate cu serverul</string>
+    <string name="questions_synced">Răspunsuri sincronizate cu serverul</string>
 
     <!-- Notes -->
     <string name="note_title">Adaugă notă</string>

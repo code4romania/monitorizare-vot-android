@@ -113,9 +113,6 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
                 } else if (timeEnter == null) {
                     Toast.makeText(getActivity(), R.string.invalid_branch_time_in, Toast.LENGTH_SHORT).show();
                 }
-                else if (timeLeave == null) {
-                    Toast.makeText(getActivity(), R.string.invalid_branch_time_out, Toast.LENGTH_SHORT).show();
-                }
                 else if (checkTime() == false) {
                     Toast.makeText(getActivity(), R.string.invalid_time_input, Toast.LENGTH_SHORT).show();
                 } else {
