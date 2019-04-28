@@ -130,6 +130,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
         Data.getInstance().markUnsynced(question);
         question.setBranchQuestionAnswer(currentBranchQuestionAnswer);
         Data.getInstance().saveAnswerResponse(currentBranchQuestionAnswer);
+        Toast.makeText(getActivity(),getString(R.string.question_confirmation_message),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -161,7 +162,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
                     @Override
                     public void onSuccess() {
                         Toast.makeText(context,
-                                context.getString(R.string.question_confirmation_message),
+                                context.getString(R.string.questions_synced),
                                 Toast.LENGTH_SHORT).show();
                         Log.d(QuestionsDetailsFragment.class.getName(), "Sending new answers");
                     }
@@ -182,6 +183,5 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
 
         return new BranchQuestionAnswer(question.getId(), answers);
     }
-
 
 }

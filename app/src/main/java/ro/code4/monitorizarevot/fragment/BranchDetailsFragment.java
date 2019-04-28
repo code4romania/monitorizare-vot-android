@@ -5,13 +5,16 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import ro.code4.monitorizarevot.BaseFragment;
@@ -109,6 +112,9 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
                     Toast.makeText(getActivity(), R.string.invalid_branch_sex, Toast.LENGTH_SHORT).show();
                 } else if (timeEnter == null) {
                     Toast.makeText(getActivity(), R.string.invalid_branch_time_in, Toast.LENGTH_SHORT).show();
+                }
+                else if (checkTime() == false) {
+                    Toast.makeText(getActivity(), R.string.invalid_time_input, Toast.LENGTH_SHORT).show();
                 } else {
                     persistSelection();
                     navigateTo(FormsListFragment.newInstance());
@@ -149,6 +155,7 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
                 });
                 break;
         }
+
     }
 
     private void updateCalendar(Calendar calendar, int hourOfDay, int minute) {
@@ -188,5 +195,24 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
         viewModel = ViewModelProviders.of(this, factory).get(BranchDetailsViewModel.class);
     }
 
-
+    private boolean checkTime()
+    {
+        boolean retValue = false;
+        Integer hour1 = timeEnter.get(Calendar.HOUR_OF_DAY);
+        Integer hour2 = timeLeave.get(Calendar.HOUR_OF_DAY);
+        Integer minute1 = timeEnter.get(Calendar.MINUTE);
+        Integer minute2 = timeLeave.get(Calendar.MINUTE);
+        if(hour1 < hour2)
+        {
+            retValue = true;
+        }
+        else if(hour1 == hour2)
+                {
+                    if(minute1 < minute2)
+                    {
+                        retValue = true;
+                    }
+                }
+        return retValue;
+    }
 }
