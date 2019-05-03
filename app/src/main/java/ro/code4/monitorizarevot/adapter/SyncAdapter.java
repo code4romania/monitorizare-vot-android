@@ -45,9 +45,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static void requestSync(Context context, ToolbarActivity.SyncDataCallback callback) {
         SyncAdapter.callback = callback;
 
-        Account account = createSyncAccount(context);
-        ContentResolver.setSyncAutomatically(account, Sync.AUTHORITY, true);
-        ContentResolver.requestSync(account, Sync.AUTHORITY, getBundle(false));
+        requestSync(context);
     }
 
     public static void requestUploadSync(Context context) {
