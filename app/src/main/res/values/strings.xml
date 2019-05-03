@@ -79,6 +79,8 @@
     <string name="form_3_letter">C</string>
     <string name="form_notes">Add a message</string>
     <string name="error_no_form_data">There is no data for this form.</string>
+    <string name="forms_sync_failed_description">Syncing forms failed</string>
+    <string name="forms_sync_failed_retry">Retry</string>
 
     <!-- Question details -->
     <string name="question_complete">Completed</string>
