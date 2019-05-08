@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'io.fabric'
+// uncomment these to add crashlytics
+// apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
