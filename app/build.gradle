@@ -83,7 +83,6 @@ dependencies {
     implementation 'io.reactivex:rxjava:1.2.4'
 
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
     testImplementation 'junit:junit:' + rootProject.junitVersion
     testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion

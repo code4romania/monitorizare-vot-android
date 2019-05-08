@@ -2,8 +2,6 @@ package ro.code4.monitorizarevot;
 
 import com.pixplicity.easyprefs.library.Prefs;
 
-import net.hockeyapp.android.CrashManager;
-
 import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
@@ -46,7 +44,6 @@ public class App extends Application implements HasActivityInjector, HasBroadcas
         AppInjector.init(this);
 
         mContext = getApplicationContext();
-        CrashManager.register(this);
 
         Realm.init(this);
         Realm.setDefaultConfiguration(new RealmConfiguration
