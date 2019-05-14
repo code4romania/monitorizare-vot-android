@@ -77,7 +77,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
 
-    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-core:16.0.8' 
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0@aar'
 
