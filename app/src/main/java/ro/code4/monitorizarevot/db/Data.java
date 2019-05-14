@@ -89,6 +89,12 @@ public class Data {
                 .findAll();
     }
 
+    public List<FormDetails> getFormDetails() {
+        return Realm.getDefaultInstance()
+                .where(FormDetails.class)
+                .findAll();
+    }
+
     public List<Note> getNotes() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<Note> result = realm
@@ -141,7 +147,7 @@ public class Data {
         realm.close();
     }
 
-    public void saveFormsVersion(List<Version> versions) {
+    public void saveFormsVersion(List<FormDetails> versions) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(versions);

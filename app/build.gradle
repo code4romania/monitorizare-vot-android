@@ -34,7 +34,7 @@ android {
         dev {
             applicationIdSuffix '.dev'
             versionNameSuffix "d"
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-dev.azurewebsites.net/"'
         }
 
         prod {

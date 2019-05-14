@@ -195,24 +195,21 @@ public class BranchDetailsFragment extends BaseFragment<BranchDetailsViewModel> 
         viewModel = ViewModelProviders.of(this, factory).get(BranchDetailsViewModel.class);
     }
 
-    private boolean checkTime()
-    {
-        boolean retValue = false;
+    private boolean checkTime() {
         Integer hour1 = timeEnter.get(Calendar.HOUR_OF_DAY);
+
+        if (timeLeave == null)
+            return true;
+
         Integer hour2 = timeLeave.get(Calendar.HOUR_OF_DAY);
         Integer minute1 = timeEnter.get(Calendar.MINUTE);
         Integer minute2 = timeLeave.get(Calendar.MINUTE);
-        if(hour1 < hour2)
-        {
-            retValue = true;
+
+        if (hour1 < hour2) {
+            return true;
+        } else if (hour1.equals(hour2)) {
+            return minute1 < minute2;
         }
-        else if(hour1 == hour2)
-                {
-                    if(minute1 < minute2)
-                    {
-                        retValue = true;
-                    }
-                }
-        return retValue;
+        return false;
     }
 }
