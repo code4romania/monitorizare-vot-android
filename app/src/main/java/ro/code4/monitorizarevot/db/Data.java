@@ -90,9 +90,15 @@ public class Data {
     }
 
     public List<FormDetails> getFormDetails() {
-        return Realm.getDefaultInstance()
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmResults<FormDetails> result = realm
                 .where(FormDetails.class)
                 .findAll();
+
+        List<FormDetails> details = realm.copyFromRealm(result);
+
+        return details;
     }
 
     public List<Note> getNotes() {

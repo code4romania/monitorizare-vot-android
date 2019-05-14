@@ -22,10 +22,6 @@ public class FormsListViewModel extends BaseViewModel {
         super(useCaseFactory, loadingMessageFactory, messageFactory);
     }
 
-    public List<Version> getFormVersions() {
-        return Data.getInstance().getFormVersions();
-    }
-
     public List<FormDetails> getFormDetails() {
         return Data.getInstance().getFormDetails();
     }
