@@ -100,12 +100,10 @@ dependencies {
 
 android.variantFilter { variant ->
 
-    String release = 'release'
     String debug = 'debug'
 
     boolean shouldBeExcluded = false
 
-    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
     shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
 
     if (shouldBeExcluded) {
