@@ -4,6 +4,12 @@ apply plugin: 'realm-android'
 // apply plugin: 'com.google.gms.google-services'
 // apply plugin: 'io.fabric'
 
+static def getKey(String env, String key) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File(env.concat('.properties'))))
+    return props[key]
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -18,10 +24,19 @@ android {
     }
 
     flavorDimensions "default"
+    signingConfigs {
+        fastlane {
+            storeFile file(getKey("keystore", "storeFile"))
+            keyAlias getKey("keystore", "keyAlias")
+            keyPassword getKey("keystore", "keyPassword")
+            storePassword getKey("keystore", "storePassword")
+        }
 
+    }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.fastlane
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -39,12 +54,6 @@ android {
 
         prod {
             buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
-        }
-
-        mock {
-            applicationIdSuffix '.mock'
-            versionNameSuffix "m"
-            buildConfigField "String", "WEB_BASE_URL", '""'
         }
     }
 
@@ -97,13 +106,10 @@ dependencies {
 
 android.variantFilter { variant ->
 
-    String release = 'release'
     String debug = 'debug'
 
     boolean shouldBeExcluded = false
 
-    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
-    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'mock'
     shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
 
     if (shouldBeExcluded) {
