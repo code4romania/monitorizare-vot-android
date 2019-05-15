@@ -51,7 +51,7 @@ platform :android do
         build_type:'release'
     )
     supply(
-        track: 'beta',
+        track: 'internal',
         package_name: 'ro.code4.monitorizarevot',
         json_key: './fastlane/gpa.json'
     )
