@@ -52,12 +52,6 @@ android {
         prod {
             buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
         }
-
-        mock {
-            applicationIdSuffix '.mock'
-            versionNameSuffix "m"
-            buildConfigField "String", "WEB_BASE_URL", '""'
-        }
     }
 
     packagingOptions {
@@ -112,7 +106,6 @@ android.variantFilter { variant ->
     boolean shouldBeExcluded = false
 
     shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'dev'
-    shouldBeExcluded |= variant.buildType.name == release && variant.getFlavors().get(0).name == 'mock'
     shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
 
     if (shouldBeExcluded) {
