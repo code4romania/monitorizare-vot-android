@@ -28,11 +28,13 @@
     <string name="title_guide">Ghid</string>
 
     <!-- Menu -->
+    <string name="menu_logout">Delogare</string>
     <string name="menu_forms">Formulare</string>
     <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
-    <string name="menu_logout">Delogare</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -68,12 +70,6 @@
     <string name="invalid_time_input">Ora plecării nu poate fi mai mică decât ora sosirii</string>
 
     <!-- Forms list -->
-    <string name="form_1">Sâmbătă</string>
-    <string name="form_1_letter">S</string>
-    <string name="form_2">Duminică</string>
-    <string name="form_2_letter">D</string>
-    <string name="form_3">Numărare</string>
-    <string name="form_3_letter">N</string>
     <string name="form_notes">Adaugă notă</string>
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
     <string name="forms_sync_failed_description">Descărcarea formularelor a eșuat</string>
@@ -95,10 +91,10 @@
     <string name="note_description_hint">Scrie aici</string>
     <string name="note_photo">Adaugă foto/video</string>
     <string name="note_saved">Notă salvată</string>
+    <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
+    <string name="error_permission_external_storage">Permisiunea este necesară pentru a putea selecta o resursă</string>
     <string name="note_gallery">Încarcă din galerie</string>
     <string name="note_take_photo">📷 Fotografiază</string>
     <string name="note_record_video">🔴 Înregistrează video</string>
 
-    <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
-    <string name="error_permission_external_storage">Permisiunea este necesară pentru a putea selecta o resursă</string>
 </resources>

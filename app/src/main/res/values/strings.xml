@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="Typos">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
@@ -71,12 +70,6 @@
     <string name="invalid_time_input">Arrival needs to be before departure</string>
 
     <!-- Forms list -->
-    <string name="form_1">Saturday Form</string>
-    <string name="form_1_letter">SA</string>
-    <string name="form_2">Sunday Form</string>
-    <string name="form_2_letter">SU</string>
-    <string name="form_3">Counting Form</string>
-    <string name="form_3_letter">C</string>
     <string name="form_notes">Add a message</string>
     <string name="error_no_form_data">There is no data for this form.</string>
     <string name="forms_sync_failed_description">Syncing forms failed</string>
