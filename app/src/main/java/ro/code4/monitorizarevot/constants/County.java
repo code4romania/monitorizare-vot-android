@@ -47,7 +47,7 @@ public enum County {
     VASLUI("VS", "Vaslui", 536),
     VALCEA("VL", "Vâlcea", 430),
     VRANCEA("VN", "Vrancea", 358),
-    DIASPORA("D", "Diaspora", 377);
+    DIASPORA("D", "Diaspora", 441);
 
     private final String code;
     private final String name;
