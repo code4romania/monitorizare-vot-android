@@ -136,7 +136,7 @@ public class QuestionsDetailsFragment extends BaseFragment<QuestionDetailsViewMo
     @Override
     public void onPrevious() {
         hideFocusedKeyboard();
-        if (currentQuestion > 1) {
+        if (currentQuestion >= 1) {
             showQuestion(currentQuestion - 1);
         } else {
             SyncAdapter.requestUploadSync(getActivity());

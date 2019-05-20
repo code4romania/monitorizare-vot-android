@@ -21,6 +21,7 @@ import ro.code4.monitorizarevot.ToolbarActivity;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
 import ro.code4.monitorizarevot.net.model.Form;
+import ro.code4.monitorizarevot.net.model.FormDetails;
 import ro.code4.monitorizarevot.net.model.Version;
 import ro.code4.monitorizarevot.util.FormRenderer;
 import ro.code4.monitorizarevot.viewmodel.FormsListViewModel;
@@ -56,19 +57,19 @@ public class FormsListFragment extends BaseFragment<FormsListViewModel> implemen
     }
 
     private void renderLayout() {
-        List<Version> formVersions = viewModel.getFormVersions();
+        List<FormDetails> formDetailsList = viewModel.getFormDetails();
         grid.removeAllViews();
 
-        if (formVersions.isEmpty()) {
+        if (formDetailsList.isEmpty()) {
             showRetrySyncSnackbar();
         } else {
-            for (Version version : formVersions) {
+            for (FormDetails formDetails : formDetailsList) {
                 FormSelectorCard card = new FormSelectorCard(rootView.getContext());
-                card.setLetter(getString(viewModel.getLetterForFormVersion(version)));
-                card.setText(getString(viewModel.getDescriptionForFormVersion(version)));
+                card.setLetter(formDetails.getCode());
+                card.setText(formDetails.getDescription());
                 card.setOnClickListener(this);
                 card.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, FormRenderer.dpToPx(150, getResources())));
-                card.setTag(version);
+                card.setTag(formDetails);
 
                 GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
                 layoutParams.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f);
@@ -153,10 +154,10 @@ public class FormsListFragment extends BaseFragment<FormsListViewModel> implemen
 
         Object tag = v.getTag();
 
-        if (!(tag instanceof Version)) {
+        if (!(tag instanceof FormDetails)) {
             navigateTo(AddNoteFragment.newInstance());
         } else {
-            showForm(Data.getInstance().getForm(((Version) tag).getKey()));
+            showForm(Data.getInstance().getForm(((FormDetails) tag).getCode()));
         }
     }
 }

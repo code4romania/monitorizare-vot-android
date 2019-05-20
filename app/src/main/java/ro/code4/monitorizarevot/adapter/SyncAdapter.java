@@ -127,33 +127,33 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private void getFormsDefinition() {
         try {
             VersionResponse versionResponse = NetworkService.doGetFormVersion();
-            List<Version> existingVersions = Data.getInstance().getFormVersions();
-            if (existingVersions == null || !existingVersions.equals(versionResponse.getVersions())) {
+            List<FormDetails> existingVersions = Data.getInstance().getFormDetails();
+            if (existingVersions == null || !existingVersions.equals(versionResponse.getFormDetailsList())) {
                 Data.getInstance().deleteAnswersAndNotes();
-                getForms(versionResponse.getVersions());
+                getForms(versionResponse.getFormDetailsList());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void getForms(List<Version> versions) {
-        FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(versions, versions.size());
+    private void getForms(List<FormDetails> formDetailsList) {
+        FormDefinitionSubscriber subscriber = new FormDefinitionSubscriber(formDetailsList, formDetailsList.size());
 
-        for (Version versionEntry: versions){
-            NetworkService.doGetForm(versionEntry.getKey()).startRequest(subscriber);
+        for (FormDetails formEntry: formDetailsList){
+            NetworkService.doGetForm(formEntry.getCode()).startRequest(subscriber);
         }
     }
 
     private class FormDefinitionSubscriber extends ObservableListener<Boolean> {
 
-        private final List<Version> versions;
+        private final List<FormDetails> versions;
 
         private final int numberOfRequests;
 
         private int successCount = 0;
 
-        FormDefinitionSubscriber(List<Version> versions, int numberOfRequests) {
+        FormDefinitionSubscriber(List<FormDetails> versions, int numberOfRequests) {
             this.versions = versions;
             this.numberOfRequests = numberOfRequests;
         }

@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 import ro.code4.monitorizarevot.constants.Api;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
@@ -26,9 +26,9 @@ public interface ApiService {
     Call<Object>postAuth(@Body User user);
 
     @GET(Api.FORM)
-    Call<List<Section>> getForm(@Query(Api.KEY_FORM_ID) String formId);
+    Call<List<Section>> getForm(@Path(Api.KEY_FORM_ID) String formId);
 
-    @GET(Api.FORM_VERSION)
+    @GET(Api.FORM_VERSIONS)
     Call<VersionResponse> getFormVersion();
 
     @POST(Api.BRANCH)

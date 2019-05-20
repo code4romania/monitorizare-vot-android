@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-import ro.code4.monitorizarevot.net.model.Version;
+import ro.code4.monitorizarevot.net.model.FormDetails;
 
 public class VersionResponse implements Serializable {
 
     // TODO serialized names to be translated when api is updated
     @Expose
-    @SerializedName("versiune")
-    private List<Version> versions;
+    @SerializedName("formulare")
+    private List<FormDetails> formDetailsList;
 
-    public List<Version> getVersions() {
-        return versions;
+    public List<FormDetails> getFormDetailsList() {
+        return formDetailsList;
     }
 }
