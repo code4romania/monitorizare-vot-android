@@ -19,8 +19,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 28
 
-        versionCode 19
-        versionName "0.9.13"
+        versionCode 21
+        versionName "0.10.1"
     }
 
     flavorDimensions "default"
@@ -51,7 +51,7 @@ android {
         }
 
         prod {
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-dev.azurewebsites.net/"'
         }
     }
 
