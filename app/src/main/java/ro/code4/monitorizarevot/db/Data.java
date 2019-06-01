@@ -105,9 +105,12 @@ public class Data {
     }
 
     public List<Version> getFormVersions() {
-        return Realm.getDefaultInstance()
+        Realm realm = Realm.getDefaultInstance();
+        List<Version> result = realm
                 .where(Version.class)
                 .findAll();
+        realm.close();
+        return result;
     }
 
     public List<FormDetails> getFormDetails() {
@@ -118,6 +121,7 @@ public class Data {
                 .findAll();
 
         List<FormDetails> details = realm.copyFromRealm(result);
+        realm.close();
 
         return details;
     }
