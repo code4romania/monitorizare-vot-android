@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,16 @@ import android.widget.Toast;
 
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
-import ro.code4.monitorizarevot.constants.County;
+import ro.code4.monitorizarevot.adapter.CountyAdapter;
+import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
+import ro.code4.monitorizarevot.net.model.County;
 import ro.code4.monitorizarevot.viewmodel.BranchSelectionViewModel;
 
 public class BranchSelectionFragment extends BaseFragment<BranchSelectionViewModel> {
 
     private Spinner countySpinner;
+    private ArrayAdapter<County> countySpinnerAdapter;
 
     private EditText branchNumber;
 
@@ -51,7 +55,9 @@ public class BranchSelectionFragment extends BaseFragment<BranchSelectionViewMod
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (Preferences.hasBranch()) {
-            countySpinner.setSelection(County.getIndexByCountyCode(Preferences.getCountyCode()));
+            int currentSelectedPosition = countySpinnerAdapter.getPosition(
+                    Data.getInstance().getCountyByCode(Preferences.getCountyCode()));
+            countySpinner.setSelection(currentSelectedPosition);
             branchNumber.setText(String.valueOf(Preferences.getBranchNumber()));
             branchNumber.setEnabled(true);
         }
@@ -73,13 +79,14 @@ public class BranchSelectionFragment extends BaseFragment<BranchSelectionViewMod
     }
 
     private void setCountiesDropdown(Spinner dropdown) {
-        ArrayAdapter<String> countyAdapter = new ArrayAdapter<>(getActivity(),
-                                                                R.layout.support_simple_spinner_dropdown_item, County.getCountiesNames());
-        dropdown.setAdapter(countyAdapter);
+        countySpinnerAdapter = new CountyAdapter(getActivity(),
+                R.layout.support_simple_spinner_dropdown_item,
+                Data.getInstance().getCounties());
+        dropdown.setAdapter(countySpinnerAdapter);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedCounty = County.getCountyByIndex(position);
+                selectedCounty = countySpinnerAdapter.getItem(position);
                 branchNumber.setEnabled(true);
             }
 
@@ -111,7 +118,14 @@ public class BranchSelectionFragment extends BaseFragment<BranchSelectionViewMod
     }
 
     private void persistSelection() {
-        Preferences.saveCountyCode(County.getCountyByIndex(countySpinner.getSelectedItemPosition()).getCode());
+        int currentSelectedPosition = countySpinner.getSelectedItemPosition();
+        County currentSelectedCounty = countySpinnerAdapter.getItem(currentSelectedPosition);
+        if (currentSelectedCounty == null) {
+            Log.e(BranchSelectionFragment.class.getName(), "Could not find selected County in list");
+            return ;
+        }
+
+        Preferences.saveCountyCode(currentSelectedCounty.getCode());
         Preferences.saveBranchNumber(getBranchNumber());
     }
 

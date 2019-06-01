@@ -50,6 +50,27 @@ public class Data {
         realm.close();
     }
 
+    public List<County> getCounties() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<County> results = realm
+                .where(County.class)
+                .findAll();
+        List<County> allCounties = realm.copyFromRealm(results);
+        realm.close();
+
+        return allCounties;
+    }
+
+    public County getCountyByCode(String code) {
+        Realm realm = Realm.getDefaultInstance();
+        County result = realm
+                .where(County.class)
+                .equalTo(County.COUNTY_CODE_FIELD, code)
+                .findFirst();
+        realm.close();
+        return result;
+    }
+
     public BranchDetails getCurrentBranchDetails() {
         Realm realm = Realm.getDefaultInstance();
         RealmResults<BranchDetails> results = realm
@@ -120,6 +141,15 @@ public class Data {
         Question question = realm.copyFromRealm(result);
         realm.close();
         return question;
+    }
+
+    public void saveCountiesLocally(List<County> counties) {
+        Log.d(Data.class.getName(), "Saving counties list to local database");
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(counties);
+        realm.commitTransaction();
+        realm.close();
     }
 
     public void saveAnswerResponse(BranchQuestionAnswer branchQuestionAnswer) {

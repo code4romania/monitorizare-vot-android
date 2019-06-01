@@ -12,6 +12,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import ro.code4.monitorizarevot.constants.Api;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
+import ro.code4.monitorizarevot.net.model.County;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.User;
@@ -30,6 +31,9 @@ public interface ApiService {
 
     @GET(Api.FORM_VERSIONS)
     Call<VersionResponse> getFormVersion();
+
+    @GET(Api.BRANCH)
+    Call<List<County>> getCounties();
 
     @POST(Api.BRANCH)
     Call<Ack> postBranchDetails(@Body BranchDetails branchDetails);
