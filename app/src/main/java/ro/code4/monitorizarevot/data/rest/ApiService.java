@@ -5,6 +5,7 @@ import java.util.List;
 import okhttp3.MultipartBody;
 import retrofit2.http.*;
 import ro.code4.monitorizarevot.net.model.BranchDetails;
+import ro.code4.monitorizarevot.net.model.County;
 import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
 import ro.code4.monitorizarevot.net.model.Section;
 import ro.code4.monitorizarevot.net.model.User;
@@ -24,6 +25,9 @@ public interface ApiService {
 
     @GET("/api/v1/formular/versiune")
     Observable<VersionResponse> getFormVersion();
+
+    @GET("/api/v1/sectie")
+    Observable<List<County>> getCounties();
 
     @POST("/api/v1/sectie")
     Observable<Ack> postBranchDetails(@Body BranchDetails branchDetails);

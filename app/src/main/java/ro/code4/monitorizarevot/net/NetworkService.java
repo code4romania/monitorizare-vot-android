@@ -107,12 +107,46 @@ public class NetworkService {
         }
     }
 
+    private static void doGetCounties(int retries) throws IOException {
+        Response<List<County>> listResponse = getApiService().getCounties().execute();
+        if (listResponse == null) {
+            throw new IOException();
+        }
+
+        if (!listResponse.isSuccessful()) {
+            if (retries > 0) {
+                doGetCounties(retries - 1);
+                return ;
+            }
+
+            throw new IOException(listResponse.message() + " " + listResponse.code());
+        }
+
+        Data.getInstance().saveCountiesLocally(listResponse.body());
+    }
+
     public static ObservableRequest<Boolean> doGetForm(final String formId) {
         return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
             @Override
             public void onRequest(Subscriber<? super Boolean> subscriber) {
                 try {
                     doGetForm(formId, NUMBER_OF_RETRIES);
+                    subscriber.onNext(true);
+                    subscriber.onCompleted();
+                } catch (IOException e){
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+            }
+        });
+    }
+
+    public static ObservableRequest<Boolean> doGetCounties() {
+        return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
+            @Override
+            public void onRequest(Subscriber<? super Boolean> subscriber) {
+                try {
+                    doGetCounties(NUMBER_OF_RETRIES);
                     subscriber.onNext(true);
                     subscriber.onCompleted();
                 } catch (IOException e){

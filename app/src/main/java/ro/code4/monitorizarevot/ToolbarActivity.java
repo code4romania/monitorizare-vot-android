@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +26,9 @@ import ro.code4.monitorizarevot.constants.Constants;
 import ro.code4.monitorizarevot.fragment.BranchSelectionFragment;
 import ro.code4.monitorizarevot.fragment.FormsListFragment;
 import ro.code4.monitorizarevot.fragment.GuideFragment;
+import ro.code4.monitorizarevot.net.NetworkService;
 import ro.code4.monitorizarevot.net.model.LogoutListener;
+import ro.code4.monitorizarevot.observable.ObservableListener;
 import ro.code4.monitorizarevot.viewmodel.ToolbarViewModel;
 
 public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements Navigator, HasSupportFragmentInjector {
@@ -45,6 +48,7 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
 
     private TextView previousSelectedItem;
     private TextView formsMenuItem;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,11 +59,23 @@ public class ToolbarActivity extends BaseActivity<ToolbarViewModel> implements N
         menuButton = findViewById(R.id.toolbar_menu);
         drawerLayout = findViewById(R.id.navigation_drawer);
         formsMenuItem = findViewById(R.id.menu_forms);
+        progressBar = findViewById(R.id.progress_circular);
 
         initNavigationDrawer();
 
         requestSync(false);
-        navigateTo(BranchSelectionFragment.newInstance());
+        launchWithSyncedCounties();
+    }
+
+    private void launchWithSyncedCounties() {
+        progressBar.setVisibility(View.VISIBLE);
+        NetworkService.doGetCounties().startRequest(new ObservableListener<Boolean>() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.INVISIBLE);
+                navigateTo(BranchSelectionFragment.newInstance());
+            }
+        });
     }
 
     public void requestSync(final boolean shouldUpdateFormsFragment) {
