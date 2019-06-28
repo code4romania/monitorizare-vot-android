@@ -1,7 +1,7 @@
 package ro.code4.monitorizarevot.constants;
 
 public class Constants {
-    public static final String GUIDE_URL = "https://monitorizare-vot-ghid.azurewebsites.net/";
+    public static final String GUIDE_URL = "https://votcorect.ro/wp-content/uploads/2019/05/Manualul-Observatorului-FV-2019-1.pdf";
     public static final String ORGANISATION_WEB_URL = "https://code4.ro/";
     public static final String SERVICE_CENTER_PHONE_NUMBER = "0800 080 200";
     public static final String TIME_FORMAT = "HH:mm";

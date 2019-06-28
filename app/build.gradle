@@ -18,7 +18,6 @@ android {
         applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
         targetSdkVersion 28
-
         versionCode 22
         versionName "0.10.2"
     }
@@ -51,7 +50,7 @@ android {
         }
 
         prod {
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-dev.azurewebsites.net/"'
         }
     }
 
