@@ -74,4 +74,27 @@ public class ResponseAnswer extends RealmObject implements Serializable {
     public void setBranchNumber(int branchNumber) {
         this.branchNumber = branchNumber;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseAnswer that = (ResponseAnswer) o;
+
+        return branchNumber == that.branchNumber &&
+                optionId.intValue() == that.optionId &&
+                (value == null ? that.value == null : value.equals(that.value)) &&
+                (countyCode == null ? that.countyCode == null : countyCode.equals(that.countyCode));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + branchNumber;
+        result = prime * result + optionId;
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + ((countyCode == null) ? 0 : countyCode.hashCode());
+        return result;
+    }
 }

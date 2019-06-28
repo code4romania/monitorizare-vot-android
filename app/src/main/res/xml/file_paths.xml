@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- FIXME: the https://github.com/epforgpl/monitorizare-vot-android.git code has other paths, check what to do here -->
+    <external-path name="observation_images" path="Pictures/MonitorizareVot" />
+    <external-path name="observation_videos" path="Movies/MonitorizareVot" />
+</paths>

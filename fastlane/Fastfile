@@ -1,0 +1,67 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Create a new Dev build"
+  lane :dev do
+    gradle(task: "clean")
+    gradle(task: "assemble", flavor: "Dev", build_type:"Debug")
+  end
+
+  desc "Submit a new Prod Build to Beta in Google Play"
+  lane :beta do
+    gradle(task: "clean")
+    gradle(
+        task: 'assemble',
+        flavor: 'Prod',
+        build_type:'release'
+    )
+    supply(
+        track: 'beta',
+        package_name: 'ro.code4.monitorizarevot',
+        json_key: './fastlane/gpa.json'
+    )
+  end
+
+  desc "Submit a new testing build to internal track in Google Play"
+  lane :internal do
+    gradle(task: "clean")
+    gradle(
+        task: 'assemble',
+        flavor: 'Dev',
+        build_type:'release'
+    )
+    supply(
+        track: 'internal',
+        package_name: 'ro.code4.monitorizarevot',
+        json_key: './fastlane/gpa.json'
+    )
+  end
+
+  desc "Submit a new Prod Build to Google Play"
+  lane :release do
+    gradle(task: "clean")
+    gradle(task: "assemble", flavor: "Prod", build_type:"Release")
+    upload_to_play_store
+  end
+
+end

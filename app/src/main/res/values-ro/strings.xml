@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="Typos">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
@@ -12,7 +11,10 @@
     <string name="spinner_choose">Alege</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
-    <string name="empty_credential_message">Introduceți numărul de telefon şi codul primit.</string>
+    <string name="error_empty_credentials">Introduceți numărul de telefon şi codul primit.</string>
+    <string name="error_no_connection">Nu există conexiune la internet. Vă rugăm să vă conectați și să încercați din nou</string>
+    <string name="error_server">Eroare de server</string>
+    <string name="error_unknown">Eroare necunoscută</string>
 
     <string name="error_permission">Eroare permisiune %1$S</string>
     <string name="error_section_type">Eroare în interpretarea secțiunii</string>
@@ -26,10 +28,13 @@
     <string name="title_guide">Ghid</string>
 
     <!-- Menu -->
+    <string name="menu_logout">Delogare</string>
     <string name="menu_forms">Formulare</string>
     <string name="menu_change_branch">Schimbă secţia</string>
     <string name="menu_guide">Ghidul observatorului</string>
     <string name="menu_call">Apelează TelVerde</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -62,23 +67,23 @@
     <string name="invalid_branch_environment">Alege urban sau rural</string>
     <string name="invalid_branch_sex">Alege bărbat sau femeie</string>
     <string name="invalid_branch_time_in">Alege ora sosirii</string>
+    <string name="invalid_time_input">Ora plecării nu poate fi mai mică decât ora sosirii</string>
 
     <!-- Forms list -->
-    <string name="form_1">Sâmbătă</string>
-    <string name="form_1_letter">S</string>
-    <string name="form_2">Duminică</string>
-    <string name="form_2_letter">D</string>
-    <string name="form_3">Numărare</string>
-    <string name="form_3_letter">N</string>
     <string name="form_notes">Adaugă notă</string>
     <string name="error_no_form_data">Nu există date pentru acest formular</string>
+    <string name="forms_sync_failed_description">Descărcarea formularelor a eșuat</string>
+    <string name="forms_sync_failed_retry">Reîncearcă</string>
 
     <!-- Question details -->
     <string name="question_complete">Completat</string>
     <string name="question_incomplete">Necompletat</string>
     <string name="question_notes">Note</string>
     <string name="question_next">Înainte</string>
+    <string name="question_previous">Înapoi</string>
     <string name="question_finish">Trimite</string>
+    <string name="question_confirmation_message">Răspuns salvat</string>
+    <string name="questions_synced">Răspunsuri sincronizate cu serverul</string>
 
     <!-- Notes -->
     <string name="note_title">Adaugă notă</string>
@@ -88,4 +93,8 @@
     <string name="note_saved">Notă salvată</string>
     <string name="invalid_note">Introdu o descriere sau alege un fişier</string>
     <string name="error_permission_external_storage">Permisiunea este necesară pentru a putea selecta o resursă</string>
+    <string name="note_gallery">Încarcă din galerie</string>
+    <string name="note_take_photo">📷 Fotografiază</string>
+    <string name="note_record_video">🔴 Înregistrează video</string>
+
 </resources>

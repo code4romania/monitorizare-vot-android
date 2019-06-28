@@ -1,28 +1,61 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+// uncomment these to add crashlytics
+// apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'io.fabric'
+
+static def getKey(String env, String key) {
+    Properties props = new Properties()
+    props.load(new FileInputStream(new File(env.concat('.properties'))))
+    return props[key]
+}
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "ro.code4.monitorizarevot"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 16
-        versionName "0.9.11"
+        versionCode 22
+        versionName "0.10.2"
+    }
+
+    flavorDimensions "default"
+    signingConfigs {
+        fastlane {
+            storeFile file(getKey("keystore", "storeFile"))
+            keyAlias getKey("keystore", "keyAlias")
+            keyPassword getKey("keystore", "keyPassword")
+            storePassword getKey("keystore", "storePassword")
+        }
+
     }
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.fastlane
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
         }
 
         debug {
             debuggable true
-            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-prod.azurewebsites.net/"'
         }
+    }
+
+    productFlavors {
+        dev {
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-dev.azurewebsites.net/"'
+        }
+
+        prod {
+            buildConfigField "String", "WEB_BASE_URL", '"https://mv-mobile-dev.azurewebsites.net/"'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
     }
 }
 
@@ -32,21 +65,58 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:gridlayout-v7:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:28.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+
+    implementation 'com.google.firebase:firebase-core:16.0.8' 
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
     implementation 'com.pixplicity.easyprefs:library:1.9.0@aar'
 
+    implementation 'com.google.dagger:dagger:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
+
     implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'io.reactivex:rxjava:1.2.4'
 
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'net.hockeyapp.android:HockeySDK:4.1.1'
 
-    implementation project(path: ':mediapicker')
+    testImplementation 'junit:junit:' + rootProject.junitVersion
+    testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion
+}
+
+android.variantFilter { variant ->
+
+    String debug = 'debug'
+
+    boolean shouldBeExcluded = false
+
+    shouldBeExcluded |= variant.buildType.name == debug && variant.getFlavors().get(0).name == 'prod'
+
+    if (shouldBeExcluded) {
+        variant.setIgnore(true);
+    }
+}
+
+//Test Logging
+tasks.withType(Test) {
+    testLogging {
+        events "started", "passed", "skipped", "failed"
+    }
 }

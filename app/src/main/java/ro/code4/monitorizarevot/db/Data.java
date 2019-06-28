@@ -1,22 +1,17 @@
 package ro.code4.monitorizarevot.db;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
-import ro.code4.monitorizarevot.constants.FormType;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.BranchQuestionAnswer;
-import ro.code4.monitorizarevot.net.model.Form;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.Question;
-import ro.code4.monitorizarevot.net.model.Section;
-import ro.code4.monitorizarevot.net.model.Syncable;
-import ro.code4.monitorizarevot.net.model.Version;
+import ro.code4.monitorizarevot.net.model.*;
+import ro.code4.monitorizarevot.util.FormUtils;
 
 public class Data {
     private static final String AUTO_INCREMENT_PRIMARY_KEY = "id";
@@ -62,21 +57,19 @@ public class Data {
                 .equalTo(COUNTY_CODE, Preferences.getCountyCode())
                 .equalTo(BRANCH_NUMBER, Preferences.getBranchNumber())
                 .findAll();
-        BranchDetails result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
+        BranchDetails result = !results.isEmpty() ? realm.copyFromRealm(results.first()) : null;
         realm.close();
         return result;
     }
 
-    public Form getFirstForm() {
-        return getForm(FormType.FIRST);
-    }
-
-    public Form getSecondForm() {
-        return getForm(FormType.SECOND);
-    }
-
-    public Form getThirdForm() {
-        return getForm(FormType.THIRD);
+    private List<Form> getAllForms() {
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Form> formsRealmResults = realm
+                .where(Form.class)
+                .findAll();
+        List<Form> forms = realm.copyFromRealm(formsRealmResults);
+        realm.close();
+        return forms;
     }
 
     public Form getForm(String formId) {
@@ -85,16 +78,27 @@ public class Data {
                 .where(Form.class)
                 .equalTo(FORM_ID, formId)
                 .findAll();
-        Form result = results.size() > 0 ? realm.copyFromRealm(results.get(0)) : null;
+        Form result = !results.isEmpty() ? realm.copyFromRealm(results.first()) : null;
         realm.close();
         return result;
     }
 
-    public Version getFormVersion() {
-        RealmResults<Version> queryResult = Realm.getDefaultInstance()
+    public List<Version> getFormVersions() {
+        return Realm.getDefaultInstance()
                 .where(Version.class)
                 .findAll();
-        return queryResult.size() > 0 ? queryResult.first() : null;
+    }
+
+    public List<FormDetails> getFormDetails() {
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmResults<FormDetails> result = realm
+                .where(FormDetails.class)
+                .findAll();
+
+        List<FormDetails> details = realm.copyFromRealm(result);
+
+        return details;
     }
 
     public List<Note> getNotes() {
@@ -119,6 +123,9 @@ public class Data {
     }
 
     public void saveAnswerResponse(BranchQuestionAnswer branchQuestionAnswer) {
+        Log.d(Data.class.getName(), "Saving new answer for question " +
+                branchQuestionAnswer.getQuestionId() + " with " +
+                branchQuestionAnswer.getAnswers().size() + " answers!");
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(branchQuestionAnswer);
@@ -146,10 +153,10 @@ public class Data {
         realm.close();
     }
 
-    public void saveFormsVersion(Version version) {
+    public void saveFormsVersion(List<FormDetails> versions) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(version);
+        realm.copyToRealmOrUpdate(versions);
         realm.commitTransaction();
         realm.close();
     }
@@ -221,6 +228,46 @@ public class Data {
         List<BranchQuestionAnswer> branchQuestionAnswers = realm.copyFromRealm(result);
         realm.close();
         return branchQuestionAnswers;
+    }
+
+    public List<QuestionAnswer> getUnsyncedQuestionAnswersFromAllForms() {
+        List<QuestionAnswer> result = new ArrayList<>();
+        for (Form form: getAllForms()) {
+            result.addAll(getUnsyncedQuestionAnswersFromForm(form));
+        }
+
+        return result;
+    }
+
+    /**
+     *
+     * @param formId
+     * @return
+     */
+    public List<QuestionAnswer> getUnsyncedQuestionAnswersFromForm(String formId) {
+        List<Question> questionList = FormUtils.getAllQuestions(formId);
+        List<QuestionAnswer> questionAnswerList = new ArrayList<>();
+        for (Question question : questionList) {
+            // skip if already synced
+            if (question.isSynced()) {
+                continue ;
+            }
+            questionAnswerList.addAll(getAnswersForQuestionInForm(question, formId));
+        }
+        return questionAnswerList;
+    }
+
+    private List<QuestionAnswer> getUnsyncedQuestionAnswersFromForm(@NonNull Form form) {
+        return getUnsyncedQuestionAnswersFromForm(form.getId());
+    }
+
+    private List<QuestionAnswer> getAnswersForQuestionInForm(Question question, String formId) {
+        List<QuestionAnswer> questionAnswerList = new ArrayList<>();
+        for (BranchQuestionAnswer branchQuestionAnswer : Data.getInstance().getCityBranchPerQuestion(question.getId())) {
+            QuestionAnswer questionAnswer = new QuestionAnswer(branchQuestionAnswer, formId);
+            questionAnswerList.add(questionAnswer);
+        }
+        return questionAnswerList;
     }
 
     public <T extends Syncable & RealmModel> List<T> getUnsyncedList(Class<T> objectClass) {

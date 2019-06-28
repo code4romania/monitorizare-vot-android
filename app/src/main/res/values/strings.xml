@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="Typos">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">Monitorizare Vot</string>
     <string name="app_version">V%1$S</string>
 
@@ -12,7 +11,10 @@
     <string name="spinner_choose">Choose</string>
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
-    <string name="empty_credential_message">Fill in your phone number and the code you received.</string>
+    <string name="error_empty_credentials">Fill in your phone number and the code you received.</string>
+    <string name="error_no_connection">No internet connection. Please connect and try again</string>
+    <string name="error_server">A server error has occurred</string>
+    <string name="error_unknown">An unknown error has occurred</string>
 
     <string name="error_permission">Permission error %1$S</string>
     <string name="error_section_type">Error in interpreting the section</string>
@@ -26,10 +28,13 @@
     <string name="title_guide">Guide</string>
 
     <!-- Menu -->
+    <string name="menu_logout">Logout</string>
     <string name="menu_forms">Forms</string>
     <string name="menu_change_branch">Change the polling station</string>
     <string name="menu_guide">Observer\'s guide</string>
     <string name="menu_call">Call the Hotline</string>
+    <string name="section">Section</string>
+    <string name="support">Support</string>
 
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
@@ -59,33 +64,37 @@
     <string name="invalid_branch_number">Fill in the polling station number</string>
     <string name="invalid_branch_number_minus">The number of the station must be positive</string>
     <string name="invalid_branch_number_max">The maximum number for %1$s county is %2$s</string>
-    <string name="invalid_branch_environment">Choose urban of rural</string>
+    <string name="invalid_branch_environment">Choose urban or rural</string>
     <string name="invalid_branch_sex">Choose man or woman</string>
     <string name="invalid_branch_time_in">Select the time of arrival</string>
+    <string name="invalid_time_input">Arrival needs to be before departure</string>
 
     <!-- Forms list -->
-    <string name="form_1">Saturday Form</string>
-    <string name="form_1_letter">SA</string>
-    <string name="form_2">Sunday Form</string>
-    <string name="form_2_letter">SU</string>
-    <string name="form_3">Counting Form</string>
-    <string name="form_3_letter">C</string>
     <string name="form_notes">Add a message</string>
     <string name="error_no_form_data">There is no data for this form.</string>
+    <string name="forms_sync_failed_description">Syncing forms failed</string>
+    <string name="forms_sync_failed_retry">Retry</string>
 
     <!-- Question details -->
     <string name="question_complete">Completed</string>
     <string name="question_incomplete">Incomplete</string>
     <string name="question_notes">Messages</string>
     <string name="question_next">Next</string>
+    <string name="question_previous">Previous</string>
     <string name="question_finish">Send</string>
+    <string name="question_confirmation_message">Answer saved</string>
+    <string name="questions_synced">Answers synced with the server</string>
 
     <!-- Notes -->
     <string name="note_title">Add a message</string>
     <string name="note_description">Your message</string>
     <string name="note_description_hint">Type here</string>
     <string name="note_photo">Add photo/video</string>
-    <string name="note_saved">Saved message</string>
+    <string name="note_saved">Note saved</string>
     <string name="invalid_note">Add a description or choose a file</string>
     <string name="error_permission_external_storage">We need your permission to select a resource</string>
+    <string name="note_gallery">Load from gallery</string>
+    <string name="note_take_photo">📷 Take photo</string>
+    <string name="note_record_video">🔴 Record video</string>
+
 </resources>

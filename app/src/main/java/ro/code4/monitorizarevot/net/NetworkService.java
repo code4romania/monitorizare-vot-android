@@ -5,12 +5,14 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import io.realm.RealmObject;
@@ -24,14 +26,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ro.code4.monitorizarevot.BuildConfig;
 import ro.code4.monitorizarevot.constants.Auth;
+import ro.code4.monitorizarevot.data.rest.gson.VersionSerializer;
 import ro.code4.monitorizarevot.db.Data;
 import ro.code4.monitorizarevot.db.Preferences;
-import ro.code4.monitorizarevot.net.model.BranchDetails;
-import ro.code4.monitorizarevot.net.model.Note;
-import ro.code4.monitorizarevot.net.model.QuestionAnswer;
-import ro.code4.monitorizarevot.net.model.ResponseAnswerContainer;
-import ro.code4.monitorizarevot.net.model.Section;
-import ro.code4.monitorizarevot.net.model.User;
+import ro.code4.monitorizarevot.net.model.*;
 import ro.code4.monitorizarevot.net.model.response.Ack;
 import ro.code4.monitorizarevot.net.model.response.ResponseNote;
 import ro.code4.monitorizarevot.net.model.response.VersionResponse;
@@ -73,13 +71,15 @@ public class NetworkService {
                         return false;
                     }
                 })
+                .registerTypeAdapter(new TypeToken<List<Version>>() {}.getType(), new VersionSerializer())
                 .excludeFieldsWithoutExposeAnnotation()
                 .create();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
+                // Adding http log interceptor causes Out Of Memory on files upload
+                //.addInterceptor(interceptor)
                 .addInterceptor(new AuthInterceptor());
         OkHttpClient client = clientBuilder.build();
 
@@ -235,13 +235,17 @@ public class NetworkService {
         });
     }
 
-    public static ObservableRequest<Boolean> syncCurrentQuestion(final QuestionAnswer questionAnswer) {
+    public static ObservableRequest<Boolean> syncQuestions(List<QuestionAnswer> questionAnswers) {
+        ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(questionAnswers);
+        return syncResponses(responseMapper);
+    }
+
+    private static ObservableRequest<Boolean> syncResponses(final ResponseAnswerContainer container) {
         return new ObservableRequest<>(new ObservableRequest.OnRequested<Boolean>() {
             @Override
             public void onRequest(Subscriber<? super Boolean> subscriber) {
                 try {
-                    ResponseAnswerContainer responseMapper = new ResponseAnswerContainer(Arrays.asList(questionAnswer));
-                    postQuestionAnswer(responseMapper);
+                    postQuestionAnswer(container);
                     subscriber.onNext(true);
                     subscriber.onCompleted();
                 } catch (IOException e){

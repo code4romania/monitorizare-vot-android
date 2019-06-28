@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ro.code4.monitorizarevot">
+<manifest package="ro.code4.monitorizarevot"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,6 +11,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
@@ -23,8 +26,8 @@
         android:allowBackup="false">
         <activity
             android:name=".StartActivity"
-            android:screenOrientation="portrait"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,23 +36,22 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Login"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:theme="@style/AppTheme.Login"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ToolbarActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity
-            android:name="vn.tungdx.mediapicker.activities.MediaPickerActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/MediaPickerTheme" />
-        <receiver android:name=".net.NetworkChangeReceiver" >
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
+        <receiver android:name=".net.NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".service.AuthenticatorService"
             android:exported="false">
@@ -60,6 +62,7 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
         <service
             android:name=".service.SyncService"
             android:exported="true">
@@ -70,14 +73,27 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
-        <provider
-            android:authorities="ro.code4.monitorizarevot"
-            android:name="ro.code4.monitorizarevot.util.StubProvider"
-            android:exported="false"
-            android:syncable="true"/>
 
-        <meta-data android:name="net.hockeyapp.android.appIdentifier"
+        <provider
+            android:name="ro.code4.monitorizarevot.util.StubProvider"
+            android:authorities="@string/provider_authority"
+            android:exported="false"
+            android:syncable="true" />
+
+        <meta-data
+            android:name="net.hockeyapp.android.appIdentifier"
             android:value="91a1da8261874c718ff1caebfceb5fd1" />
+
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sync-adapter
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:contentAuthority="ro.code4.monitorizarevot"
-    android:accountType="code4.ro"
+    android:contentAuthority="@string/sync_adapter_authority"
+    android:accountType="@string/account_type"
     android:userVisible="false"
     android:supportsUploading="true"
     android:allowParallelSyncs="false"

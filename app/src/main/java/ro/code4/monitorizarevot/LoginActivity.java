@@ -1,64 +1,71 @@
 package ro.code4.monitorizarevot;
 
 import android.app.ActivityOptions;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import ro.code4.monitorizarevot.net.NetworkService;
-import ro.code4.monitorizarevot.net.model.User;
-import ro.code4.monitorizarevot.observable.ObservableListener;
-import ro.code4.monitorizarevot.observable.ObservableListenerDetacher;
-import vn.tungdx.mediapicker.activities.MediaPickerErrorDialog;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
+import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
 
 import static ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL;
 
-public class LoginActivity extends BaseActivity {
-    private EditText username;
-    private EditText password;
-    private ObservableListenerDetacher mListenerDetacher;
+public class LoginActivity extends BaseActivity<LoginViewModel> {
+
+    @BindView(R.id.phone)
+    EditText username;
+
+    @BindView(R.id.branch)
+    EditText password;
+
+    @BindView(R.id.app_version)
+    TextView appVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        username = findViewById(R.id.phone);
-        password = findViewById(R.id.branch);
-        username.getText();
+        ButterKnife.bind(this);
 
-        Button loginButton = findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new OnClickListener() {
+        appVersion.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+
+        viewModel.message().observe(this, new Observer<String>() {
+
             @Override
-            public void onClick(View view) {
-                login();
+            public void onChanged(@Nullable String message) {
+                showErrorDialog(message);
             }
         });
 
-        View organisationLink = findViewById(R.id.login_organisation_link);
-        organisationLink.setOnClickListener(new OnClickListener() {
+        viewModel.loginStatus().observe(this, new Observer<Boolean>() {
+
             @Override
-            public void onClick(View view) {
-                openOrganisationWebpage();
+            public void onChanged(Boolean status) {
+                if (status) {
+                    performNavigation();
+                }
             }
         });
-
-        setAppVersion((TextView) findViewById(R.id.app_version));
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mListenerDetacher != null && !mListenerDetacher.isDetached()){
-            mListenerDetacher.detach();
-        }
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(LoginViewModel.class);
     }
 
     private void openOrganisationWebpage() {
@@ -66,55 +73,51 @@ public class LoginActivity extends BaseActivity {
         startActivity(openBrowser);
     }
 
-    private void setAppVersion(TextView appVersion) {
-        appVersion.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME));
+    @OnClick(R.id.login_button)
+    void onLoginButtonClick() {
+        login();
+    }
+
+    @OnClick(R.id.login_organisation_link)
+    void onOrganisationLinkClick() {
+        openOrganisationWebpage();
+    }
+
+    @OnEditorAction(R.id.branch)
+    boolean onDoneEditPassword(TextView textView, int i, KeyEvent keyEvent) {
+        if (i == EditorInfo.IME_ACTION_DONE) {
+            login();
+        }
+        return false;
     }
 
     private void login() {
-        String userName = username.getText().toString();
-        String pass = password.getText().toString();
+        String phoneNumber = username.getText().toString();
+        String pin = password.getText().toString();
+        String udid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        viewModel.login(phoneNumber, pin, udid);
+    }
 
-        if(!TextUtils.isEmpty(userName.trim()) && !TextUtils.isEmpty(pass.trim())){
-            showLoading();
-            User user = new User(userName, pass, getUdid());
-            mListenerDetacher = NetworkService.login(user).startRequest(new LoginSubscriber());
+    private void showErrorDialog(String message) {
+        if (!TextUtils.isEmpty(message)) {
+            Toast.makeText(App.getContext(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void performNavigation() {
+        Intent intent = new Intent(LoginActivity.this, ToolbarActivity.class);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptions options;
+            Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background),
+                                                             getString(R.string.shared_element_login_background));
+            Pair<View, String> sharedLogo = new Pair<>(findViewById(R.id.logo), getString(R.string.shared_element_logo));
+            options = ActivityOptions
+                    .makeSceneTransitionAnimation(LoginActivity.this, sharedBackground, sharedLogo);
+            startActivity(intent, options.toBundle());
         } else {
-            MediaPickerErrorDialog
-                    .newInstance(getString(R.string.empty_credential_message))
-                    .show(getSupportFragmentManager(), null);
+            startActivity(intent);
         }
-    }
-
-    private String getUdid() {
-        return Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-    }
-
-    private class LoginSubscriber extends ObservableListener<Boolean> {
-        @Override
-        public void onError(Throwable e) {
-            super.onError(e);
-            hideLoading();
-            MediaPickerErrorDialog
-                    .newInstance(e.getMessage())
-                    .show(getSupportFragmentManager(), null);
-        }
-
-        @Override
-        public void onSuccess() {
-            hideLoading();
-            Intent intent = new Intent(LoginActivity.this, ToolbarActivity.class);
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                ActivityOptions options;
-                Pair<View, String> sharedBackground = new Pair<>(findViewById(R.id.purple_background), getString(R.string.shared_element_login_background));
-                Pair<View, String> sharedLogo = new Pair<>(findViewById(R.id.logo), getString(R.string.shared_element_logo));
-                options = ActivityOptions
-                        .makeSceneTransitionAnimation(LoginActivity.this, sharedBackground, sharedLogo);
-                startActivity(intent, options.toBundle());
-            } else {
-                startActivity(intent);
-            }
-            finish(); //TODO finish after transition is complete
-        }
+        finish(); //TODO finish after transition is complete
     }
 }
 

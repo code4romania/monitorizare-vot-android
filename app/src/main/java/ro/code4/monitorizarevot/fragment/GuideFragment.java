@@ -1,22 +1,30 @@
 package ro.code4.monitorizarevot.fragment;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ro.code4.monitorizarevot.BaseFragment;
 import ro.code4.monitorizarevot.R;
+import ro.code4.monitorizarevot.viewmodel.GuideViewModel;
 import ro.code4.monitorizarevot.constants.Constants;
 
-public class GuideFragment extends BaseFragment {
+public class GuideFragment extends BaseFragment<GuideViewModel> {
+
     public static GuideFragment newInstance() {
         return new GuideFragment();
     }
+
+    @BindView(R.id.guide_web_view)
+    WebView webView;
 
     @Nullable
     @Override
@@ -27,14 +35,20 @@ public class GuideFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        WebView guideView = view.findViewById(R.id.web_view_guide);
-        WebSettings webSettings = guideView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        guideView.loadUrl(Constants.GUIDE_URL);
+        ButterKnife.bind(this, view);
+        webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setSupportZoom(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("https://docs.google.com/gview?embedded=true&url="+Constants.GUIDE_URL);
     }
 
     @Override
     public String getTitle() {
         return getString(R.string.title_guide);
+    }
+
+    @Override
+    protected void setupViewModel() {
+        viewModel = ViewModelProviders.of(this, factory).get(GuideViewModel.class);
     }
 }

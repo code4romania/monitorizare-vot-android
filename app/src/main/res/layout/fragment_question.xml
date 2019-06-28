@@ -7,6 +7,7 @@
     android:gravity="center_horizontal">
 
     <LinearLayout
+        android:id="@+id/question_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -38,12 +39,20 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true">
         <Button
-            android:id="@+id/button_question_notes"
+            android:id="@+id/button_question_previous"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="@dimen/button_height"
-            android:text="@string/question_notes"
+            android:text="@string/question_previous"
             style="@style/buttonEmbedded"/>
+
+        <Button
+            android:id="@+id/button_question_notes"
+            style="@style/buttonEmbedded"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="@string/question_notes" />
         <Button
             android:id="@+id/button_question_next"
             android:layout_width="0dp"
