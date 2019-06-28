@@ -122,18 +122,18 @@ public class QuestionFragment extends BaseFragment<QuestionViewModel> {
             }
         });
 
-        rootView.findViewById(R.id.question_wrapper).setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
-            @Override
-            public void onSwipeLeft() {
-                navigator.onPrevious();
-                hideButtons();
-            }
-
-            @Override
-            public void onSwipeRight() {
-                navigator.onNext();
-            }
-        });
+//        rootView.findViewById(R.id.question_wrapper).setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+//            @Override
+//            public void onSwipeLeft() {
+//                navigator.onPrevious();
+//                hideButtons();
+//            }
+//
+//            @Override
+//            public void onSwipeRight() {
+//                navigator.onNext();
+//            }
+//        });
         hideButtons();
         return rootView;
     }
