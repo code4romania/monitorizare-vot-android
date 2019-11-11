@@ -2,7 +2,7 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/monitorizare-vot-android.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-android/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/monitorizare-vot-android.svg?style=for-the-badge)](https://github.com/code4romania/monitorizare-vot-android/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-* **This app was completelly re-written and improved using Kotlin. Please see [the new repo](https://github.com/code4romania/mon-vot-android-kotlin).** *
+***This app was completelly re-written and improved using Kotlin. Please see [the new repo](https://github.com/code4romania/mon-vot-android-kotlin).***
 
 [See the project live](http://monitorizarevot.ro/)
 
