@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hbb20.CountryCodePicker;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,6 +28,10 @@ import ro.code4.monitorizarevot.viewmodel.LoginViewModel;
 import static ro.code4.monitorizarevot.constants.Constants.ORGANISATION_WEB_URL;
 
 public class LoginActivity extends BaseActivity<LoginViewModel> {
+
+
+    @BindView(R.id.country_code)
+    CountryCodePicker countryCodePicker;
 
     @BindView(R.id.phone)
     EditText username;
@@ -92,10 +98,11 @@ public class LoginActivity extends BaseActivity<LoginViewModel> {
     }
 
     private void login() {
+        String countryCode = countryCodePicker.getSelectedCountryCodeWithPlus();
         String phoneNumber = username.getText().toString();
         String pin = password.getText().toString();
         String udid = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        viewModel.login(phoneNumber, pin, udid);
+        viewModel.login(countryCode + phoneNumber, pin, udid);
     }
 
     private void showErrorDialog(String message) {

@@ -12,6 +12,7 @@
     <string name="hint_time">hh:mm</string>
     <string name="empty" />
     <string name="error_empty_credentials">Fill in your phone number and the code you received.</string>
+    <string name="error_invalid_phone_number">Invalid phone number.</string>
     <string name="error_no_connection">No internet connection. Please connect and try again</string>
     <string name="error_server">A server error has occurred</string>
     <string name="error_unknown">An unknown error has occurred</string>

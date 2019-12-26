@@ -1,10 +1,13 @@
 package ro.code4.monitorizarevot.data.repository;
 
+import android.telephony.PhoneNumberUtils;
+
 import static android.text.TextUtils.isEmpty;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
 import ro.code4.monitorizarevot.data.datasource.ApiDataSource;
 import ro.code4.monitorizarevot.data.datasource.DataSourceFactory;
 import ro.code4.monitorizarevot.domain.exception.MessageType;
@@ -30,8 +33,12 @@ public class AuthRepositoryImpl implements AuthRepository {
             return Observable.error(new VoteException(MessageType.EMPTY_CREDENTIALS));
         }
 
+        if(!PhoneNumberUtils.isGlobalPhoneNumber(params.getPhoneNumber())) {
+            return Observable.error(new VoteException(MessageType.INVALID_PHONE_NUMBER));
+        }
+
         ApiDataSource apiDataSource = mDataSourceFactory.dataSource(params.isLocal());
-        User user = new User(params.getPhoneNumber(), params.getPinNumber(), params.getUdid());
+        User user = new User(params.getPhoneNumber().replaceAll("[^+\\d.]", ""), params.getPinNumber(), params.getUdid());
 
         return apiDataSource.login(user);
     }

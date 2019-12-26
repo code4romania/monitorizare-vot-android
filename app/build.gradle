@@ -97,6 +97,8 @@ dependencies {
 
     implementation 'org.greenrobot:eventbus:3.0.0'
 
+    implementation 'com.hbb20:ccp:2.2.6'
+
     testImplementation 'junit:junit:' + rootProject.junitVersion
     testImplementation 'org.mockito:mockito-core:' + rootProject.mockitoVersion
 }

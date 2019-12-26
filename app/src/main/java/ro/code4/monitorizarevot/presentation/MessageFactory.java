@@ -33,6 +33,10 @@ public class MessageFactory {
                 message = mContext.getString(R.string.error_empty_credentials);
                 break;
 
+            case INVALID_PHONE_NUMBER:
+                message = mContext.getString(R.string.error_invalid_phone_number);
+                break;
+
             case NO_INTERNET_CONNECTION:
                 message = mContext.getString(R.string.error_no_connection);
                 break;
