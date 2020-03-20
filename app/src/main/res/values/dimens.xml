@@ -37,6 +37,11 @@
     <dimen name="header_margin_vertial">10dp</dimen>
     <dimen name="icon_block_size">50dp</dimen>
 
+    <!-- Onboarding -->
+    <dimen name="onboarding_title_size">24sp</dimen>
+    <dimen name="onboarding_description_size">18sp</dimen>
+    <dimen name="onboarding_description_padding">18dp</dimen>
+
     <!-- Login -->
     <dimen name="login_margin_bottom">43dp</dimen>
     <dimen name="login_text_size">20sp</dimen>

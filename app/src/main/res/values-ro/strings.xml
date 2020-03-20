@@ -39,6 +39,17 @@
     <!-- Images -->
     <string name="content_icon_building">Building icon</string>
 
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Alege secția</string>
+    <string name="onboarding_description_1">Primul pas este să menționezi secția de votare în care te afli, alegând județul şi numărul acesteia. În pasul următor vom mai avea nevoie de câteva detalii (zonă urbană/ rurală, preşedintele secției, ora la care ai ajuns). Stai liniştit, vei putea edita informațiile</string>
+    <string name="onboarding_title_2">Completează formularele</string>
+    <string name="onboarding_description_2">Pentru a te ajuta să sesizezi nereguli, ai la dispoziție formulare cu regulile ce trebuiesc respectate într-o secție de votare. În fiecare formular poți marca dacă anumite proceduri au fost respectate sau nu</string>
+    <string name="onboarding_title_3">Adaugă note</string>
+    <string name="onboarding_description_3">Ai observat o neregulă care nu apare în formulare? Foloseşte butonul "Adaugă notă", scrie un mesaj şi/ sau ataşează o poză</string>
+    <string name="onboarding_previous">Înapoi</string>
+    <string name="onboarding_next">Mai departe</string>
+    <string name="onboarding_continue">Continuă</string>
+
     <!-- Login -->
     <string name="login_phone">Numărul de telefon</string>
     <string name="login_branch">Cod primit</string>

@@ -16,6 +16,11 @@ public abstract class ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(OnboardingViewModel.class)
+    abstract ViewModel bindOnboardingViewModel(OnboardingViewModel viewModel);
+
+    @Binds
+    @IntoMap
     @ViewModelKey(StartViewModel.class)
     abstract ViewModel bindStartViewModel(StartViewModel viewModel);
 

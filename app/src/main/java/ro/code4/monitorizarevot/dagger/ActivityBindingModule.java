@@ -3,11 +3,15 @@ package ro.code4.monitorizarevot.dagger;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import ro.code4.monitorizarevot.LoginActivity;
+import ro.code4.monitorizarevot.OnboardingActivity;
 import ro.code4.monitorizarevot.StartActivity;
 import ro.code4.monitorizarevot.ToolbarActivity;
 
 @Module(includes = {ViewModelModule.class})
 public abstract class ActivityBindingModule {
+
+    @ContributesAndroidInjector
+    abstract OnboardingActivity activityOnboarding();
 
     @ContributesAndroidInjector
     abstract StartActivity activityStart();
